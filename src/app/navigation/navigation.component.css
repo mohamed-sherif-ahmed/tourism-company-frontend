@@ -1,0 +1,59 @@
+/*
+  Simple CSS navigation bar with fading inactive links
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Lato:300,500);
+
+/*
+  pad the body and set default font styles
+*/
+body {
+  padding: 25px;
+  font: 300 40px/1.2 Lato;
+}
+
+/*
+  navigation
+*/
+.nav {
+
+  list-style: none;
+}
+
+/*
+  nav list items
+  1. side by side
+  2. needed for circle positioning
+*/
+.nav li {
+  float: left; /*1*/
+}
+
+/*
+  nav link items
+*/
+.nav > li a {
+  display: block; /*1*/
+  padding: 12px 18px; /*2*/
+  text-decoration: none; /*3*/
+  color: #999; /*4*/
+  border-bottom: 1px solid #eee;
+  transition: all ease .5s;
+}
+
+/*
+  fade out all links on ul hover
+*/
+.nav:hover > li a {
+  opacity: .5;
+  transition: all ease .5s;
+}
+
+/*
+  override previous rule to highlight current link
+*/
+.nav > li:hover a {
+  opacity: 1;
+  color: #E74C3C;
+  border-color: #E74C3C;
+}
