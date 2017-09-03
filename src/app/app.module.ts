@@ -12,6 +12,7 @@ import { OfferComponent } from './offer/offer.component';
 import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
+import { FormsModule }   from '@angular/forms'; 
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UsersComponent } from './users/users.component';
   ],
   imports: [
     BrowserModule,
+     FormsModule,
     RouterModule.forRoot([
       {
         path: 'news',
