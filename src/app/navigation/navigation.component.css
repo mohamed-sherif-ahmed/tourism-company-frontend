@@ -8,7 +8,22 @@
   pad the body and set default font styles
 */
 body {
-  padding: 25px;
+  width:100%;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+
+  /* Safari and Chrome */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+  box-align:center;
   font: 300 40px/1.2 Lato;
 }
 
@@ -54,6 +69,6 @@ body {
 */
 .nav > li:hover a {
   opacity: 1;
-  color: #E74C3C;
-  border-color: #E74C3C;
+  color: #3a08e7;
+  border-color: #2e25e7;
 }
