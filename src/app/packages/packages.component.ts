@@ -106,6 +106,11 @@ export class PackagesComponent /*implements OnInit*/ {
     this.fvouchers=this.vouchers.filter(voucher=>voucher.id===p.id);
 
     }
+  packagesToView : Package[];
+  viewTable():void 
+  {
+    this.packagesToView = PACKAGES;
+  }
 
 
  /* constructor() { }

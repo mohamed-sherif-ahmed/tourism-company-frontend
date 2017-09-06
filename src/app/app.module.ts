@@ -12,7 +12,9 @@ import { OfferComponent } from './offer/offer.component';
 import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
-import { FormsModule }   from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdButtonModule, MdCheckboxModule , MdCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,11 @@ import { FormsModule }   from '@angular/forms';
   imports: [
     BrowserModule,
      FormsModule,
+     BrowserAnimationsModule,
+     MdButtonModule,
+     MdCheckboxModule,
+     MdCardModule,
+     
     RouterModule.forRoot([
       {
         path: 'news',
