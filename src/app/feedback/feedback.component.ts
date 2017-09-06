@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FeedbackService} from './feedback.service';
-import {Feedback} from "./Feedback";
+import {Feedback} from './Feedback';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
