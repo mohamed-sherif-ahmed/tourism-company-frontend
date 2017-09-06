@@ -3,7 +3,12 @@
 
 body{
   font-family: Lato;
-  width: 80%;
+  width: 100%;
+}
+
+.cards-tab{
+  margin: auto;
+  width: 75%;
 }
 
 .delete-button{
