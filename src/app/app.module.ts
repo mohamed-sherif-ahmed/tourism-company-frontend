@@ -13,8 +13,11 @@ import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
 import { FormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MdButtonModule, MdCheckboxModule , MdCardModule } from '@angular/material';
+=======
+>>>>>>> a4cd507b00e8e59964c61e52e0484fb0ec3a2547
 
 @NgModule({
   declarations: [
