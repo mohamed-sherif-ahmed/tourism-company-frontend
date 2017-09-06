@@ -9,7 +9,7 @@ import { Package } from './package';
 })
 
 export class PackagesComponent /*implements OnInit*/ {
-  packagesArr: Package[];
+  packagesArr: JSON;
   constructor (private packageService: PackagesService) { }
   viewPackages(): void {
    this.packageService.getPackages().then(arr => {

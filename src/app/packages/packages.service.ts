@@ -22,7 +22,7 @@ export class PackagesService {
     });
   }
 
-  getPackages(): Promise<Package[]> {
+  getPackages(): Promise<JSON> {
     const url = `${AppConstants.API_ENDPOINT}/package`;
     const api_key = localStorage.getItem('api_key');
     const options = new RequestOptions({
@@ -31,14 +31,21 @@ export class PackagesService {
         'api_key': api_key
       }
     });
-    // let data: Package[];
-    // this.http.request(url, options).subscribe(response => {
-    //   if ( response['valid'] === true) {
-    //     data = response['res'] as Package[];
-    //   }
-    // });
     return this.http.request(url, options).toPromise().then(response => {
-      return response.json().res as Package[];
+      return response.json();
+    });
+  }
+  getPackage(id): Promise<JSON> {
+    const url = `${AppConstants.API_ENDPOINT}/package/${id}`;
+    const api_key = localStorage.getItem('api_key');
+    const options = new RequestOptions({
+      method: RequestMethod.Get,
+      body: {
+        'api_key': api_key
+      }
+    });
+    return this.http.request(url, options).toPromise().then(response => {
+      return response.json();
     });
   }
 }

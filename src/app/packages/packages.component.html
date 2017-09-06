@@ -1,33 +1,33 @@
 <app-navigation></app-navigation>
-<h1>
-  {{title}}
-</h1>
-<ul class="packages">
-  <li *ngFor="let package of packages"(click)="onSelect(package)">
-    
-     <span class="badge">PackageID: {{package.id}}</span>Package Name:  {{package.name}}
-    
-  </li>
-</ul>
-<div *ngIf="selectedPackage">
-<h2>{{selectedPackage.name}} package vouchers : </h2>
-<div><label>id: </label>{{selectedPackage.id}}</div>
-
-<div>
-    <label>name: </label>
-    <input [(ngModel)]="selectedPackage.name" placeholder="name"/>
-</div>
- 
-    
-    <li *ngFor="let fvoucher of fvouchers">
-      
-      
-       <span class="badge"></span>Voucher Name:  {{fvoucher.name}}
-       
-    </li>
-      
-      
-      
-
-</div>
-  
+<body>
+  <md-tab-group>
+    <md-tab label="View Packages">
+      <h1 class="view-title">Available Packages</h1>
+      <md-card class="package-card">
+        <md-card-header>
+          <md-card-title>Package Name</md-card-title>
+          <md-card-subtitle>Package Description</md-card-subtitle>
+        </md-card-header>
+        <md-card-content>
+          <p>Some Stuff</p>
+        </md-card-content>
+        <md-card-actions class="card-actions">
+          <button md-button>EDIT</button>
+          <button class="delete-button" md-button>DELETE</button>
+        </md-card-actions>
+      </md-card>
+    </md-tab>
+    <md-tab label="Add New Package">
+      <br/>
+      <table cellspacing="5">
+        <tr>
+          <td>
+            <md-form-field>
+              <input mdInput placeholder="Package Name"/>
+            </md-form-field>
+          </td>
+        </tr>
+      </table>
+    </md-tab>
+  </md-tab-group>
+</body>
