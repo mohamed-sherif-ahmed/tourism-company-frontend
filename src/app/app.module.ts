@@ -6,6 +6,7 @@ import { MdCardModule } from '@angular/material';
 import {MdButtonModule} from '@angular/material';
 import {MdTabsModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
+import {MdFormFieldModule} from '@angular/material';
 
 import { HttpModule } from '@angular/http';
 
@@ -32,7 +33,7 @@ import { PackagesService } from './packages/packages.service';
     OfferComponent,
     PackagesComponent,
     FeedbackComponent,
-    UsersComponent
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +43,7 @@ import { PackagesService } from './packages/packages.service';
     MdButtonModule,
     MdTabsModule,
     MdInputModule,
+    MdFormFieldModule,
     HttpModule,
     RouterModule.forRoot([
       {

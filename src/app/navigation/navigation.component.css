@@ -8,9 +8,7 @@
   pad the body and set default font styles
 */
 body {
-  width:100%;
-
-  /* Firefox */
+   /*Firefox*/
   display:-moz-box;
   -moz-box-pack:center;
   -moz-box-align:center;
@@ -20,10 +18,6 @@ body {
   -webkit-box-pack:center;
   -webkit-box-align:center;
 
-  /* W3C */
-  display:box;
-  box-pack:center;
-  box-align:center;
   font: 300 40px/1.2 Lato;
 }
 
@@ -31,7 +25,6 @@ body {
   navigation
 */
 .nav {
-
   list-style: none;
 }
 
@@ -42,6 +35,9 @@ body {
 */
 .nav li {
   float: left; /*1*/
+  display: inline;
+  margin: auto;
+
 }
 
 /*
