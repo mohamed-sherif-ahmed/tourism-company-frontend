@@ -13,7 +13,11 @@ import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
 import { FormsModule } from '@angular/forms';
-
+import {FeedbackService} from './feedback/feedback.service';
+import {OfferService} from './offer/offer.service';
+import {ConnectionBackend, Http, HttpModule} from '@angular/http';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http' ;
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +31,10 @@ import { FormsModule } from '@angular/forms';
     UsersComponent
   ],
   imports: [
+    HttpClientModule,
+    HttpModule,
     BrowserModule,
-     FormsModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: 'news',
@@ -65,7 +71,7 @@ import { FormsModule } from '@angular/forms';
       }
     ])
   ],
-  providers: [],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
