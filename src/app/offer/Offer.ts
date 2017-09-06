@@ -1,9 +1,9 @@
 export class Offer {
 title: string;
-description: string;
-expDate: Date;
+desc: string;
+expdate: Date;
 givenpoints: number ;
-image: object ;
+img: string ;
 type: string ;
 condition: string;
 points: number;
