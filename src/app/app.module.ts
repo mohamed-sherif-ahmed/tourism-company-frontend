@@ -8,8 +8,6 @@ import {MdTabsModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MdFormFieldModule} from '@angular/material';
 
-import { HttpModule } from '@angular/http';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
@@ -21,9 +19,13 @@ import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
 import { FormsModule } from '@angular/forms';
-import { PackagesService } from './packages/packages.service';
+import {FeedbackService} from './feedback/feedback.service';
+import {OfferService} from './offer/offer.service';
+import {ConnectionBackend, Http, HttpModule} from '@angular/http';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http' ;
+import {PackagesService} from './packages/packages.service';
 import {MdCheckboxModule} from '@angular/material';
-
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {MdCheckboxModule} from '@angular/material';
     UsersComponent,
   ],
   imports: [
+    HttpClientModule,
+    HttpModule,
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -84,7 +88,7 @@ import {MdCheckboxModule} from '@angular/material';
       }
     ])
   ],
-  providers: [PackagesService],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
