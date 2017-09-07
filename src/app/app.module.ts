@@ -22,6 +22,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
 import { FormsModule } from '@angular/forms';
 import { PackagesService } from './packages/packages.service';
+import {MdCheckboxModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { PackagesService } from './packages/packages.service';
     MdInputModule,
     MdFormFieldModule,
     HttpModule,
+    MdCheckboxModule,
     RouterModule.forRoot([
       {
         path: 'news',
