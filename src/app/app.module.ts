@@ -18,6 +18,8 @@ import {OfferService} from './offer/offer.service';
 import {ConnectionBackend, Http, HttpModule} from '@angular/http';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HttpClientModule} from '@angular/common/http' ;
+import {PackagesService} from './packages/packages.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +73,7 @@ import {HttpClientModule} from '@angular/common/http' ;
       }
     ])
   ],
-  providers: [FeedbackService, OfferService , HttpModule , HttpClient ],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
