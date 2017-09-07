@@ -1,20 +1,36 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import url(https://fonts.googleapis.com/css?family=Lato:300,500);
 
-.wrapper {
-    text-align: center;
+body{
+  font-family: Lato;
+  width: 100%;
 }
-.card {
-  width: 500px;
-  position: absolute;
-   top: 32%;
-   left: 32%;
-   
-  
+
+.cards-tab{
+  margin: auto;
+  width: 75%;
 }
-.cardWrapper{
-    text-align: left;
-    
+
+.delete-button{
+  color: white;
+  background-color: #d50000;
 }
-.cardButton {
-    color: white;
-    background-color: red;
+
+.card-actions{
+  text-align: right;
+}
+
+.view-title{
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }

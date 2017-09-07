@@ -1,27 +1,32 @@
-<div>
-  <app-navigation></app-navigation>
-<div class="wrapper">
-  <button class="button-row" md-raised-button>view news</button>
-  <button class="button-row" md-raised-button>add to news</button>
-</div>
-<div class="cardWrapper">
-  <md-card class="card">
-  <md-card-header >
-    <md-card-title>title 1</md-card-title>
-    <md-card-subtitle>subtitle 1</md-card-subtitle>
-  </md-card-header>
-  <md-card-content>
-    <p>
-      jasvhakljbvaiuvbkjlsbvljdsbvkjadsvbksdavafa
-      sffeqgqergegsgqegesadfasgergfasdfasgvefsafva
-      agaegaegsdgsfafgerqgsadfgadsgfqergfagasgvae
-    </p>
-  </md-card-content>
-  <md-card-actions>
-     <button class="button-row" md-raised-button>Edit</button>
-  <button class="cardButton" md-raised-button>Delete</button>
-  </md-card-actions>
-  </md-card>
-</div>
+<app-navigation></app-navigation>
+<body>
+  <md-tab-group>
+    <md-tab label="View news">
+      <div class="cards-tab">
+        <h1 class="view-title">News</h1>
+        <md-card class="package-card">
+          <md-card-header>
+            <md-card-title>news heading</md-card-title>
+            <md-card-subtitle>news subtitle</md-card-subtitle>
+          </md-card-header>
+          <md-card-content>
+            <p>news body</p>
+          </md-card-content>
+          <md-card-actions class="card-actions">
+            <button md-button>EDIT</button>
+            <button class="delete-button" md-button>DELETE</button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </md-tab>
+    <md-tab label="Add News">
+      <h1 class="view-title">Add news</h1>
+      
+       
+    </md-tab>
+  </md-tab-group>
+</body>
+
+
   
 
