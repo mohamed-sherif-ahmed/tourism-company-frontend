@@ -1,20 +1,76 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,500);
 
-.wrapper {
-    text-align: center;
+body{
+  font-family: Lato;
+  width: 100%;
 }
-.card {
-  width: 500px;
-  position: absolute;
-   top: 32%;
-   left: 32%;
-   
-  
+
+.cards-tab{
+  margin: auto;
+  width: 75%;
 }
-.cardWrapper{
-    text-align: left;
-    
+
+.delete-button{
+  color: white;
+  background-color: #d50000;
 }
-.cardButton {
-    color: white;
-    background-color: red;
+
+.card-actions{
+  text-align: right;
+}
+
+.view-title{
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.card-content{
+  text-align: left;
+  margin: auto;
+}
+
+.main-field{
+  margin: auto;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #3a08e7;
+}
+
+th {
+  text-align: left;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  width: auto;
+}
+
+tr {
+  margin: 15px;
+  padding: 15px;
+}
+
+td {
+  width: 100%;
+  text-align: justify;
+}
+
+ table {
+   width: 80%;
+   font-family: Lato;
+   font-size: 16px;
+   margin: auto;
+   text-align: center;
+ }
+
+.form-actions {
+  text-align: right;
+}
+
+.form-actions button {
+  background-color: #3a08e7;
+  color: white;
 }
