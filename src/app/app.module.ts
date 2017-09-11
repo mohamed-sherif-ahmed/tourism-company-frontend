@@ -7,6 +7,7 @@ import {MdButtonModule} from '@angular/material';
 import {MdTabsModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MdFormFieldModule} from '@angular/material';
+import {MdSelectModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -26,6 +27,8 @@ import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HttpClientModule} from '@angular/common/http' ;
 import {PackagesService} from './packages/packages.service';
 import {MdCheckboxModule} from '@angular/material';
+import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -50,8 +53,11 @@ import {MdCheckboxModule} from '@angular/material';
     MdTabsModule,
     MdInputModule,
     MdFormFieldModule,
+    MdDatepickerModule,
+    MdSelectModule,
     HttpModule,
     MdCheckboxModule,
+    MdNativeDateModule,
     RouterModule.forRoot([
       {
         path: 'news',

@@ -1,4 +1,82 @@
 <app-navigation></app-navigation>
-<p>
-  offer works!
-</p>
+<body>
+  <md-tab-group>
+    <md-tab label="View Offers">
+      <div class="cards-tab">
+        <h1 class="view-title">Available Offers</h1>
+        <md-card class="package-card">
+          <md-card-header>
+            <md-card-title>News Title</md-card-title>
+            <md-card-subtitle>News Desc</md-card-subtitle>
+          </md-card-header>
+          <md-card-content>
+            <p>Some Stuff</p>
+          </md-card-content>
+          <md-card-actions class="card-actions">
+            <button md-button>EDIT</button>
+            <button class="delete-button" md-button>DELETE</button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </md-tab>
+    <md-tab label="Add Offer">
+      <h1 class="view-title">Add Offer</h1>
+      <div class="cards-tab">
+        <md-card class="package-card">
+          <md-card-content class="card-content">
+            <table>
+              <tr>
+                <th><label>Title : </label></th>
+                <th colspan="3"><md-form-field><input mdInput type="text" placeholder="Title" /></md-form-field></th>
+              </tr>
+              <tr>
+                <th><label>Description : </label></th>
+                <th colspan="3"><md-form-field><textarea style="width: 100%"mdInput placeholder="Description"></textarea></md-form-field></th>
+              </tr>
+              <tr>
+                <th><label>Expiry Date : </label></th>
+                <th>
+                  <md-form-field>
+                    <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+                    <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                    <md-datepicker #picker></md-datepicker>
+                  </md-form-field>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <label>Image : </label>
+                </th>
+                <th colspan="3">
+                  <input type="file" />
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <label>Type : </label>
+                </th>
+                <th colspan="3">
+                  <md-select placeholder="Type">
+                    <md-option value="h">VoucherNo</md-option>
+                    <md-option value="s">SSS</md-option>
+                  </md-select>
+                </th>
+              </tr>
+              <tr>
+                <th><label>Conditon : </label></th>
+                <th colspan="3"><md-form-field><input mdInput type="Condition" placeholder="Title" /></md-form-field></th>
+              </tr>
+              <tr>
+                <th><label>Points : </label></th>
+                <th colspan="3"><md-form-field><input mdInput type="number" placeholder="Points" /></md-form-field></th>
+              </tr>
+            </table>
+            <div class="form-actions">
+              <button md-button>Submit</button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</body>

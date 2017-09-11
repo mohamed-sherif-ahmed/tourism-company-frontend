@@ -21,11 +21,48 @@
     </md-tab>
     <md-tab label="Add New Package">
       <h1 class="view-title">Add Package</h1>
-      <form>
-        <md-form-field>
-          <input mdInput placeholder="Package Name">
-        </md-form-field>
-      </form>
+      <div class="cards-tab">
+        <md-card class="package-card">
+          <md-card-content class="card-content">
+            <table>
+              <tr>
+                <th><label>Package Name : </label></th>
+                <th colspan="3"><md-form-field><input mdInput type="text" placeholder="Package Name" /></md-form-field></th>
+              </tr>
+              <tr>
+                <th>
+                  <label>Vouchers : </label>
+                </th>
+                <th colspan="3">
+                  <md-select placeholder="Voucher">
+                    <md-option value="h">VoucherNo</md-option>
+                    <md-option value="s">SSS</md-option>
+                  </md-select>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <label>Image : </label>
+                </th>
+                <th colspan="3">
+                  <input type="file" />
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <label>Points : </label>
+                </th>
+                <th colspan="3">
+                  <md-form-field><input mdInput type="number" placeholder="Points"/></md-form-field>
+                </th>
+              </tr>
+            </table>
+            <div class="form-actions">
+              <button md-button>Submit</button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
     </md-tab>
     <md-tab label="View Vouchers">
       <div class="cards-tab">

@@ -1,27 +1,63 @@
-<div>
-  <app-navigation></app-navigation>
-<div class="wrapper">
-  <button class="button-row" md-raised-button>view news</button>
-  <button class="button-row" md-raised-button>add to news</button>
-</div>
-<div class="cardWrapper">
-  <md-card class="card">
-  <md-card-header >
-    <md-card-title>title 1</md-card-title>
-    <md-card-subtitle>subtitle 1</md-card-subtitle>
-  </md-card-header>
-  <md-card-content>
-    <p>
-      jasvhakljbvaiuvbkjlsbvljdsbvkjadsvbksdavafa
-      sffeqgqergegsgqegesadfasgergfasdfasgvefsafva
-      agaegaegsdgsfafgerqgsadfgadsgfqergfagasgvae
-    </p>
-  </md-card-content>
-  <md-card-actions>
-     <button class="button-row" md-raised-button>Edit</button>
-  <button class="cardButton" md-raised-button>Delete</button>
-  </md-card-actions>
-  </md-card>
-</div>
-  
-
+<app-navigation></app-navigation>
+<body>
+  <md-tab-group>
+    <md-tab label="View News">
+      <div class="cards-tab">
+        <h1 class="view-title">Available News</h1>
+        <md-card class="package-card">
+          <md-card-header>
+            <md-card-title>News Title</md-card-title>
+            <md-card-subtitle>News Body</md-card-subtitle>
+          </md-card-header>
+          <md-card-content>
+            <p>Some Stuff</p>
+          </md-card-content>
+          <md-card-actions class="card-actions">
+            <button md-button>EDIT</button>
+            <button class="delete-button" md-button>DELETE</button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </md-tab>
+    <md-tab label="Add New News">
+      <h1 class="view-title">Add News</h1>
+      <div class="cards-tab">
+        <md-card class="package-card">
+          <md-card-content class="card-content">
+            <table>
+              <tr>
+                <th><label>Title : </label></th>
+                <th colspan="3"><md-form-field><input mdInput type="text" placeholder="Title" /></md-form-field></th>
+              </tr>
+              <tr>
+                <th><label>Body : </label></th>
+                <th colspan="3"><md-form-field><textarea style="width: 100%"mdInput placeholder="Body"></textarea></md-form-field></th>
+              </tr>
+              <tr>
+                <th><label>Date : </label></th>
+                <th>
+                  <md-form-field>
+                    <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
+                    <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+                    <md-datepicker #picker></md-datepicker>
+                  </md-form-field>
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <label>PDF : </label>
+                </th>
+                <th colspan="3">
+                  <input type="file" />
+                </th>
+              </tr>
+            </table>
+            <div class="form-actions">
+              <button md-button>Submit</button>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</body>
