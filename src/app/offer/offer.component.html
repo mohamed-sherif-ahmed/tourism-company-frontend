@@ -1,4 +1,13 @@
 <app-navigation></app-navigation>
-<p>
-  offer works!
-</p>
+<ul class="cards">
+  <li class="cards__item" *ngFor="let test of tests">
+    <div class="card">
+      <div class="card__image"> <img src="https://vignette2.wikia.nocookie.net/creepypasta/images/0/04/Package-0.jpg/revision/latest/scale-to-width-down/2000?cb=20150702201533"></div>
+      <div class="card__content">
+        <div class="card__title"> {{test.name}} </div>
+        <p class="card__text">This is the shorthand for flex-grow, flex-shrink and flex-basis combined. The second and third parameters (flex-shrink and flex-basis) are optional. Default is 0 1 auto. </p>
+        <button class="btn btn--block card__btn">EDIT</button> <button class="btn btn--block card__btn">DELETE</button>
+      </div>
+    </div>
+  </li>
+</ul>
