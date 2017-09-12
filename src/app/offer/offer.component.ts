@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import {OfferService} from './offer.service';
 import {Offer} from './Offer' ;
 import {Test} from "./Test";

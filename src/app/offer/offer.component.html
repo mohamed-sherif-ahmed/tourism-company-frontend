@@ -1,4 +1,7 @@
 <app-navigation></app-navigation>
+<body>
+<md-tab-group>
+  <md-tab label="VIEW OFFERS">
 <ul class="cards">
   <li class="cards__item" *ngFor="let test of tests">
     <div class="card">
@@ -11,3 +14,27 @@
     </div>
   </li>
 </ul>
+  </md-tab>
+  <md-tab label="ADD OFFERS">
+    <div class='wrap'>
+      <form>
+        <input  placeholder='TITLE' #userName>
+        <input  placeholder='DESCRIPTION' #Password>
+        <input   placeholder='EXP DATE' #name>
+        <input   placeholder='GIVEN POINTS ' #address>
+        <input   placeholder='TYPE' #userName>
+        <input  placeholder='CONDITION' #Password>
+        <input   placeholder='POINTS' #address>
+        <p>
+        </p>
+        <button class="btn btn--block card__btn">ADD</button>
+      </form>
+    </div>
+  </md-tab>
+  <md-tab label="SEARCH">
+    <div class="wrap">
+    <input  placeholder='ENTER THE ID OF THE OFFER' #Password>
+    </div>
+  </md-tab>
+  </md-tab-group>
+</body>
