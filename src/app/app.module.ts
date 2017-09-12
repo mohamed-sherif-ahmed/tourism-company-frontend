@@ -7,7 +7,6 @@ import {MdButtonModule} from '@angular/material';
 import {MdTabsModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MdFormFieldModule} from '@angular/material';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
