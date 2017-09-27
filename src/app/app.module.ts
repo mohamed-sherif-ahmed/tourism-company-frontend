@@ -9,7 +9,6 @@ import {MdInputModule} from '@angular/material';
 import {MdFormFieldModule} from '@angular/material';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-
 import { NavigationComponent } from './navigation/navigation.component';
 import { NewsComponent } from './news/news.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -17,7 +16,6 @@ import { OfferComponent } from './offer/offer.component';
 import { PackagesComponent } from './packages/packages.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { UsersComponent } from './users/users.component';
-import { FormsModule } from '@angular/forms';
 import {FeedbackService} from './feedback/feedback.service';
 import {OfferService} from './offer/offer.service';
 import {ConnectionBackend, Http, HttpModule} from '@angular/http';
@@ -25,7 +23,9 @@ import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HttpClientModule} from '@angular/common/http' ;
 import {PackagesService} from './packages/packages.service';
 import {MdCheckboxModule} from '@angular/material';
-
+import { TermsandconditionsComponent } from './termsandconditions/termsandconditions.component';
+import { FormsModule } from '@angular/forms';
+import { FileSelectDirective } from 'ng2-file-upload';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +37,8 @@ import {MdCheckboxModule} from '@angular/material';
     PackagesComponent,
     FeedbackComponent,
     UsersComponent,
+    TermsandconditionsComponent,
+    FileSelectDirective
   ],
   imports: [
     HttpClientModule,
@@ -84,6 +86,10 @@ import {MdCheckboxModule} from '@angular/material';
       {
         path: 'users',
         component: UsersComponent
+      },
+      {
+        path: 'term',
+        component: TermsandconditionsComponent
       }
     ])
   ],

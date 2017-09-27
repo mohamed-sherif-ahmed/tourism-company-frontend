@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Offer} from './Offer' ;
-import {Http} from '@angular/http';
+import {Http, Headers} from '@angular/http';
 import {AppConstants} from '../app.constants';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
@@ -44,17 +44,23 @@ export class OfferService {
     });
   }
 
-  addOffer(offer: Offer): void {
-    const url = `${AppConstants.API_ENDPOINT}/offer`;
+  addOffer(offer: Offer, files: FileList): void {
+    const url = `${AppConstants.API_ENDPOINT}/add_of/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
-    this.httpPoster.post<Response>(url, {
-      'user_id': user_id,
-      'api_key': api_key,
-      'offer': offer
-    }).subscribe(data => {
-      this.valid = data.valid ;
-      this.err = data.msg;
+    const header = new Headers();
+    header.append('Accept', 'application/json');
+    const options = new RequestOptions({
+      headers: header
+    });
+    const formData = new FormData();
+    const file = files[0];
+    formData.append('file', file);
+    formData.append('user_id', user_id);
+    formData.append('offer', JSON.stringify(offer));
+    this.http.post(url, formData, options).subscribe(data => {
+      this.valid = data['valid'] ;
+      this.err = data['msg'];
     });
   }
   editOffer(newOffer: Offer , offerId: string): void {
