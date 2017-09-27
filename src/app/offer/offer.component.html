@@ -9,7 +9,7 @@
       <div class="card__content">
         <div class="card__title"> {{test.name}} </div>
         <p class="card__text">This is the shorthand for flex-grow, flex-shrink and flex-basis combined. The second and third parameters (flex-shrink and flex-basis) are optional. Default is 0 1 auto. </p>
-        <button class="btn btn--block card__btn">EDIT</button> <button class="btn btn--block card__btn">DELETE</button>
+        <button class="btn btn--block card__btn">DELETE</button>
       </div>
     </div>
   </li>
@@ -27,6 +27,9 @@
         <input   placeholder='POINTS' #address>
         <p>
         </p>
+        <input type="file" #file (change)="pdfHandler(file.files)" multiple/>
+        <p>
+        </p>
         <button class="btn btn--block card__btn">ADD</button>
       </form>
     </div>
@@ -39,5 +42,26 @@
       <button class="btn btn--block card__btn">SEARCH</button>
     </div>
   </md-tab>
+  <md-tab label="EDIT OFFERS">
+    <div class='wrap'>
+      <form>
+        <input  placeholder='ENTER THE ID OF THE OFFER' #Password>
+        <input  placeholder='TITLE' #userName>
+        <input  placeholder='DESCRIPTION' #Password>
+        <input   placeholder='EXP DATE' #name>
+        <input   placeholder='GIVEN POINTS ' #address>
+        <input   placeholder='TYPE' #userName>
+        <input  placeholder='CONDITION' #Password>
+        <input   placeholder='POINTS' #address>
+        <p>
+        </p>
+        <input type="file" #file (change)="pdfHandler(file.files)" multiple/>
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)="test()">EDIT</button>
+      </form>
+    </div>
+  </md-tab>
+
   </md-tab-group>
 </body>

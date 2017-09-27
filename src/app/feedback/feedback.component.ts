@@ -11,6 +11,7 @@ export class FeedbackComponent implements OnInit {
   constructor( private service: FeedbackService) { }
  feedbacks: Feedback[] ;
   ngOnInit() {
+    this.service.delFeedbacks();
   }
   viewFeedbacks(): void {
     this.service.getFeedbacks().then((res) => {
