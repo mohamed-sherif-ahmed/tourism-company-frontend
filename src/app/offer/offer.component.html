@@ -27,7 +27,7 @@
         <input   placeholder='POINTS' #address>
         <p>
         </p>
-        <input type="file" #file (change)="pdfHandler(file.files)" multiple/>
+        <input type="file" #file (change)="pdfHandler($event)" multiple/>
         <p>
         </p>
         <button class="btn btn--block card__btn">ADD</button>
@@ -53,9 +53,6 @@
         <input   placeholder='TYPE' #userName>
         <input  placeholder='CONDITION' #Password>
         <input   placeholder='POINTS' #address>
-        <p>
-        </p>
-        <input type="file" #file (change)="pdfHandler(file.files)" multiple/>
         <p>
         </p>
         <button class="btn btn--block card__btn" (click)="test()">EDIT</button>
