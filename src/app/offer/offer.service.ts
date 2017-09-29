@@ -54,13 +54,9 @@ export class OfferService {
     });
   }
 
-<<<<<<< HEAD
+
   addOffer(offer: Offer, files :any): void {
     const url = `/add_of/`;
-=======
-  addOffer(offer: Offer, files: FileList): void {
-    const url = `${AppConstants.API_ENDPOINT}/add_of/`;
->>>>>>> 5b4e6aa18efe259aef007c5279c05339b73d7e0b
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -69,15 +65,10 @@ export class OfferService {
       headers: header
     });
     const formData = new FormData();
-<<<<<<< HEAD
     if (files.length > 0) {
       for ( let file of files) {
            formData.append('files', file, file.name);
       }}
-=======
-    const file = files[0];
-    formData.append('file', file);
->>>>>>> 5b4e6aa18efe259aef007c5279c05339b73d7e0b
     formData.append('user_id', user_id);
     formData.append('offer', JSON.stringify(offer));
     this.http.post(url, formData, options).subscribe(data => {

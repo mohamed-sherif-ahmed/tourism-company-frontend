@@ -59,15 +59,10 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-<<<<<<< HEAD
+
   pdfHandler(event): void {
     console.log('pdfhandler called');
     this.offerService.addOffer(this.selectedoffer, event.target.files);
-=======
-  pdfHandler(files: FileList): void {
-    console.log('sdfdsss');
-    this.offerService.addOffer(this.selectedoffer, files);
->>>>>>> 5b4e6aa18efe259aef007c5279c05339b73d7e0b
   }
   test(): void {
     console.log('sdfdsss');
