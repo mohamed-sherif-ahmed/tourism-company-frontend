@@ -15,53 +15,46 @@ export class OfferComponent implements OnInit {
   constructor(private offerService: OfferService) { }
   file: FileList;
  offersArray: Offer[];
+ neededDate: Date;
   data: {} ;
   error: {};
- public fil: FileItem ;
-  public upload: FileUploader = new FileUploader({url : '/add_of'});
+  files:any ;
   selectedoffer: Offer;
-   tests: Test[] = [
-    { id: 11, name: 'Mr. Nice' },
-    { id: 12, name: 'Narco' },
-    { id: 13, name: 'Bombasto' },
-    { id: 14, name: 'Celeritas' },
-    { id: 15, name: 'Magneta' },
-    { id: 16, name: 'RubberMan' },
-    { id: 17, name: 'Dynama' },
-    { id: 18, name: 'Dr IQ' },
-    { id: 19, name: 'Magma' },
-    { id: 20, name: 'Tornado' }
-  ];
+  addedOffer:Offer;
   ngOnInit() {
-    this.upload.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
-    this.upload.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+    this.viewOffers(this.neededDate) ;
   }
-  viewOffers(date: Date , long: number): void {
-    this.offerService.getOffers( date , long ).then((res) => {
+  viewOffers(date: Date ): void {
+    this.offerService.getOffers( date ).then((res) => {
       if (this.offerService.valid) {
         this.offersArray = res;
       } else { // nzahrlo this.offerService.err fl UI
           }
     });
   }
-  onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-     this.data = JSON.parse(response);
-  }
-
-  onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
-     this.error = JSON.parse(response);
+  sumbitdateclicked(year , month , day){
+    this.neededDate = new Date (year , month , day)
+    console.log(this.neededDate);
+    this.viewOffers(this.neededDate) ;
   }
   viewOffer(id: string , long: number): void {
-    this.offerService.getOffer( id , long ).then((res) => {
+    this.offerService.getOffer( id  ).then((res) => {
       if (this.offerService.valid) {
         this.selectedoffer = res;
       } else { // nzahrlo this.offerService.err fl UI
       }
     });
   }
+createOffer(title , desc ,exp , points , type ,condition , img ){
+  this.addedOffer = new Offer(title,desc,exp,10,type,condition,img,img);
+  console.log(this.addedOffer);
+    console.log("test");
+    this.offerService.addOffer(this.addedOffer,this.files);
 
+}
   pdfHandler(event): void {
     console.log('pdfhandler called');
+    this.files = event.target.files ;
     this.offerService.addOffer(this.selectedoffer, event.target.files);
   }
   test(): void {

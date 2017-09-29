@@ -14,12 +14,12 @@ export class OfferService {
   valid: Boolean = true ;
   err: string ;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
-  getOffers(sinceDate: Date , long: number): Promise<Offer[]> {
+  getOffers(sinceDate: Date ): Promise<Offer[]> {
     const url = `im4booking/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const hh = new Headers();
-    hh.append('', '');
+    hh.append('since_date', JSON.stringify(sinceDate) );
     hh.append('Content-Type', 'application/json');
     hh.append('Access-Control-Allow-Origin', '*');
     hh.append('Access-Control-Allow-Headers', '*');
@@ -39,15 +39,25 @@ export class OfferService {
       return response.json().res as Offer[];
     });
   }
-  getOffer( id: string, long: number): Promise<Offer> {
-    const url = `im4booking/offer/` + id;
+  getOffer( id: string): Promise<Offer> {
+    const url = `/im4booking/offer/` + id;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const hh = new Headers();
+    hh.append('Content-Type', 'application/json');
+    hh.append('Access-Control-Allow-Origin', '*');
+    hh.append('Access-Control-Allow-Headers', '*');
+    hh.append('Access-Control-Allow-Methods', '*');
+    hh.append('Access-Control-Allow-Credentials', '*');
+    hh.append('Access-Control-Allow-Request-Headers', '*');
+    hh.append('Access-Control-Allow-Request-Methods', '*');
+    hh.append('Access-Control-Origin', '*');
+    hh.append('Accept', 'application/json');
     const options = new RequestOptions({
-      method: RequestMethod.Get,
-      body: {
-        'long' : long
-      }
+      headers: hh
     });
-    return this.http.request(url, options).toPromise().then(response => {
+    return this.http.get(url, options
+    ).toPromise().then(response => {
       this.valid = response.json().valid ;
       this.err = response.json().msg ;
       return response.json().res as Offer;
@@ -55,8 +65,8 @@ export class OfferService {
   }
 
 
-  addOffer(offer: Offer, files :any): void {
-    const url = `/add_of/`;
+  addOffer(offer: Offer, files : File[]): void {
+    const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -65,10 +75,9 @@ export class OfferService {
       headers: header
     });
     const formData = new FormData();
-    if (files.length > 0) {
       for ( let file of files) {
            formData.append('files', file, file.name);
-      }}
+      }
     formData.append('user_id', user_id);
     formData.append('offer', JSON.stringify(offer));
     this.http.post(url, formData, options).subscribe(data => {

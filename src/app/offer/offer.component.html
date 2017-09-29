@@ -2,14 +2,15 @@
 <body>
 <md-tab-group>
   <md-tab label="VIEW OFFERS">
+    <input placeholder="YEAR"#year><input placeholder="MONTH"#month><input placeholder="DAY"#day> <button class="btn btn--block" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit </button>
 <ul class="cards">
-  <li class="cards__item" *ngFor="let test of tests">
+  <li class="cards__item" *ngFor="let offer of offersArray">
     <div class="card">
-      <div class="card__image"> <img src="https://vignette2.wikia.nocookie.net/creepypasta/images/0/04/Package-0.jpg/revision/latest/scale-to-width-down/2000?cb=20150702201533"></div>
+      <div class="card__image"> <img src="{{offer.img_path}}"></div>
       <div class="card__content">
-        <div class="card__title"> {{test.name}} </div>
-        <p class="card__text">This is the shorthand for flex-grow, flex-shrink and flex-basis combined. The second and third parameters (flex-shrink and flex-basis) are optional. Default is 0 1 auto. </p>
-        <button class="btn btn--block card__btn">DELETE</button>
+        <div class="card__title"> {{offer.name}} </div>
+        <p class="card__text">{{offer.description}} </p>
+        <button class="btn btn--block card__btn" >DELETE</button>
       </div>
     </div>
   </li>
@@ -18,19 +19,19 @@
   <md-tab label="ADD OFFERS">
     <div class='wrap'>
       <form>
-        <input  placeholder='TITLE' #userName>
-        <input  placeholder='DESCRIPTION' #Password>
-        <input   placeholder='EXP DATE' #name>
-        <input   placeholder='GIVEN POINTS ' #address>
-        <input   placeholder='TYPE' #userName>
-        <input  placeholder='CONDITION' #Password>
-        <input   placeholder='POINTS' #address>
+        <input  placeholder='TITLE' #title="">
+        <input  placeholder='DESCRIPTION' #desc>
+        <input   placeholder='EXP DATE' #exp>
+        <input   placeholder='GIVEN POINTS ' #points>
+        <input   placeholder='TYPE' #type="">
+        <input  placeholder='CONDITION' #condition>
+          <input  placeholder='IMAGE PATH' #img>
         <p>
         </p>
         <input type="file" #file (change)="pdfHandler($event)" multiple/>
         <p>
         </p>
-        <button class="btn btn--block card__btn">ADD</button>
+        <button class="btn btn--block card__btn" (click)= "createOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value,img.value)" >ADD</button>
       </form>
     </div>
   </md-tab>
