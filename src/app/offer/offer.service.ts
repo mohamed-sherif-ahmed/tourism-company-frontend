@@ -54,6 +54,7 @@ export class OfferService {
     });
   }
 
+
   addOffer(offer: Offer, files :any): void {
     const url = `/add_of/`;
     const api_key = localStorage.getItem('api_key');
