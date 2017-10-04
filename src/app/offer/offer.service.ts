@@ -66,17 +66,18 @@ export class OfferService {
 
 
   addOffer(offer: Offer, files : File[]): void {
-    const url = `/im4booking/offer/`;
+    const url = `/add_of/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
-    header.append('Accept', 'application/json');
+    // header.append('Accept', 'multipart/form-data');
+    // header.append('Content-Type', 'multipart/form-data');
     const options = new RequestOptions({
       headers: header
     });
     const formData = new FormData();
       for ( let file of files) {
-           formData.append('files', file, file.name);
+           formData.append('file', file, file.name);
       }
     formData.append('user_id', user_id);
     formData.append('offer', JSON.stringify(offer));
