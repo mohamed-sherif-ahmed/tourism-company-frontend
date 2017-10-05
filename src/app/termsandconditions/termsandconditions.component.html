@@ -1,2 +1,26 @@
 <app-navigation></app-navigation>
+<md-tab-group>
+  <md-tab label="VIEW TERMS AND CONDITIONS">
+<ul class="cards">
+  <li class="cards__item">
+    <div class="card">
+      <div class="card__content">
+        <div class="card__title"> TERMS AND CONDITIONS </div>
+        <p class="card__text">{{terms}} </p>
+      </div>
+    </div>
+  </li>
+</ul>
+  </md-tab>
+  <md-tab label="ADD TERMS AND CONDITIONS">
+    <div class='wrap'>
+      <form>
+        <input  placeholder='TERMS' #title="">
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)= "add(title.value)" >ADD</button>
+      </form>
+    </div>
+  </md-tab>
 
+  </md-tab-group>

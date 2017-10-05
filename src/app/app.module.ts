@@ -22,14 +22,15 @@ import { UsersComponent } from './users/users.component';
 import { FormsModule } from '@angular/forms';
 import {FeedbackService} from './feedback/feedback.service';
 import {OfferService} from './offer/offer.service';
+import {TermsandconditionsService} from './termsandconditions/termsandconditions.service';
 import {ConnectionBackend, Http, HttpModule} from '@angular/http';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {HttpClientModule} from '@angular/common/http' ;
 import {PackagesService} from './packages/packages.service';
 import {MdCheckboxModule} from '@angular/material';
 import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
-
-
+import {TermsandconditionsComponent} from './termsandconditions/termsandconditions.component';
+import {NewsService} from './news/news.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
     PackagesComponent,
     FeedbackComponent,
     UsersComponent,
+    TermsandconditionsComponent
   ],
   imports: [
     HttpClientModule,
@@ -91,10 +93,14 @@ import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
       {
         path: 'users',
         component: UsersComponent
+      },
+      {
+        path: 'term',
+        component: TermsandconditionsComponent
       }
     ])
   ],
-  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

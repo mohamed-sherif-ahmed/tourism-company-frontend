@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-import {Feedback} from './Feedback';
 import {AppConstants} from '../app.constants';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
@@ -9,15 +8,15 @@ interface Response {
   msg: string ;
 }
 @Injectable()
-export class FeedbackService {
+export class TermsandconditionsService {
   valid: Boolean = true ;
   err: string ;
   header = new HttpHeaders();
   constructor(private http: Http , private httpPoster: HttpClient ) { }
-  getFeedbacks(): Promise<Feedback[]> {
+  getTerms(): Promise<string> {
     // this.header.append('Content-Type', 'application/json' );
     // this.header.append('Access-Control-Allow-Origin', '*' );
-    const url = `/feedback`;
+    const url = `/termsandconditions`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const hh = new Headers();
@@ -38,10 +37,10 @@ export class FeedbackService {
     ).toPromise().then(response => {
       this.valid = response.json().valid ;
       this.err = response.json().msg ;
-      return response.json().res as Feedback[];
+      return response.json().res as string;
     });
   }
-   delFeedbacks(id:string): void {
+   addterms(id:string): void {
     this.header.append('Content-Type', 'application/json' );
     this.header.append('Access-Control-Allow-Origin', '*' );
      const url = `/feedback/delete`;
@@ -50,7 +49,7 @@ export class FeedbackService {
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
-      'feedback_id': id,
+      'termsandconditions': id,
     }, {
       headers: this.header
     }).subscribe(data => {

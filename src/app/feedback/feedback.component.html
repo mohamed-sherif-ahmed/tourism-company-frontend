@@ -1,4 +1,13 @@
 <app-navigation></app-navigation>
-<p>
-  feedback works!
-</p>
+<ul class="cards">
+  <li class="cards__item" *ngFor="let feedback of feedbacks">
+    <div class="card">
+      <div class="card__image"> <img src="http://www.homeplansdesigner.com/assets/images/feedback.png"></div>
+      <div class="card__content">
+        <div class="card__title"> {{feedback.title}} </div>
+        <p class="card__text">{{feedback.body}} </p>
+        <button class="btn btn--block card__btn" onclick="delete(feedback.title)" >DELETE</button>
+      </div>
+    </div>
+  </li>
+</ul>

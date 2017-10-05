@@ -1,63 +1,58 @@
 <app-navigation></app-navigation>
 <body>
-  <md-tab-group>
-    <md-tab label="View News">
-      <div class="cards-tab">
-        <h1 class="view-title">Available News</h1>
-        <md-card class="package-card">
-          <md-card-header>
-            <md-card-title>News Title</md-card-title>
-            <md-card-subtitle>News Body</md-card-subtitle>
-          </md-card-header>
-          <md-card-content>
-            <p>Some Stuff</p>
-          </md-card-content>
-          <md-card-actions class="card-actions">
-            <button md-button>EDIT</button>
-            <button class="delete-button" md-button>DELETE</button>
-          </md-card-actions>
-        </md-card>
+<md-tab-group>
+  <md-tab label="VIEW NEWS">
+    <input placeholder="YEAR"#year><input placeholder="MONTH"#month><input placeholder="DAY"#day> <button class="btn btn--block" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit </button>
+<ul class="cards">
+  <li class="cards__item" *ngFor="let news of newsArray">
+    <div class="card">
+      <div class="card__image"><img src= "https://wwees.buncombeschools.org/common/pages/UserFile.aspx?fileId=2564929" ></div>
+      <div class="card__content">
+        <div class="card__title"> {{news.title}} </div>
+        <p class="card__text">{{news.body}} </p>
+        <button class="btn btn--block card__btn" onclick="delete(news.title)" >DELETE</button>
       </div>
-    </md-tab>
-    <md-tab label="Add New News">
-      <h1 class="view-title">Add News</h1>
-      <div class="cards-tab">
-        <md-card class="package-card">
-          <md-card-content class="card-content">
-            <table>
-              <tr>
-                <th><label>Title : </label></th>
-                <th colspan="3"><md-form-field><input mdInput type="text" placeholder="Title" /></md-form-field></th>
-              </tr>
-              <tr>
-                <th><label>Body : </label></th>
-                <th colspan="3"><md-form-field><textarea style="width: 100%"mdInput placeholder="Body"></textarea></md-form-field></th>
-              </tr>
-              <tr>
-                <th><label>Date : </label></th>
-                <th>
-                  <md-form-field>
-                    <input mdInput [mdDatepicker]="picker" placeholder="Choose a date">
-                    <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-                    <md-datepicker #picker></md-datepicker>
-                  </md-form-field>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <label>PDF : </label>
-                </th>
-                <th colspan="3">
-                  <input type="file" />
-                </th>
-              </tr>
-            </table>
-            <div class="form-actions">
-              <button md-button>Submit</button>
-            </div>
-          </md-card-content>
-        </md-card>
-      </div>
-    </md-tab>
+    </div>
+  </li>
+</ul>
+  </md-tab>
+  <md-tab label="ADD NEWS">
+    <div class='wrap'>
+      <form>
+        <input  placeholder='TITLE' #title="">
+        <input  placeholder='ID' #desc>
+        <input   placeholder='BODY' #exp>
+        <input   placeholder='DATE ' #points>
+        <p>
+        </p>
+        <input type="file" #file (change)="pdfHandler($event)" multiple/>
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)= "createNews(title.value,desc.value,exp.value,points.value)" >ADD</button>
+      </form>
+    </div>
+  </md-tab>
+  <md-tab label="SEARCH">
+    <div class="wrap">
+    <input  placeholder='ENTER THE ID OF THE NEWS' #Password>
+      <p>
+      </p>
+      <button class="btn btn--block card__btn">SEARCH</button>
+    </div>
+  </md-tab>
+  <md-tab label="EDIT NEWS">
+    <div class='wrap'>
+      <form>
+        <input  placeholder='TITLE' #title="">
+        <input  placeholder='ID' #desc>
+        <input   placeholder='BODY' #exp>
+        <input   placeholder='DATE ' #points>
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)="test()">EDIT</button>
+      </form>
+    </div>
+  </md-tab>
+
   </md-tab-group>
 </body>

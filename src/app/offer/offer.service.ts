@@ -44,6 +44,8 @@ export class OfferService {
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const hh = new Headers();
+    hh.append('api_key' ,api_key);
+    hh.append('user_id' ,user_id);
     hh.append('Content-Type', 'application/json');
     hh.append('Access-Control-Allow-Origin', '*');
     hh.append('Access-Control-Allow-Headers', '*');
@@ -66,7 +68,7 @@ export class OfferService {
 
 
   addOffer(offer: Offer, files : File[]): void {
-    const url = `/add_of/`;
+    const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();

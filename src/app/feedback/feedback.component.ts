@@ -11,7 +11,7 @@ export class FeedbackComponent implements OnInit {
   constructor( private service: FeedbackService) { }
  feedbacks: Feedback[] ;
   ngOnInit() {
-    this.service.delFeedbacks();
+  this.viewFeedbacks();
   }
   viewFeedbacks(): void {
     this.service.getFeedbacks().then((res) => {
@@ -21,4 +21,9 @@ export class FeedbackComponent implements OnInit {
       }
     });
   }
+
+  delete(name:string){
+    this.service.delFeedbacks(name);
+  }
+
 }

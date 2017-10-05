@@ -52,10 +52,12 @@ createOffer(title , desc ,exp , points , type ,condition , img ){
     this.offerService.addOffer(this.addedOffer,this.files);
 
 }
+delete(name:string){
+  this.offerService.delOffer(name);
+}
   pdfHandler(event): void {
     console.log('pdfhandler called');
     this.files = event.target.files ;
-    this.offerService.addOffer(this.selectedoffer, event.target.files);
   }
   test(): void {
     console.log('sdfdsss');
