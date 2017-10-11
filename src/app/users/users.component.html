@@ -1,4 +1,47 @@
 <app-navigation></app-navigation>
-<p>
-  users works!
-</p>
+<md-tab-group>
+  <md-tab label="View Packages">
+    <div class="cards-tab">
+      <h1 class="view-title">Available Users</h1>
+      <md-card class="package-card">
+        <md-card-header>
+          <md-card-title>USER NAME</md-card-title>
+        </md-card-header>
+        <md-card-content>
+          <div *ngIf="changePassword">
+            <form>
+              <div class="form-group">
+                <label>Password :</label>
+                <input type="text" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </md-card-content>
+        <md-card-actions class="card-actions">
+          <button md-button (click)="showPasswordForm()">Change Password</button>
+          <button class="delete-button" md-button>Delete</button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </md-tab>
+  <md-tab label="Add New Admin">
+    <div class='container'>
+      <form>
+        <div class="form-group">
+          <label>Username :</label>
+          <input type="text" class="form-control" #name>
+        </div>
+        <div class="form-group">
+          <label for="pwd">Email :</label>
+          <input type="email" class="form-control" #points>
+        </div>
+        <div class="form-group">
+          <label>Password :</label>
+          <input type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    </md-tab>
+</md-tab-group>

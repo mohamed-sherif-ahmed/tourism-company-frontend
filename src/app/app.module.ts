@@ -33,6 +33,7 @@ import {TermsandconditionsComponent} from './termsandconditions/termsandconditio
 import {NewsService} from './news/news.service';
 import { RequestsComponent } from './requests/requests.component';
 import { RequestService } from './requests/requests.service';
+import { UserService } from './users/user.service'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,7 @@ import { RequestService } from './requests/requests.service';
       }
     ])
   ],
-  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService, RequestService],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService, RequestService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
