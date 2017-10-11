@@ -32,6 +32,7 @@ import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
 import {TermsandconditionsComponent} from './termsandconditions/termsandconditions.component';
 import {NewsService} from './news/news.service';
 import { RequestsComponent } from './requests/requests.component';
+import { RequestService } from './requests/requests.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,7 +107,7 @@ import { RequestsComponent } from './requests/requests.component';
       }
     ])
   ],
-  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService, RequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
