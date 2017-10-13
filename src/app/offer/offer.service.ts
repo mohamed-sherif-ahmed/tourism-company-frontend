@@ -8,11 +8,13 @@ interface Response {
 valid: boolean ;
   res: string ;
   msg: string ;
+  offer_id:string;
 }
 @Injectable()
 export class OfferService {
   valid: Boolean = true ;
   err: string ;
+  offerbeingCreatedID:string;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
   getOffers(sinceDate: Date ): Promise<Offer[]> {
     const url = `im4booking/offer`;
@@ -67,7 +69,21 @@ export class OfferService {
   }
 
 
-  addOffer(offer: Offer, files : File[]): void {
+  addOffer(offer: Offer): void {
+    const url = `/im4booking/offer/`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    this.httpPoster.post<Response>(url, {
+      'user_id': user_id,
+      'api_key': api_key,
+      'offer': offer
+    }).subscribe(data => {
+      this.valid = data.valid ;
+      this.err = data.msg;
+      this.offerbeingCreatedID=data.offer_id;
+    });
+  }
+  addOfferpdf(offerId: string, files : File[]): void {
     const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -82,12 +98,35 @@ export class OfferService {
            formData.append('file', file, file.name);
       }
     formData.append('user_id', user_id);
-    formData.append('offer', JSON.stringify(offer));
+    formData.append('offer_id', offerId);
     this.http.post(url, formData, options).subscribe(data => {
       this.valid = data['valid'] ;
       this.err = data['msg'];
     });
   }
+  addOfferimg(offerId: string, files : File[]): void {
+
+    const url = `/im4booking/offer/`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const header = new Headers();
+    // header.append('Accept', 'multipart/form-data');
+    // header.append('Content-Type', 'multipart/form-data');
+    const options = new RequestOptions({
+      headers: header
+    });
+    const formData = new FormData();
+      for ( let file of files) {
+           formData.append('file', file, file.name);
+      }
+    formData.append('user_id', user_id);
+    formData.append('offer_id', offerId);
+    this.http.post(url, formData, options).subscribe(data => {
+      this.valid = data['valid'] ;
+      this.err = data['msg'];
+    });
+  }
+
   editOffer(newOffer: Offer , offerId: string): void {
     const url = `${AppConstants.API_ENDPOINT}/offer/edit`;
     const api_key = localStorage.getItem('api_key');
