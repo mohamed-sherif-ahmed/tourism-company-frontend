@@ -10,13 +10,16 @@ export class TermsandconditionsComponent implements OnInit {
   constructor(private service : TermsandconditionsService) { }
 
  terms : string ;
+ esponse:any ;
   ngOnInit() {
     this.viewterms();
   }
   viewterms(): void {
     this.service.getTerms().then((res) => {
-      if (this.service.valid) {
-        this.terms = res ;
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.terms=this.esponse['data'];
+
       } else { // nzahrlo this.offerService.err fl UI
       }
     });

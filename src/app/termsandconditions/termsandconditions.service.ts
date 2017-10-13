@@ -16,7 +16,7 @@ export class TermsandconditionsService {
   getTerms(): Promise<string> {
     // this.header.append('Content-Type', 'application/json' );
     // this.header.append('Access-Control-Allow-Origin', '*' );
-    const url = `/termsandconditions`;
+    const url = `im4booking/terms`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const hh = new Headers();
@@ -35,15 +35,13 @@ export class TermsandconditionsService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as string;
+      return response['_body'] as string;
     });
   }
    addterms(id:string): void {
     this.header.append('Content-Type', 'application/json' );
     this.header.append('Access-Control-Allow-Origin', '*' );
-     const url = `/feedback/delete`;
+     const url = `im4booking/terms`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     this.httpPoster.post<Response>(url, {

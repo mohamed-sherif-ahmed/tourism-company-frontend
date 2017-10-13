@@ -22,23 +22,26 @@
     <div class='wrap'>
 
       <form>
-        <input  placeholder='TITLE' #title>
+        <input  placeholder='TITLE' #name>
+          <input  placeholder='TITLE IN ARABIC' #titlear>
         <p>
         </p>
-        <textarea class="textarea" placeholder='DESCRIPTION' #desc></textarea>
+        <textarea class="textarea" placeholder='DESCRIPTION' #descrip></textarea>
+        <textarea class="textarea" placeholder='DESCRIPTION IN ARABIC' #descar></textarea>
       <md-input-container>
-          <input  mdInput [mdDatepicker]="picker" #exp>
+          <input  mdInput [mdDatepicker]="picker" #expi>
           <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
       </md-input-container>
       <md-datepicker #picker></md-datepicker>
-        <input   placeholder='GIVEN POINTS ' #points>
+        <input   placeholder='GIVEN POINTS ' #pointss>
         <p>
         </p>
-        <textarea  placeholder='CONDITIONS' #condition></textarea>
+        <textarea  placeholder='CONDITIONS' #conditions></textarea>
+            <textarea  placeholder='CONDITIONS IN ARABIC' #conditionar></textarea>
         <p>
         </p>
-        <button class="btn btn--block card__btn" (click)= "createOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value)" >SUMBIT OFFER DATA</button>
-
+        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value,expi.value,pointss.value,conditions.value,conditionar.value)" >SUMBIT OFFER DATA</button>
+<div *ngIf="filesb">
         <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
         <p>
         </p>
@@ -47,6 +50,7 @@
           <p>
           </p>
             <button class="btn btn--block card__btn" (click)= "createOfferimg()" >ADD ADD OFFER IMAGE</button>
+          </div>
       </form>
     </div>
   </md-tab>
