@@ -2,7 +2,7 @@
 <body>
 <md-tab-group>
   <md-tab label="VIEW OFFERS">
-    <input placeholder="YEAR"#year><input placeholder="MONTH"#month><input placeholder="DAY"#day> <button class="btn btn--block" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit </button>
+    <input placeholder="YEAR"#year><input placeholder="MONTH"#month><input placeholder="DAY"#day> <button class="btn btn--block" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit the since date </button>
 <ul class="cards">
   <li class="cards__item" *ngFor="let offer of offersArray">
     <div class="card">
@@ -16,22 +16,37 @@
   </li>
 </ul>
   </md-tab>
+
   <md-tab label="ADD OFFERS">
+
     <div class='wrap'>
+
       <form>
-        <input  placeholder='TITLE' #title="">
-        <input  placeholder='DESCRIPTION' #desc>
-        <input   placeholder='EXP DATE' #exp>
+        <input  placeholder='TITLE' #title>
+        <p>
+        </p>
+        <textarea class="textarea" placeholder='DESCRIPTION' #desc></textarea>
+      <md-input-container>
+          <input  mdInput [mdDatepicker]="picker" #exp>
+          <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      </md-input-container>
+      <md-datepicker #picker></md-datepicker>
         <input   placeholder='GIVEN POINTS ' #points>
-        <input   placeholder='TYPE' #type="">
-        <input  placeholder='CONDITION' #condition>
-          <input  placeholder='IMAGE PATH' #img>
         <p>
         </p>
-        <input type="file" #file (change)="pdfHandler($event)" multiple/>
+        <textarea  placeholder='CONDITIONS' #condition></textarea>
         <p>
         </p>
-        <button class="btn btn--block card__btn" (click)= "createOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value,img.value)" >ADD</button>
+        <button class="btn btn--block card__btn" (click)= "createOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value)" >SUMBIT OFFER DATA</button>
+
+        <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
+        <p>
+        </p>
+          <button class="btn btn--block card__btn" (click)= "createOfferpdf()" >ADD OFFER PDF</button>
+          <input type="file" #file placeholder=' ADD OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
+          <p>
+          </p>
+            <button class="btn btn--block card__btn" (click)= "createOfferimg()" >ADD ADD OFFER IMAGE</button>
       </form>
     </div>
   </md-tab>
@@ -44,21 +59,46 @@
     </div>
   </md-tab>
   <md-tab label="EDIT OFFERS">
-    <div class='wrap'>
-      <form>
-        <input  placeholder='ENTER THE ID OF THE OFFER' #Password>
-        <input  placeholder='TITLE' #userName>
-        <input  placeholder='DESCRIPTION' #Password>
-        <input   placeholder='EXP DATE' #name>
-        <input   placeholder='GIVEN POINTS ' #address>
-        <input   placeholder='TYPE' #userName>
-        <input  placeholder='CONDITION' #Password>
-        <input   placeholder='POINTS' #address>
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)="test()">EDIT</button>
-      </form>
-    </div>
+
+        <div class='wrap'>
+
+          <form>
+            <input  placeholder='OFFER ID ' #ids>
+                <button class="btn btn--block card__btn" (click)="viewOffer(ids.value)" >SUMBIT OFFER ID</button>
+                <div *ngIf="visable" class="card">
+                  <div class="card__image"> <img src="{{selectedoffer.img_path}}"></div>
+                  <div class="card__content">
+                    <div class="card__title"> edited offer name is {{selectedoffer.name}} </div>
+                    <p class="card__text">{{selectedoffer.description}} </p>
+                  </div>
+                </div>
+            <input  placeholder=' NEW TITLE' #title>
+            <p>
+            </p>
+            <textarea class="textarea" placeholder=' NEW DESCRIPTION' #desc></textarea>
+          <md-input-container>
+              <input  mdInput [mdDatepicker]="test" #exp>
+              <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
+          </md-input-container>
+          <md-datepicker #test></md-datepicker>
+            <input   placeholder=' NEW GIVEN POINTS ' #points>
+            <p>
+            </p>
+            <textarea  placeholder='NEW CONDITIONS' #condition></textarea>
+            <p>
+            </p>
+            <button class="btn btn--block card__btn" (click)= "editOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value)" >SUMBIT OFFER DATA</button>
+
+            <input type="file" #file placeholder=' ADD NEW OFFER PDF' (change)="pdfHandler($event)" multiple/>
+            <p>
+            </p>
+              <button class="btn btn--block card__btn" (click)= "editOfferpdf()" >ADD NEW OFFER PDF</button>
+              <input type="file" #file placeholder=' ADD NEW OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
+              <p>
+              </p>
+                <button class="btn btn--block card__btn" (click)= "editOfferimg()" >ADD NEW OFFER IMAGE</button>
+          </form>
+        </div>
   </md-tab>
 
   </md-tab-group>

@@ -13,14 +13,17 @@ import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 
 export class OfferComponent implements OnInit {
   constructor(private offerService: OfferService) { }
-  file: FileList;
  offersArray: Offer[];
  neededDate: Date;
   data: {} ;
   error: {};
-  files:any ;
+  filter: boolean= false;
+  files:any;
   selectedoffer: Offer;
+  editedOfferId:string;
   addedOffer:Offer;
+  called : boolean = false;
+  visable:boolean = false;
   ngOnInit() {
     this.viewOffers(this.neededDate) ;
   }
@@ -37,7 +40,10 @@ export class OfferComponent implements OnInit {
     console.log(this.neededDate);
     this.viewOffers(this.neededDate) ;
   }
-  viewOffer(id: string , long: number): void {
+  viewOffer(id: string ): void {
+    this.visable = true ;
+    this.editedOfferId=id;
+    console.log(this.editedOfferId);
     this.offerService.getOffer( id  ).then((res) => {
       if (this.offerService.valid) {
         this.selectedoffer = res;
@@ -45,19 +51,48 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-createOffer(title , desc ,exp , points , type ,condition , img ){
-  this.addedOffer = new Offer(title,desc,exp,10,type,condition,img,img);
+createOffer(title , desc ,exp , points , type ,condition ){
+  this.addedOffer = new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ');
   console.log(this.addedOffer);
     console.log("test");
-    this.offerService.addOffer(this.addedOffer,this.files);
+    this.offerService.addOffer(this.addedOffer);
+}
+
+editOffer(title , desc ,exp , points , type ,condition){
+
+this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
 
 }
+
+createOfferpdf(){
+  console.log(this.addedOffer);
+    console.log(this.offerService.offerbeingCreatedID);
+    this.offerService.addOfferpdf(this.offerService.offerbeingCreatedID, this.files);
+}
+
+
+createOfferimg(){
+  console.log(this.addedOffer);
+    console.log(this.offerService.offerbeingCreatedID);
+    this.offerService.addOfferimg(this.offerService.offerbeingCreatedID, this.files);
+}
+editOfferimg(){
+    console.log(this.editedOfferId);
+    this.offerService.addOfferimg(this.editedOfferId, this.files);
+}
+editOfferpdf(){
+    console.log(this.editedOfferId);
+    this.offerService.addOfferpdf(this.editedOfferId, this.files);
+}
+
 delete(name:string){
   this.offerService.delOffer(name);
 }
+
+
   pdfHandler(event): void {
     console.log('pdfhandler called');
-    this.files = event.target.files ;
+  this.files = event.target.files
   }
   test(): void {
     console.log('sdfdsss');
