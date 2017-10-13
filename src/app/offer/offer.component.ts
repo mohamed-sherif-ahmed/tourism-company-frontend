@@ -18,6 +18,7 @@ export class OfferComponent implements OnInit {
   data: {} ;
   error: {};
   filter: boolean= false;
+  filesb: boolean= false;
   files:any;
   selectedoffer: Offer;
   editedOfferId:string;
@@ -51,16 +52,18 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-createOffer(title , desc ,exp , points , type ,condition ){
-  this.addedOffer = new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ');
+createOffer(title , titlear ,desc ,descar,exp , points ,condition, conditionar){
+  console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
+  this.addedOffer = new Offer(title,titlear,desc,descar,exp,points as number,'img to be uploaded ', "offer",condition,conditionar);
   console.log(this.addedOffer);
     console.log("test");
+    this.filesb= true ;
     this.offerService.addOffer(this.addedOffer);
 }
 
 editOffer(title , desc ,exp , points , type ,condition){
 
-this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
+//this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
 
 }
 

@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
 <md-tab-group>
-  <md-tab label="VIEW TERMS AND CONDITIONS">
+  <md-tab label="VIEW TERMS AND CONDITIONS" onclick="viewterms()">
 <ul class="cards">
   <li class="cards__item">
     <div class="card">
@@ -15,7 +15,7 @@
   <md-tab label="ADD TERMS AND CONDITIONS">
     <div class='wrap'>
       <form>
-        <input  placeholder='TERMS' #title="">
+        <input  placeholder='TERMS' #title>
         <p>
         </p>
         <button class="btn btn--block card__btn" (click)= "add(title.value)" >ADD</button>
