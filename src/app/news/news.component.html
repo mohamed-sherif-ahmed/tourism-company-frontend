@@ -19,16 +19,17 @@
   <md-tab label="ADD NEWS">
     <div class='wrap'>
       <form>
-        <input  placeholder='TITLE' #title="">
-        <input  placeholder='ID' #desc>
-        <input   placeholder='BODY' #exp>
-        <input   placeholder='DATE ' #points>
+        <input  placeholder='TITLE' #titlet="">
+        <input  placeholder='ID' #desct>
+        <textarea   placeholder='BODY' #expt></textarea>
+        <md-input-container>
+            <input  mdInput [mdDatepicker]="picker" #expi>
+            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+        </md-input-container>
+          <md-datepicker #picker></md-datepicker>
         <p>
         </p>
-        <input type="file" #file (change)="pdfHandler($event)" multiple/>
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)= "createNews(title.value,desc.value,exp.value,points.value)" >ADD</button>
+        <button class="btn btn--block card__btn" (click)= "createNews(titlet.value,desct.value,expt.value,expi.value)" >ADD</button>
       </form>
     </div>
   </md-tab>
