@@ -23,6 +23,8 @@ export class OfferComponent implements OnInit {
   selectedoffer: Offer;
   editedOfferId:string;
   addedOffer:Offer;
+  expdate:Date;
+  creationDate:Date;
   called : boolean = false;
   visable:boolean = false;
   ngOnInit() {
@@ -52,9 +54,11 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-createOffer(title , titlear ,desc ,descar,exp , points ,condition, conditionar){
+createOffer(title , titlear ,desc ,descar,exp , creation,points ,condition, conditionar){
+   this.expdate = new Date (exp);
+   this.creationDate = new Date(creation);
   console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
-  this.addedOffer = new Offer(title,titlear,desc,descar,exp,points as number,'img to be uploaded ', "offer",condition,conditionar);
+  this.addedOffer = new Offer(title,titlear,desc,descar,this.expdate,this.creationDate,points as number,'img to be uploaded ', "offer",condition,conditionar);
   console.log(this.addedOffer);
     console.log("test");
     this.filesb= true ;

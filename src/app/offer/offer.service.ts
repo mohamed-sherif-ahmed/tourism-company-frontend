@@ -14,6 +14,7 @@ valid: boolean ;
 export class OfferService {
   valid: Boolean = true ;
   err: string ;
+  conditions:Boolean = true;
   offerbeingCreatedID:string;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
   getOffers(sinceDate: Date ): Promise<Offer[]> {
@@ -73,10 +74,87 @@ export class OfferService {
     const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
+    if (offer.conditionar =="" && offer.condition =="")
+    this.conditions =false ;
+
+console.log({name: [
+  {
+    lang: "ar",
+    value: offer.titlear
+  },
+  {
+    lang: "en",
+    value: offer.name
+  }
+],
+description: [
+  {
+    lang: "ar",
+    value: offer.description
+  },
+  {
+    lang: "en",
+    value: offer.desar
+  }
+],
+exp_date: offer.exp_date,
+creation_date: offer.creationDate,
+given_points: offer.given_points,
+condition_type: this.conditions,
+condition: [
+  {
+    lang: "ar",
+    value: offer.conditionar
+  },
+  {
+    lang: "en",
+    value: offer.condition
+  }
+],
+is_voucher: false,
+in_package: false
+});
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
-      'offer': offer
+      'offer': {
+	name: [
+		{
+			lang: "ar",
+			value: offer.titlear
+		},
+		{
+			lang: "en",
+			value: offer.name
+		}
+	],
+	description: [
+		{
+			lang: "ar",
+			value: offer.description
+		},
+		{
+			lang: "en",
+			value: offer.desar
+		}
+	],
+	exp_date: offer.exp_date,
+	creation_date: offer.creationDate,
+	given_points: offer.given_points,
+	condition_type: this.conditions,
+	condition: [
+		{
+			lang: "ar",
+			value: offer.conditionar
+		},
+		{
+			lang: "en",
+			value: offer.condition
+		}
+	],
+	is_voucher: false,
+	in_package: false
+}
     }).subscribe(data => {
       this.valid = data.valid ;
       this.err = data.msg;
