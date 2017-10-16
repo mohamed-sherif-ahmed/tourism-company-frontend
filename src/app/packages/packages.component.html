@@ -4,76 +4,73 @@
     <md-tab label="View Packages">
       <div class="cards-tab">
         <h1 class="view-title">Available Packages</h1>
-        <md-card class="package-card">
+        <md-card class="package-card" *ngFor="let pack of packageArr">
           <md-card-header>
-            <md-card-title>Package Name</md-card-title>
-            <md-card-subtitle>Package Description</md-card-subtitle>
+            <md-card-title>{{pack.package_name}}</md-card-title>
           </md-card-header>
           <md-card-content>
-            <p>Some Stuff</p>
+            <img src="{{pack.imgurl}}" />
+            <div class="container" *ngIf="editEnabled">
+              <form>
+                <div class="form-group">
+                  <label>Package Name:</label>
+                  <input type="text" class="form-control" id="name" value="{{editFormPackage.package_name}}">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Points:</label>
+                  <input type="number" class="form-control" id="points">
+                </div>
+                <div class="form-group">
+                  <label>Image</label>
+                  <input type="file" class="form-control" id="img" (change)="fileHandler($event)">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button class="btn btn-warning">Cancel Edit</button>
+              </form>
+            </div>
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button>EDIT</button>
+            <button md-button (click)="editPackage(pack.id)">EDIT</button>
             <button class="delete-button" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
       </div>
     </md-tab>
     <md-tab label="Add New Package">
-      <h1 class="view-title">Add Package</h1>
-      <div class="cards-tab">
-        <md-card class="package-card">
-          <md-card-content class="card-content">
-            <table>
-              <tr>
-                <th><label>Package Name : </label></th>
-                <th colspan="3"><md-form-field><input mdInput type="text" placeholder="Package Name" /></md-form-field></th>
-              </tr>
-              <tr>
-                <th>
-                  <label>Vouchers : </label>
-                </th>
-                <th colspan="3">
-                  <md-select placeholder="Voucher">
-                    <md-option value="h">VoucherNo</md-option>
-                    <md-option value="s">SSS</md-option>
-                  </md-select>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <label>Image : </label>
-                </th>
-                <th colspan="3">
-                  <input type="file" />
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <label>Points : </label>
-                </th>
-                <th colspan="3">
-                  <md-form-field><input mdInput type="number" placeholder="Points"/></md-form-field>
-                </th>
-              </tr>
-            </table>
-            <div class="form-actions">
-              <button md-button>Submit</button>
-            </div>
-          </md-card-content>
-        </md-card>
-      </div>
+    <div class='container'>
+      <form>
+        <div class="form-group">
+          <label>Package Name:</label>
+          <input type="text" class="form-control" #name>
+        </div>
+        <div class="form-group">
+          <label for="pwd">Points:</label>
+          <input type="number" class="form-control" #points>
+        </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" class="form-control" (change)="fileHandler($event)">
+        </div>
+        <div class="form-group">
+          <div *ngFor="let packVoucher of packVoucherArr">
+            <label>{{packVoucher.title}}</label>
+            <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, points.value)">Submit</button>
+      </form>
+    </div>
     </md-tab>
     <md-tab label="View Vouchers">
       <div class="cards-tab">
         <h1 class="view-title">Available Vouchers</h1>
-        <md-card class="package-card">
+        <md-card class="package-card" *ngFor="let voucher of vouchersArr">
           <md-card-header>
-            <md-card-title>Package Name</md-card-title>
-            <md-card-subtitle>Package Description</md-card-subtitle>
+            <md-card-title>{{voucher.title}}</md-card-title>
+            <md-card-subtitle>{{voucher.description}}</md-card-subtitle>
           </md-card-header>
           <md-card-content>
-            <p>Some Stuff</p>
+            <p>{{voucher.condition}}</p>
           </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button>EDIT</button>
@@ -84,6 +81,39 @@
     </md-tab>
     <md-tab label="Add New Voucher">
       <h1 class="view-title">Add New Voucher</h1>
+      <div class="container">
+        <form>
+          <div class="form-group">
+            <label>Title :</label>
+            <input type="text" class="form-control" id="title">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Description :</label>
+            <textarea class="form-control" id="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Condition :</label>
+            <textarea class="form-control" id="condition"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Image :</label>
+            <input type="file" class="form-control" id="img" (change)="fileHandler($event)">
+          </div>
+          <div class="form-group">
+            <md-input-container>
+              <label>Expiry Date :</label>
+              <input  mdInput [mdDatepicker]="test" #exp>
+              <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
+            </md-input-container>
+            <md-datepicker #test></md-datepicker>
+          </div>
+          <div class="form-group">
+            <label>Points :</label>
+            <input type="number" class="form-control" id="points">
+          </div>
+          <button class="btn btn-primary" (onclick)="addVoucher(title.value, description.value, condition.value, points.value)">Submit</button>
+        </form>
+      </div>
     </md-tab>
   </md-tab-group>
 </body>

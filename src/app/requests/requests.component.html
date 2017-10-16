@@ -1,0 +1,17 @@
+<app-navigation></app-navigation>
+<md-tab-group>
+  <md-tab label="View Packages">
+    <div class="cards-tab">
+      <h1 class="view-title">Available Packages</h1>
+      <md-card class="package-card" *ngFor="let req of requestArr">
+        <md-card-header>
+          <md-card-title>{{req['user']}}</md-card-title>
+        </md-card-header>
+        <md-card-actions class="card-actions">
+          <button md-button>Accept</button>
+          <button class="delete-button" md-button (onClick)="deleteRequest(req['id'])">Reject</button>
+        </md-card-actions>
+      </md-card>
+    </div>
+  </md-tab>
+</md-tab-group>

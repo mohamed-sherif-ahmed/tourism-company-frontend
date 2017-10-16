@@ -31,6 +31,9 @@ import {MdCheckboxModule} from '@angular/material';
 import {MdDatepickerModule, MdNativeDateModule} from '@angular/material';
 import {TermsandconditionsComponent} from './termsandconditions/termsandconditions.component';
 import {NewsService} from './news/news.service';
+import { RequestsComponent } from './requests/requests.component';
+import { RequestService } from './requests/requests.service';
+import { UserService } from './users/user.service'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,8 @@ import {NewsService} from './news/news.service';
     PackagesComponent,
     FeedbackComponent,
     UsersComponent,
-    TermsandconditionsComponent
+    TermsandconditionsComponent,
+    RequestsComponent
   ],
   imports: [
     HttpClientModule,
@@ -97,10 +101,14 @@ import {NewsService} from './news/news.service';
       {
         path: 'term',
         component: TermsandconditionsComponent
+      },
+      {
+        path: 'requests',
+        component: RequestsComponent
       }
     ])
   ],
-  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService],
+  providers: [FeedbackService, OfferService , HttpModule , HttpClient, PackagesService ,NewsService,TermsandconditionsService, RequestService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
