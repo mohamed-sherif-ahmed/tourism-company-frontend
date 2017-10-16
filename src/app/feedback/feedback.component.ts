@@ -10,14 +10,18 @@ export class FeedbackComponent implements OnInit {
 
   constructor( private service: FeedbackService) { }
  feedbacks: Feedback[] ;
+ esponse : any ;
   ngOnInit() {
   this.viewFeedbacks();
   }
   viewFeedbacks(): void {
     this.service.getFeedbacks().then((res) => {
-      if (this.service.valid) {
-        this.feedbacks = res;
-      } else { // nzahrlo this.offerService.err fl UI
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.feedbacks=this.esponse['data'] as Feedback[];
+
+      }
+       else { // nzahrlo this.offerService.err fl UI
       }
     });
   }

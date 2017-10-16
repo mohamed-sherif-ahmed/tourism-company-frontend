@@ -4,6 +4,7 @@ import {Http, Headers} from '@angular/http';
 import {AppConstants} from '../app.constants';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
+import {offerjson} from './offerjson'
 interface Response {
 valid: boolean ;
   res: string ;
@@ -14,9 +15,10 @@ valid: boolean ;
 export class OfferService {
   valid: Boolean = true ;
   err: string ;
+  conditions:Boolean = true;
   offerbeingCreatedID:string;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
-  getOffers(sinceDate: Date ): Promise<Offer[]> {
+  getOffers(sinceDate: Date ): Promise<string> {
     const url = `im4booking/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -36,12 +38,10 @@ export class OfferService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as Offer[];
+      return response['_body'] as string;
     });
   }
-  getOffer( id: string): Promise<Offer> {
+  getOffer( id: string): Promise<string> {
     const url = `/im4booking/offer/` + id;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -62,9 +62,7 @@ export class OfferService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as Offer;
+      return response['_body'] as string;
     });
   }
 
@@ -73,10 +71,87 @@ export class OfferService {
     const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
+    if (offer.conditionar =="" && offer.condition =="")
+    this.conditions =false ;
+
+console.log({name: [
+  {
+    lang: "ar",
+    value: offer.titlear
+  },
+  {
+    lang: "en",
+    value: offer.name
+  }
+],
+description: [
+  {
+    lang: "ar",
+    value: offer.description
+  },
+  {
+    lang: "en",
+    value: offer.desar
+  }
+],
+exp_date: offer.exp_date,
+creation_date: offer.creationDate,
+given_points: offer.given_points,
+condition_type: this.conditions,
+condition: [
+  {
+    lang: "ar",
+    value: offer.conditionar
+  },
+  {
+    lang: "en",
+    value: offer.condition
+  }
+],
+is_voucher: false,
+in_package: false
+} as offerjson);
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
-      'offer': offer
+      'offer': {
+	name: [
+		{
+			lang: "ar",
+			value: offer.titlear
+		},
+		{
+			lang: "en",
+			value: offer.name
+		}
+	],
+	description: [
+		{
+			lang: "ar",
+			value: offer.description
+		},
+		{
+			lang: "en",
+			value: offer.desar
+		}
+	],
+	exp_date: offer.exp_date,
+	creation_date: offer.creationDate,
+	given_points: offer.given_points,
+	condition_type: this.conditions,
+	condition: [
+		{
+			lang: "ar",
+			value: offer.conditionar
+		},
+		{
+			lang: "en",
+			value: offer.condition
+		}
+	],
+	is_voucher: false,
+	in_package: false
+}
     }).subscribe(data => {
       this.valid = data.valid ;
       this.err = data.msg;

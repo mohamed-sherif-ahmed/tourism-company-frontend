@@ -1,0 +1,38 @@
+export class offerjson {
+	name: [
+		{
+			lang: "ar",
+			value: string
+		},
+		{
+			lang: "en",
+			value: string
+		}
+	];
+	description: [
+		{
+			lang: "ar",
+			value: string
+		},
+		{
+			lang: "en",
+			value:string
+		}
+	];
+	exp_date: Date;
+	creation_date: Date ;
+	given_points: number;
+	condition_type: boolean;
+	condition: [
+		{
+			lang: "ar",
+			value: string
+		},
+		{
+			lang: "en",
+			value: string
+		}
+	];
+	is_voucher: boolean;
+	in_package: boolean;
+}

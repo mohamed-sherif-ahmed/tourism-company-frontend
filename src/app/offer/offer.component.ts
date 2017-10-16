@@ -4,7 +4,7 @@ import {Offer} from './Offer' ;
 import {Test} from "./Test";
 import { FileSelectDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
-
+import {offerjson} from './offerjson' ;
 @Component({
   selector: 'app-offer',
   templateUrl: './offer.component.html',
@@ -13,26 +13,30 @@ import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 
 export class OfferComponent implements OnInit {
   constructor(private offerService: OfferService) { }
- offersArray: Offer[];
+ offersArray: offerjson[];
  neededDate: Date;
   data: {} ;
   error: {};
   filter: boolean= false;
   filesb: boolean= false;
   files:any;
-  selectedoffer: Offer;
   editedOfferId:string;
   addedOffer:Offer;
+  viewedOffer:offerjson;
+  expdate:Date;
+  creationDate:Date;
   called : boolean = false;
+  esponse:any ;
   visable:boolean = false;
   ngOnInit() {
     this.viewOffers(this.neededDate) ;
   }
   viewOffers(date: Date ): void {
     this.offerService.getOffers( date ).then((res) => {
-      if (this.offerService.valid) {
-        this.offersArray = res;
-      } else { // nzahrlo this.offerService.err fl UI
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.offersArray=this.esponse['data'] as offerjson[] ;}
+         else { // nzahrlo this.offerService.err fl UI
           }
     });
   }
@@ -46,15 +50,19 @@ export class OfferComponent implements OnInit {
     this.editedOfferId=id;
     console.log(this.editedOfferId);
     this.offerService.getOffer( id  ).then((res) => {
-      if (this.offerService.valid) {
-        this.selectedoffer = res;
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.viewedOffer=this.esponse['data'] as offerjson  ;
+
       } else { // nzahrlo this.offerService.err fl UI
       }
     });
   }
-createOffer(title , titlear ,desc ,descar,exp , points ,condition, conditionar){
+createOffer(title , titlear ,desc ,descar,exp , creation,points ,condition, conditionar){
+   this.expdate = new Date (exp);
+   this.creationDate = new Date(creation);
   console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
-  this.addedOffer = new Offer(title,titlear,desc,descar,exp,points as number,'img to be uploaded ', "offer",condition,conditionar);
+  this.addedOffer = new Offer(title,titlear,desc,descar,this.expdate,this.creationDate,points as number,'img to be uploaded ', "offer",condition,conditionar);
   console.log(this.addedOffer);
     console.log("test");
     this.filesb= true ;

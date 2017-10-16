@@ -28,11 +28,19 @@
         </p>
         <textarea class="textarea" placeholder='DESCRIPTION' #descrip></textarea>
         <textarea class="textarea" placeholder='DESCRIPTION IN ARABIC' #descar></textarea>
+        <label>EXPIRING DATE</label>
       <md-input-container>
           <input  mdInput [mdDatepicker]="picker" #expi>
           <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
       </md-input-container>
       <md-datepicker #picker></md-datepicker>
+        <label>CREATION DATE</label>
+
+      <md-input-container>
+          <input  mdInput [mdDatepicker]="pickert" #creation>
+          <md-datepicker-toggle mdSuffix [for]="pickert"></md-datepicker-toggle>
+      </md-input-container>
+      <md-datepicker #pickert></md-datepicker>
         <input   placeholder='GIVEN POINTS ' #pointss>
         <p>
         </p>
@@ -40,7 +48,7 @@
             <textarea  placeholder='CONDITIONS IN ARABIC' #conditionar></textarea>
         <p>
         </p>
-        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value,expi.value,pointss.value,conditions.value,conditionar.value)" >SUMBIT OFFER DATA</button>
+        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value,expi.value,creation.value,pointss.value,conditions.value,conditionar.value)" >SUMBIT OFFER DATA</button>
 <div *ngIf="filesb">
         <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
         <p>
@@ -72,8 +80,8 @@
                 <div *ngIf="visable" class="card">
                   <div class="card__image"> <img src="{{selectedoffer.img_path}}"></div>
                   <div class="card__content">
-                    <div class="card__title"> edited offer name is {{selectedoffer.name}} </div>
-                    <p class="card__text">{{selectedoffer.description}} </p>
+                    <div class="card__title"> edited offer name is {{viewedOffer.name}} </div>
+                    <p class="card__text">{{viewedOffer.description}} </p>
                   </div>
                 </div>
             <input  placeholder=' NEW TITLE' #title>
