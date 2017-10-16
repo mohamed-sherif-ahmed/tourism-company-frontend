@@ -45,9 +45,8 @@ export class NewsComponent /*implements OnInit*/ {
   }
 createNews(title , id , body , date){
   this.addedNews = new News(title , id , body , date);
-  console.log(this.addedNews);
-    console.log("test");
-    this.newsService.addNews(this.addedNews,this.files);
+  console.log(this.addedNews); 
+    this.newsService.addNews(this.addedNews);
 
 }
 delete (title:string){
