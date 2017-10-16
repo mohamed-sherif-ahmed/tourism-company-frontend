@@ -100,8 +100,12 @@
             <input type="file" class="form-control" id="img">
           </div>
           <div class="form-group">
-            <label>Expiry Date :</label>
-            <input type="date" class="form-control" id="expdate">
+            <md-input-container>
+              <label>Expiry Date :</label>
+              <input  mdInput [mdDatepicker]="test" #exp>
+              <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
+            </md-input-container>
+            <md-datepicker #test></md-datepicker>
           </div>
           <div class="form-group">
             <label>Points :</label>

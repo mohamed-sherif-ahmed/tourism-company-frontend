@@ -34,7 +34,7 @@ export class PackagesService {
   }
 
   getPackages(): Promise<Package[]> {
-    const url = `package`;
+    const url = `/package`;
     const api_key = localStorage.getItem('api_key');
     const options = new RequestOptions({
       method: RequestMethod.Get,

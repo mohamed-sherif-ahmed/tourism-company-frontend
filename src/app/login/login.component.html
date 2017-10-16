@@ -6,15 +6,18 @@
       <div class="login-form">
         <div class="sign-in-htm">
           <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
+            <label for="user" class="label" >Username</label>
+            <input id="user" type="text" class="input" #username>
           </div>
           <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label for="pass" class="label" >Password</label>
+            <input id="pass" type="password" class="input" data-type="password" #password>
           </div>
           <div class="group">
-            <button routerLink="/news" (click)="login()" class="button" value="Sign In">Sign In</button>
+            <button (click)="login(username.value, password.value)" class="button" value="Sign In">Sign In</button>
+          </div>
+          <div class="group" *ngIf="showWrongUser">
+            <label>Wrong Username Or Password</label>
           </div>
           <div class="hr"></div>
         </div>
