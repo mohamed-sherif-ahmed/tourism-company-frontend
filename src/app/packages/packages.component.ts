@@ -67,4 +67,15 @@ export class PackagesComponent implements OnInit {
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
   }
+  addVoucher(title: string, desc: string, cond: string, points: string): void { 
+    const data = {
+      'title': title,
+      'desc': desc,
+      'expdate': '',
+      'type': '',
+      'points': points,
+      'condition': cond
+    };
+    this.packageService.addVouchers(JSON.stringify(data), this.imgFile);
+  }
 }

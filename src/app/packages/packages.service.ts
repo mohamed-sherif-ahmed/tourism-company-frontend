@@ -62,17 +62,19 @@ export class PackagesService {
       return response.json().res as Package;
     });
   }
-  addVouchers(data: Voucher): Promise<JSON> {
+  addVouchers(data: string, files: File[]): Promise<JSON> {
     const url = `package/voucher`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
     header.append('api_key', api_key);
     header.append('user_id', user_id);
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('file', file, file.name);
+    }
+    formData.append('voucher', data);
     const options = new RequestOptions({
-      body: {
-        'voucher': data
-      },
       headers: header
     });
     return this.http.post(url, options).toPromise().then(response => {
