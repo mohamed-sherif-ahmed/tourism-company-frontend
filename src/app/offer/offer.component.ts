@@ -4,7 +4,7 @@ import {Offer} from './Offer' ;
 import {Test} from "./Test";
 import { FileSelectDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
-
+import {offerjson} from './offerjson' ;
 @Component({
   selector: 'app-offer',
   templateUrl: './offer.component.html',
@@ -13,16 +13,16 @@ import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 
 export class OfferComponent implements OnInit {
   constructor(private offerService: OfferService) { }
- offersArray: Offer[];
+ offersArray: offerjson[];
  neededDate: Date;
   data: {} ;
   error: {};
   filter: boolean= false;
   filesb: boolean= false;
   files:any;
-  selectedoffer: Offer;
   editedOfferId:string;
   addedOffer:Offer;
+  viewedOffer:offerjson;
   expdate:Date;
   creationDate:Date;
   called : boolean = false;
@@ -35,7 +35,7 @@ export class OfferComponent implements OnInit {
     this.offerService.getOffers( date ).then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.offersArray=this.esponse['data'] as Offer[] ;}
+        this.offersArray=this.esponse['data'] as offerjson[] ;}
          else { // nzahrlo this.offerService.err fl UI
           }
     });
@@ -52,7 +52,7 @@ export class OfferComponent implements OnInit {
     this.offerService.getOffer( id  ).then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.addedOffer=this.esponse['data'] as Offer ;
+        this.viewedOffer=this.esponse['data'] as offerjson  ;
 
       } else { // nzahrlo this.offerService.err fl UI
       }

@@ -4,6 +4,7 @@ import {Http, Headers} from '@angular/http';
 import {AppConstants} from '../app.constants';
 import {RequestMethod, RequestOptions} from '@angular/http';
 import {HttpClient} from '@angular/common/http';
+import {offerjson} from './offerjson'
 interface Response {
 valid: boolean ;
   res: string ;
@@ -109,7 +110,7 @@ condition: [
 ],
 is_voucher: false,
 in_package: false
-});
+} as offerjson);
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
