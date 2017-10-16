@@ -14,7 +14,7 @@ export class FeedbackService {
   err: string ;
   header = new HttpHeaders();
   constructor(private http: Http , private httpPoster: HttpClient ) { }
-  getFeedbacks(): Promise<Feedback[]> {
+  getFeedbacks(): Promise<string> {
     // this.header.append('Content-Type', 'application/json' );
     // this.header.append('Access-Control-Allow-Origin', '*' );
     const url = `/feedback`;
@@ -36,9 +36,7 @@ export class FeedbackService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as Feedback[];
+        return response['_body'] as string;
     });
   }
    delFeedbacks(id:string): void {
