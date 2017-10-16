@@ -85,15 +85,15 @@
         <form>
           <div class="form-group">
             <label>Title :</label>
-            <input type="text" class="form-control" id="title">
+            <input type="text" class="form-control" id="title" #vtitle>
           </div>
           <div class="form-group">
             <label for="pwd">Description :</label>
-            <textarea class="form-control" id="description"></textarea>
+            <textarea class="form-control" id="description" #vdescription></textarea>
           </div>
           <div class="form-group">
             <label for="pwd">Condition :</label>
-            <textarea class="form-control" id="condition"></textarea>
+            <textarea class="form-control" id="condition" #vcondition></textarea>
           </div>
           <div class="form-group">
             <label>Image :</label>
@@ -109,9 +109,9 @@
           </div>
           <div class="form-group">
             <label>Points :</label>
-            <input type="number" class="form-control" id="points">
+            <input type="number" class="form-control" id="points" #vpoints>
           </div>
-          <button class="btn btn-primary" (onclick)="addVoucher(title.value, description.value, condition.value, points.value)">Submit</button>
+          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value);">Submit</button>
         </form>
       </div>
     </md-tab>
