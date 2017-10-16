@@ -17,7 +17,7 @@ export class OfferService {
   conditions:Boolean = true;
   offerbeingCreatedID:string;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
-  getOffers(sinceDate: Date ): Promise<Offer[]> {
+  getOffers(sinceDate: Date ): Promise<string> {
     const url = `im4booking/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -37,12 +37,10 @@ export class OfferService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as Offer[];
+      return response['_body'] as string;
     });
   }
-  getOffer( id: string): Promise<Offer> {
+  getOffer( id: string): Promise<string> {
     const url = `/im4booking/offer/` + id;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -63,9 +61,7 @@ export class OfferService {
     });
     return this.http.get(url, options
     ).toPromise().then(response => {
-      this.valid = response.json().valid ;
-      this.err = response.json().msg ;
-      return response.json().res as Offer;
+      return response['_body'] as string;
     });
   }
 

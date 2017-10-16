@@ -26,15 +26,17 @@ export class OfferComponent implements OnInit {
   expdate:Date;
   creationDate:Date;
   called : boolean = false;
+  esponse:any ;
   visable:boolean = false;
   ngOnInit() {
     this.viewOffers(this.neededDate) ;
   }
   viewOffers(date: Date ): void {
     this.offerService.getOffers( date ).then((res) => {
-      if (this.offerService.valid) {
-        this.offersArray = res;
-      } else { // nzahrlo this.offerService.err fl UI
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.offersArray=this.esponse['data'] as Offer[] ;}
+         else { // nzahrlo this.offerService.err fl UI
           }
     });
   }
@@ -48,8 +50,10 @@ export class OfferComponent implements OnInit {
     this.editedOfferId=id;
     console.log(this.editedOfferId);
     this.offerService.getOffer( id  ).then((res) => {
-      if (this.offerService.valid) {
-        this.selectedoffer = res;
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.addedOffer=this.esponse['data'] as Offer ;
+
       } else { // nzahrlo this.offerService.err fl UI
       }
     });
