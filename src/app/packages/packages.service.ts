@@ -12,23 +12,17 @@ import {Voucher} from './voucher';
 export class PackagesService {
   constructor (private http: Http) { }
 
-  addPackage(data: Package, files: File[]): Promise<JSON> {
+  addPackage(data: string): Promise<JSON> {
     const url = `/package`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
-    const header = new Headers();
-    header.append('api_key', api_key);
-    header.append('user_id', user_id);
-    const formData = new FormData();
-    for (let file of files) {
-      formData.append('file', file, file.name);
-    }
-    formData.append('package', JSON.stringify(data));
-    const options = new RequestOptions({
-      headers: header
-    });
 
-    return this.http.post(url, formData, options).toPromise().then(response => {
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package': data
+    }
+    return this.http.post(url, data).toPromise().then(response => {
       return response.json();
     });
   }
@@ -62,24 +56,19 @@ export class PackagesService {
       return response.json().res as Package;
     });
   }
-  addVouchers(data: string, files: File[]): Promise<JSON> {
+  addVouchers(data: string): Promise<JSON> {
+
     const url = `package/voucher`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
-    const header = new Headers();
-    header.append('api_key', api_key);
-    header.append('user_id', user_id);
-    const formData = new FormData();
-    for (let file of files) {
-      formData.append('file', file, file.name);
+
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'voucher': data
     }
-    formData.append('voucher', data);
-    formData.append('api_key', api_key);
-    formData.append('user_id', user_id);
-    const options = new RequestOptions({
-      headers: header
-    });
-    return this.http.post(url, options).toPromise().then(response => {
+
+    return this.http.post(url, body).toPromise().then(response => {
       return response.json();
     });
   }

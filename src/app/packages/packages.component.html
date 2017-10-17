@@ -51,12 +51,12 @@
           <label>Image</label>
           <input type="file" class="form-control" (change)="fileHandler($event)">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <div *ngFor="let packVoucher of packVoucherArr">
             <label>{{packVoucher.title}}</label>
             <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
           </div>
-        </div>
+        </div> -->
         <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, points.value)">Submit</button>
       </form>
     </div>
@@ -88,12 +88,24 @@
             <input type="text" class="form-control" id="title" #vtitle>
           </div>
           <div class="form-group">
+            <label>Title Arabic:</label>
+            <input type="text" class="form-control" id="title" #vtitleAr>
+          </div>
+          <div class="form-group">
             <label for="pwd">Description :</label>
             <textarea class="form-control" id="description" #vdescription></textarea>
           </div>
           <div class="form-group">
+            <label for="pwd">Description Arabic:</label>
+            <textarea class="form-control" id="description" #vdescriptionar></textarea>
+          </div>
+          <div class="form-group">
             <label for="pwd">Condition :</label>
             <textarea class="form-control" id="condition" #vcondition></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Condition Arabic:</label>
+            <textarea class="form-control" id="condition" #vconditionar></textarea>
           </div>
           <div class="form-group">
             <label>Image :</label>
@@ -101,17 +113,25 @@
           </div>
           <div class="form-group">
             <md-input-container>
-              <label>Expiry Date :</label>
-              <input  mdInput [mdDatepicker]="test" #exp>
+              <label>Start Date :</label>
+              <input  mdInput [mdDatepicker]="test" #strt>
               <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
             </md-input-container>
             <md-datepicker #test></md-datepicker>
           </div>
           <div class="form-group">
+            <md-input-container>
+              <label>Expiry Date :</label>
+              <input  mdInput [mdDatepicker]="testa" #exp>
+              <md-datepicker-toggle mdSuffix [for]="testa"></md-datepicker-toggle>
+            </md-input-container>
+            <md-datepicker #testa></md-datepicker>
+          </div>
+          <div class="form-group">
             <label>Points :</label>
             <input type="number" class="form-control" id="points" #vpoints>
           </div>
-          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value);">Submit</button>
+          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value);">Submit</button>
         </form>
       </div>
     </md-tab>

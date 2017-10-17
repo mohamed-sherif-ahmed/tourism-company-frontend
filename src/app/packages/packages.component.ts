@@ -36,9 +36,14 @@ export class PackagesComponent implements OnInit {
     this.editFormPackage = selectedPackage[0];
   }
   addNewPackage(name, points): void {
-    console.log(`${name} ,, ${points}`);
-    const pack = new Package(name, points, 0, this.packVoucherArr);
-    this.packageService.addPackage(pack, this.imgFile);
+    const data = {
+      'name': name,
+      'points': points,
+      'listed_customer': [],
+      'vouchers': []
+    }
+    console.log(data);
+  this.packageService.addPackage(JSON.stringify(data));
 
   }
   cancelEdit(): void {
@@ -67,15 +72,46 @@ export class PackagesComponent implements OnInit {
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
   }
-  addVoucher(title: string, desc: string, cond: string, points: string): void { 
+  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string): void { 
+    const endDate = new Date(EnddateStr);
+    const startDate = new Date(StartDateStr);
     const data = {
-      'title': title,
-      'desc': desc,
-      'expdate': '',
+      'title': [
+        {
+          'lang': 'en',
+          'value': title
+        },
+        {
+          'lang': 'ar',
+          'value': titleAr
+        }
+      ],
+      'desc':[
+        {
+          'lang': 'en',
+          'value': desc
+        },
+        {
+          'lang': 'ar',
+          'value': descAr
+        }
+      ],
+      'creation_date': startDate,
+      'exp_date': endDate,
       'type': '',
       'points': points,
-      'condition': cond
+      'condition':[
+        {
+          'lang': 'en',
+          'value': cond
+        },
+        {
+          'lang': 'ar',
+          'value': condAr
+        }
+      ]
     };
-    this.packageService.addVouchers(JSON.stringify(data), this.imgFile);
+    console.log(data);
+    this.packageService.addVouchers(JSON.stringify(data));
   }
 }
