@@ -74,6 +74,8 @@ export class PackagesService {
       formData.append('file', file, file.name);
     }
     formData.append('voucher', data);
+    formData.append('api_key', api_key);
+    formData.append('user_id', user_id);
     const options = new RequestOptions({
       headers: header
     });

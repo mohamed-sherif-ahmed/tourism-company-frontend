@@ -30,17 +30,17 @@
       <form>
         <div class="form-group">
           <label>Username :</label>
-          <input type="text" class="form-control" #name>
+          <input #name type="text" class="form-control" >
         </div>
         <div class="form-group">
           <label for="pwd">Email :</label>
-          <input type="email" class="form-control" #points>
+          <input #points type="email" class="form-control" >
         </div>
         <div class="form-group">
           <label>Password :</label>
-          <input type="text" class="form-control">
+          <input #pass type="text" class="form-control" >
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value)">Submit</button>
       </form>
     </div>
     </md-tab>

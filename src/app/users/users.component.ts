@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
     
   }
   addNewUser(userName: string, email: string, password: string): void {
+    console.log("5ara hena");
     this.userService.addNewUser(email, password, userName);
   }
 }

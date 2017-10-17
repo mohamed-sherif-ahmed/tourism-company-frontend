@@ -23,7 +23,7 @@ export class UserService {
     }
 
     addNewUser(email: string, password:string, username: string): Promise<JSON> {
-        const url = `/admin/user`;
+        const url = `/admin/adduser`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
@@ -32,9 +32,13 @@ export class UserService {
         const options = new RequestOptions({
             headers: header,
             body: {
-                'username': username,
-                'password': password,
-                'email': email
+                'apikey': api_key,
+                'userid': user_id,
+                'user': {
+                    'username': username,
+                    'password': password,
+                    'email': email
+                }
             }
           });
         return this.http.post(url, options).toPromise().then(response => {
