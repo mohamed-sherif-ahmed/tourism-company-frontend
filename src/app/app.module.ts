@@ -33,7 +33,8 @@ import {TermsandconditionsComponent} from './termsandconditions/termsandconditio
 import {NewsService} from './news/news.service';
 import { RequestsComponent } from './requests/requests.component';
 import { RequestService } from './requests/requests.service';
-import { UserService } from './users/user.service'; 
+import { UserService } from './users/user.service';
+import { PasswordRedirectComponent } from './password-redirect/password-redirect.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,8 @@ import { UserService } from './users/user.service';
     FeedbackComponent,
     UsersComponent,
     TermsandconditionsComponent,
-    RequestsComponent
+    RequestsComponent,
+    PasswordRedirectComponent
   ],
   imports: [
     HttpClientModule,
@@ -105,6 +107,10 @@ import { UserService } from './users/user.service';
       {
         path: 'requests',
         component: RequestsComponent
+      },
+      {
+        path: 'passRedirect',
+        component: PasswordRedirectComponent
       }
     ])
   ],
