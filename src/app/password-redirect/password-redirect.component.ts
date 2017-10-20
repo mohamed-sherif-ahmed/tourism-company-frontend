@@ -25,7 +25,9 @@ export class PasswordRedirectComponent implements OnInit {
         'new_password': pass
     }).subscribe(res => {
       const r = JSON.parse(JSON.stringify(res));
-      const body = r['body'];
+      console.log(r);
+      var body = r['_body'];
+      body = JSON.parse(body);
       if (body['valid'] == true) {
         this.router.navigateByUrl("offer");
       }

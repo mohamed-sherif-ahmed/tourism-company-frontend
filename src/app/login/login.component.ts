@@ -36,12 +36,15 @@ export class LoginComponent implements OnInit {
       console.log(body);
       if (body['valid'] == true){
         const login_res = body['response'];
+        console.log(login_res);
         localStorage.setItem('user_id', login_res['user_id']);
         localStorage.setItem('api_key', login_res['api_key']);
-        if (login_res['new_user']){
+        if (login_res['login_status'] == 'new login'){
+          console.log("Logiiii");
           this.router.navigateByUrl("passRedirect");
+        }else { 
+          this.router.navigateByUrl("offer");
         }
-        this.router.navigateByUrl("offer");
       } else { 
         console.log("in else");
         this.showWrongUser = true;
