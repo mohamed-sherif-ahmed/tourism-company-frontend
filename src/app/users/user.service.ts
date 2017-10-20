@@ -22,8 +22,8 @@ export class UserService {
         });
     }
 
-    addNewUser(data: string): void {
-        const url = `/admin/adduser`;
+    addNewUser(data): void {
+        const url = `im4booking/admin/adduser`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         this.http.post(url, {

@@ -60,15 +60,16 @@ export class PackagesService {
       return response.json().res as Package;
     });
   }
-  addVouchers(data): Promise<JSON> {
+  addVouchers(data, packageId): Promise<JSON> {
 
-    const url = `package/voucher`;
+    const url = `im4booking/package/voucher`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
 
     const body = {
       'api_key': api_key,
       'user_id': user_id,
+      'package_id': packageId,
       'voucher': data
     }
 
@@ -107,8 +108,8 @@ export class PackagesService {
       return response.json();
     });
   }
-  getVouchers(): Promise<string> {
-    const url = `package/voucher/`;
+  getVouchers(): Promise<any> {
+    const url = `im4booking/package/voucher/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -119,7 +120,7 @@ export class PackagesService {
     });
     return this.http.get(url, options).toPromise().then(response => {
       console.log(response);
-      return response['body'];
+      return response['_body'];
     })
   }
   sendFile(offerId: string, files : File[]): void {

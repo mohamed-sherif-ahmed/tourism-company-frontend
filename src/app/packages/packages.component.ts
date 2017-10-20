@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PackagesService } from './packages.service';
 import { Package } from './package';
 import { Voucher } from './voucher';
+import { package_json } from './package_json';
+import { voucher_json } from './voucher_json';
 
 @Component({
   selector: 'app-packages',
@@ -10,12 +12,12 @@ import { Voucher } from './voucher';
 })
 
 export class PackagesComponent implements OnInit {
-  packagesArr: JSON [];
-  vouchersArr: JSON [];
+  packagesArr: package_json [];
+  vouchersArr: voucher_json [];
   editEnabled = false;
-  editedPackage: number;
+  editedPackage: string;
   editedVoucher: number;
-  editFormPackage: Package;
+  editFormPackage: package_json;
   editFormVoucher: Voucher;
   imgFile: any;
   packVoucherArr: string [];
@@ -27,25 +29,24 @@ export class PackagesComponent implements OnInit {
     this.packageService.getPackages().then(res => {
       console.log(res);
       var body = JSON.parse(res);
-      this.packagesArr = body['response'];
+      this.packagesArr = body['response'] as package_json [];
       console.log(this.packagesArr);
     });
-    // this.packageService.getVouchers().then(res => {
-    //   console.log(`in component ${res}`);
-    //   const body = JSON.parse(res);
-    //   this.packagesArr = res['vouchers'];
-    // });
+    this.packageService.getVouchers().then(res => {
+      var body = JSON.parse(res);
+      this.vouchersArr = body['response'] as voucher_json [];
+    });
   }
 
-  editPackage(packageId: number): void {
+  editPackage(packageId: string): void {
     this.editEnabled = true;
     this.editedPackage = packageId;
-    // const selectedPackage = this.packagesArr.filter( pack => {
-    //   if (pack.id === this.editedPackage) {
-    //     return pack;
-    //   }
-    // });
-    // this.editFormPackage = selectedPackage[0];
+    const selectedPackage = this.packagesArr.filter( pack => {
+      if (pack._id === this.editedPackage) {
+        return pack;
+      }
+    });
+    this.editFormPackage = selectedPackage[0];
   }
   addNewPackage(name: string, nameAr: string, points: number, desc: string, descAr: string): void {
     const data = {
@@ -114,9 +115,10 @@ export class PackagesComponent implements OnInit {
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
   }
-  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string): void { 
+  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string, packageId: string): void { 
     const endDate = new Date(EnddateStr);
     const startDate = new Date(StartDateStr);
+    console.log(packageId);
     const data = {
       'title': [
         {
@@ -154,6 +156,6 @@ export class PackagesComponent implements OnInit {
       ]
     };
     console.log(data);
-    this.packageService.addVouchers(data);
+    this.packageService.addVouchers(data, packageId);
   }
 }

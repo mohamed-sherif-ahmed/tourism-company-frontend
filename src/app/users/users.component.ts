@@ -22,15 +22,27 @@ export class UsersComponent implements OnInit {
     
   }
   addNewUser(userName: string, email: string, password: string, userStatus: string, clientStatus: string, phone: string): void {
-    const data = {
-      'username': userName,
-      'email': email,
-      'password': password,
-      'phone': phone,
-      'client_type': clientStatus,
-      'user_type': userStatus
+    var data; 
+    if (userStatus == "admin") {
+      data = {
+        'name': userName,
+        'email': email,
+        'password': password,
+        'phone_number': phone,
+        'user_type': userStatus
+      }
+    } else {
+      data = {
+        'name': userName,
+        'email': email,
+        'password': password,
+        'phone_number': phone,
+        'client_type': clientStatus,
+        'user_type': userStatus
+      }
     }
+    
     console.log(data);
-    this.userService.addNewUser(JSON.stringify(data));
+    this.userService.addNewUser(data);
   }
 }

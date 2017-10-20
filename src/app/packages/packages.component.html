@@ -4,32 +4,50 @@
     <md-tab label="View Packages">
       <div class="cards-tab">
         <h1 class="view-title">Available Packages</h1>
-        <md-card class="package-card" *ngFor="let pack of packageArr">
+        <md-card class="package-card" *ngFor="let pack of packagesArr">
           <md-card-header>
             <md-card-title>{{pack.description[0].value}}</md-card-title>
             <md-card-title>{{pack.description[1].value}}</md-card-title>
-            <!-- <md-card-title>{{((pack['name'])[1])['value']}}</md-card-title> -->
           </md-card-header>
           <md-card-content>
-            <!-- <img src="{{pack.imgurl}}" />
+            <!-- <img src="{{pack.imgurl}}" /> -->
             <div class="container" *ngIf="editEnabled">
               <form>
                 <div class="form-group">
                   <label>Package Name:</label>
-                  <input type="text" class="form-control" id="name" value="{{editFormPackage.package_name}}">
+                  <input type="text" class="form-control" #name value="{{editFormPackage.name[0].value}}">
+                </div>
+                <div class="form-group">
+                  <label>Package Name in Arabic:</label>
+                  <input type="text" class="form-control" #namear value="{{editFormPackage.name[1].value}}">
                 </div>
                 <div class="form-group">
                   <label for="pwd">Points:</label>
-                  <input type="number" class="form-control" id="points">
+                  <input type="number" class="form-control" #points value="{{editFormPackage.points}">
                 </div>
                 <div class="form-group">
-                  <label>Image</label>
-                  <input type="file" class="form-control" id="img" (change)="fileHandler($event)">
+                  <label>Description :</label>
+                  <textarea class="form-control" id="description" #description value="{{editFormPackage.description[0].value}}"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button class="btn btn-warning">Cancel Edit</button>
+                <div class="form-group">
+                  <label>Description Arabic:</label>
+                  <textarea class="form-control" id="descriptionAr" #descriptionar value="{{editFormPackage.description[1].value}}"></textarea>
+                </div>
+                <!-- <div class="form-group">
+                  <div *ngFor="let packVoucher of packVoucherArr">
+                    <label>{{packVoucher.title}}</label>
+                    <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
+                  </div>
+                </div> -->
+                <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, namear.value, points.value, description.value, descriptionar.value)">Submit</button>
+                <!-- <div *ngIf="showImageUpload">
+                  <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" class="form-control" (change)="fileHandler(1,$event)">
+                  </div>
+                </div> -->
               </form>
-            </div> -->
+            </div>
           </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button (click)="editPackage(pack._id)">EDIT</button>
@@ -82,11 +100,11 @@
         <h1 class="view-title">Available Vouchers</h1>
         <md-card class="package-card" *ngFor="let voucher of vouchersArr">
           <md-card-header>
-            <md-card-title>{{voucher.title}}</md-card-title>
-            <md-card-subtitle>{{voucher.description}}</md-card-subtitle>
+            <md-card-title>{{voucher.title[0].value}}</md-card-title>
+            <md-card-title>{{voucher.title[1].value}}</md-card-title>
           </md-card-header>
           <md-card-content>
-            <p>{{voucher.condition}}</p>
+            <!-- <p>{{voucher.condition}}</p> -->
           </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button>EDIT</button>
@@ -128,6 +146,11 @@
             <input type="file" class="form-control" id="img" (change)="fileHandler($event)">
           </div>
           <div class="form-group">
+            <select class="selectpicker" #packageId>
+              <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
+            </select>
+          </div>
+          <div class="form-group">
             <md-input-container>
               <label>Start Date :</label>
               <input  mdInput [mdDatepicker]="test" #strt>
@@ -147,7 +170,7 @@
             <label>Points :</label>
             <input type="number" class="form-control" id="points" #vpoints>
           </div>
-          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value);">Submit</button>
+          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value, packageId.value);">Submit</button>
         </form>
       </div>
     </md-tab>
