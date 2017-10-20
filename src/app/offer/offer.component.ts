@@ -20,6 +20,7 @@ export class OfferComponent implements OnInit {
   filter: boolean= false;
   filesb: boolean= false;
   files:any;
+  divVisable:boolean = false;
   editedOfferId:string;
   addedOffer:Offer;
   viewedOffer:offerjson;
@@ -75,6 +76,12 @@ editOffer(title , desc ,exp , points , type ,condition){
 
 }
 
+edit(id: string){
+this.divVisable= true;
+this.editedOfferId=id ;
+
+
+}
 createOfferpdf(){
   console.log(this.addedOffer);
     console.log(this.offerService.offerbeingCreatedID);
