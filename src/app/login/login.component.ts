@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
         const login_res = body['response'];
         localStorage.setItem('user_id', login_res['user_id']);
         localStorage.setItem('api_key', login_res['api_key']);
+        if (login_res['new_user']){
+          this.router.navigateByUrl("passRedirect");
+        }
         this.router.navigateByUrl("offer");
       } else { 
         console.log("in else");
