@@ -12,7 +12,7 @@ import {Voucher} from './voucher';
 export class PackagesService {
   constructor (private http: Http) { }
 
-  addPackage(data: string): Promise<JSON> {
+  addPackage(data): Promise<JSON> {
     const url = `im4booking/package`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -22,14 +22,14 @@ export class PackagesService {
       'user_id': user_id,
       'package': data
     };
-    
+
     return this.http.post(url, body).toPromise().then(response => {
       return response.json();
     });
   }
 
-  getPackages(): Promise<string> {
-    const url = `/package`;
+  getPackages(): Promise<any> {
+    const url = `/im4booking/package`;
     const api_key = localStorage.getItem('api_key');
     const options = new RequestOptions({
       method: RequestMethod.Get,
@@ -39,7 +39,8 @@ export class PackagesService {
     });
     return this.http.request(url, options).toPromise().then(response => {
       console.log(response);
-      const body = response['body'];
+      const body = response['_body'];
+      console.log(`body : ${body}`);
       return body;
     });
   }
@@ -59,7 +60,7 @@ export class PackagesService {
       return response.json().res as Package;
     });
   }
-  addVouchers(data: string): Promise<JSON> {
+  addVouchers(data): Promise<JSON> {
 
     const url = `package/voucher`;
     const api_key = localStorage.getItem('api_key');
@@ -120,5 +121,25 @@ export class PackagesService {
       console.log(response);
       return response['body'];
     })
+  }
+  sendFile(offerId: string, files : File[]): void {
+    const url = `/upload_pic/package`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const header = new Headers();
+    // header.append('Accept', 'multipart/form-data');
+    // header.append('Content-Type', 'multipart/form-data');
+    const options = new RequestOptions({
+      headers: header
+    });
+    const formData = new FormData();
+      for ( let file of files) {
+           formData.append('file', file, file.name);
+
+      }
+    formData.append('user_id', user_id);
+    formData.append('offer_id', offerId);
+    formData.append('id', offerId);
+    this.http.post(url, formData, options).subscribe();
   }
 }

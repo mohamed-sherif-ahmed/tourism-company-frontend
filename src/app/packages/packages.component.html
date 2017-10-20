@@ -6,10 +6,12 @@
         <h1 class="view-title">Available Packages</h1>
         <md-card class="package-card" *ngFor="let pack of packageArr">
           <md-card-header>
-            <md-card-title>{{pack.package_name}}</md-card-title>
+            <md-card-title>{{pack.description[0].value}}</md-card-title>
+            <md-card-title>{{pack.description[1].value}}</md-card-title>
+            <!-- <md-card-title>{{((pack['name'])[1])['value']}}</md-card-title> -->
           </md-card-header>
           <md-card-content>
-            <img src="{{pack.imgurl}}" />
+            <!-- <img src="{{pack.imgurl}}" />
             <div class="container" *ngIf="editEnabled">
               <form>
                 <div class="form-group">
@@ -27,10 +29,10 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button class="btn btn-warning">Cancel Edit</button>
               </form>
-            </div>
+            </div> -->
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="editPackage(pack.id)">EDIT</button>
+            <button md-button (click)="editPackage(pack._id)">EDIT</button>
             <button class="delete-button" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
@@ -42,6 +44,10 @@
         <div class="form-group">
           <label>Package Name:</label>
           <input type="text" class="form-control" #name>
+        </div>
+        <div class="form-group">
+          <label>Package Name in Arabic:</label>
+          <input type="text" class="form-control" #namear>
         </div>
         <div class="form-group">
           <label for="pwd">Points:</label>
@@ -61,11 +67,11 @@
             <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
           </div>
         </div> -->
-        <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, points.value, description.value, descriptionar.value)">Submit</button>
+        <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, namear.value, points.value, description.value, descriptionar.value)">Submit</button>
         <div *ngIf="showImageUpload">
           <div class="form-group">
             <label>Image</label>
-            <input type="file" class="form-control" (change)="fileHandler($event)">
+            <input type="file" class="form-control" (change)="fileHandler(1,$event)">
           </div>
         </div>
       </form>
