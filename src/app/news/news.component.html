@@ -12,8 +12,8 @@
     <div class="card">
       <div class="card__image"> <img src="{{offer.img_path}}"></div>
       <div class="card__content">
-        <div class="card__title"> {{offer.title[0].value}} </div>
-        <p class="card__text">{{offer.body[0].value}} </p>
+        <div class="card__title"> {{offer.title[0].value}}  {{offer.title[1].value}} </div>
+        <p class="card__text">{{offer.body[0].value}}  {{offer.body[0].value}}</p>
         <button class="btn btn--block card__btn" onclick="delete(offer.id)" >DELETE</button>
         <button class="btn btn--block card__btn" onclick="edit(offer.id)" >EDIT</button>
       </div>
