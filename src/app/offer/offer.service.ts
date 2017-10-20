@@ -23,7 +23,6 @@ export class OfferService {
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const hh = new Headers();
-    hh.append('since_date', JSON.stringify(sinceDate) );
     hh.append('Content-Type', 'application/json');
     hh.append('Access-Control-Allow-Origin', '*');
     hh.append('Access-Control-Allow-Headers', '*');
@@ -153,13 +152,13 @@ is_voucher: false,
 
 }
     }).subscribe(data => {
-      this.valid = data.valid ;
-      this.err = data.msg;
-      this.offerbeingCreatedID=data.offer_id;
+      this.offerbeingCreatedID = data['_body']as string;
+      this.offerbeingCreatedID= this.offerbeingCreatedID['response'];
+      this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
     });
   }
   addOfferpdf(offerId: string, files : File[]): void {
-    const url = `/im4booking/offer/`;
+    const url = `/upload_media/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -171,9 +170,11 @@ is_voucher: false,
     const formData = new FormData();
       for ( let file of files) {
            formData.append('file', file, file.name);
+
       }
     formData.append('user_id', user_id);
     formData.append('offer_id', offerId);
+    formData.append('id',this.offerbeingCreatedID);
     this.http.post(url, formData, options).subscribe(data => {
       this.valid = data['valid'] ;
       this.err = data['msg'];
@@ -181,7 +182,7 @@ is_voucher: false,
   }
   addOfferimg(offerId: string, files : File[]): void {
 
-    const url = `/im4booking/offer/`;
+    const url = `/upload_pic/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -196,6 +197,7 @@ is_voucher: false,
       }
     formData.append('user_id', user_id);
     formData.append('offer_id', offerId);
+    formData.append('id',this.offerbeingCreatedID);
     this.http.post(url, formData, options).subscribe(data => {
       this.valid = data['valid'] ;
       this.err = data['msg'];
