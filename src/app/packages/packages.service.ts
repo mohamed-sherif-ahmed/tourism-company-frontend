@@ -13,7 +13,7 @@ export class PackagesService {
   constructor (private http: Http) { }
 
   addPackage(data: string): Promise<JSON> {
-    const url = `/package`;
+    const url = `im4booking/package`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
 
@@ -21,13 +21,14 @@ export class PackagesService {
       'api_key': api_key,
       'user_id': user_id,
       'package': data
-    }
-    return this.http.post(url, data).toPromise().then(response => {
+    };
+    
+    return this.http.post(url, body).toPromise().then(response => {
       return response.json();
     });
   }
 
-  getPackages(): Promise<Package[]> {
+  getPackages(): Promise<string> {
     const url = `/package`;
     const api_key = localStorage.getItem('api_key');
     const options = new RequestOptions({
@@ -37,7 +38,9 @@ export class PackagesService {
       }
     });
     return this.http.request(url, options).toPromise().then(response => {
-      return response.json().res as Package[];
+      console.log(response);
+      const body = response['body'];
+      return body;
     });
   }
   getPackage(id): Promise<Package> {
@@ -103,7 +106,7 @@ export class PackagesService {
       return response.json();
     });
   }
-  getVouchers(): Promise<Voucher []> {
+  getVouchers(): Promise<string> {
     const url = `package/voucher/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -114,7 +117,8 @@ export class PackagesService {
       headers: header
     });
     return this.http.get(url, options).toPromise().then(response => {
-      return response.json() as Voucher [];
+      console.log(response);
+      return response['body'];
     })
   }
 }

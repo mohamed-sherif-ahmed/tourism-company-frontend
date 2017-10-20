@@ -10,8 +10,8 @@ import { Voucher } from './voucher';
 })
 
 export class PackagesComponent implements OnInit {
-  packagesArr: Package [];
-  vouchersArr: Voucher [];
+  packagesArr: JSON [];
+  vouchersArr: JSON [];
   editEnabled = false;
   editedPackage: number;
   editedVoucher: number;
@@ -19,31 +19,50 @@ export class PackagesComponent implements OnInit {
   editFormVoucher: Voucher;
   imgFile: any;
   packVoucherArr: string [];
+  showImageUpload = false;
   constructor (private packageService: PackagesService) { }
   ngOnInit() {
-    this.packageService.getPackages().then(res => this.packagesArr = res);
-    this.packageService.getVouchers().then(res => this.vouchersArr = res);
+    this.packageService.getPackages().then(res => {
+      console.log(`in component ${res}`);
+      const body = JSON.parse(res);
+      this.packagesArr = res['packages'];
+    });
+    this.packageService.getVouchers().then(res => {
+      console.log(`in component ${res}`);
+      const body = JSON.parse(res);
+      this.packagesArr = res['vouchers'];
+    });
   }
 
   editPackage(packageId: number): void {
     this.editEnabled = true;
     this.editedPackage = packageId;
-    const selectedPackage = this.packagesArr.filter( pack => {
-      if (pack.id === this.editedPackage) {
-        return pack;
-      }
-    });
-    this.editFormPackage = selectedPackage[0];
+    // const selectedPackage = this.packagesArr.filter( pack => {
+    //   if (pack.id === this.editedPackage) {
+    //     return pack;
+    //   }
+    // });
+    // this.editFormPackage = selectedPackage[0];
   }
-  addNewPackage(name, points): void {
+  addNewPackage(name: string, points: number, desc: string, descAr: string): void {
     const data = {
       'name': name,
       'points': points,
-      'listed_customer': [],
-      'vouchers': []
+      'description': [
+        {
+          'lang': 'en',
+          'value': desc
+        },
+        {
+          'lang': 'ar',
+          'value': descAr
+        }
+      ]
+      //'vouchers': []
     }
     console.log(data);
-  this.packageService.addPackage(JSON.stringify(data));
+    this.packageService.addPackage(JSON.stringify(data));
+    this.showImageUpload = true;
 
   }
   cancelEdit(): void {
@@ -58,13 +77,13 @@ export class PackagesComponent implements OnInit {
   }
   editVoucher(voucherId: number): void {
     this.editEnabled = true;
-    this.editedVoucher = voucherId;
-    const selectedPackage = this.vouchersArr.filter( voucher => {
-      if (voucher.id === this.editedVoucher) {
-        return voucher;
-      }
-    });
-    this.editFormVoucher = selectedPackage[0];
+    // this.editedVoucher = voucherId;
+    // const selectedPackage = this.vouchersArr.filter( voucher => {
+    //   if (voucher.id === this.editedVoucher) {
+    //     return voucher;
+    //   }
+    // });
+    // this.editFormVoucher = selectedPackage[0];
   }
   fileHandler(event): void {
       this.imgFile = event.target.files;
