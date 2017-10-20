@@ -34,5 +34,5 @@ export class offerjson {
 		}
 	];
 	is_voucher: boolean;
-	in_package: boolean;
+
 }

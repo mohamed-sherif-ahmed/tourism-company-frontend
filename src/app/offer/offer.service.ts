@@ -109,7 +109,7 @@ condition: [
   }
 ],
 is_voucher: false,
-in_package: false
+
 } as offerjson);
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
@@ -150,7 +150,7 @@ in_package: false
 		}
 	],
 	is_voucher: false,
-	in_package: false
+
 }
     }).subscribe(data => {
       this.valid = data.valid ;
