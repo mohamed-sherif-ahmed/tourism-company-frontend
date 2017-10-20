@@ -59,9 +59,9 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-createOffer(title , titlear ,desc ,descar,exp , creation,points ,condition, conditionar){
+createOffer(title , titlear ,desc ,descar,exp ,points ,condition, conditionar){
    this.expdate = new Date (exp);
-   this.creationDate = new Date(creation);
+   this.creationDate = new Date(Date.now());
   console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
   this.addedOffer = new Offer(title,titlear,desc,descar,this.expdate,this.creationDate,points as number,'img to be uploaded ', "offer",condition,conditionar);
   console.log(this.addedOffer);
