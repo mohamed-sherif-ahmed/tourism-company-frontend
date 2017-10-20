@@ -152,9 +152,12 @@ is_voucher: false,
 
 }
     }).subscribe(data => {
-      this.offerbeingCreatedID = data['_body']as string;
-      this.offerbeingCreatedID= JSON.parse(this.offerbeingCreatedID)['response'];
+    console.log(data);
+
+      this.offerbeingCreatedID= data['response'];
+      console.log("the response   ",this.offerbeingCreatedID);
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
+      console.log("the id   ",this.offerbeingCreatedID);
     });
   }
   addOfferpdf(offerId: string, files : File[]): void {
