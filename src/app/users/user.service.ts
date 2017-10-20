@@ -22,18 +22,14 @@ export class UserService {
         });
     }
 
-    addNewUser(email: string, password:string, username: string): void {
+    addNewUser(data: string): void {
         const url = `/admin/adduser`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         this.http.post(url, {
             'api_key': api_key,
             'user_id': user_id,
-            'user': {
-                'username': username,
-                'password': password,
-                'email': email
-            }
+            'new_user_data': data
         }).subscribe();
     }
 

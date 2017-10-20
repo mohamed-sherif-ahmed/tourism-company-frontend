@@ -8,6 +8,7 @@ import { UserService } from './user.service';
 })
 export class UsersComponent implements OnInit {
   changePassword = false;
+  
   constructor(private userService: UserService) { }
   ngOnInit() {
   }
@@ -20,8 +21,16 @@ export class UsersComponent implements OnInit {
   deleteUser(userId: string): void {
     
   }
-  addNewUser(userName: string, email: string, password: string): void {
-    console.log("5ara hena");
-    this.userService.addNewUser(email, password, userName);
+  addNewUser(userName: string, email: string, password: string, userStatus: string, clientStatus: string, phone: string): void {
+    const data = {
+      'username': userName,
+      'email': email,
+      'password': password,
+      'phone': phone,
+      'client_type': clientStatus,
+      'user_type': userStatus
+    }
+    console.log(data);
+    this.userService.addNewUser(JSON.stringify(data));
   }
 }

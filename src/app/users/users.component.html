@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
 <md-tab-group>
-  <md-tab label="View Packages">
+  <md-tab label="View Users">
     <div class="cards-tab">
       <h1 class="view-title">Available Users</h1>
       <md-card class="package-card">
@@ -25,7 +25,7 @@
       </md-card>
     </div>
   </md-tab>
-  <md-tab label="Add New Admin">
+  <md-tab label="Add New User">
     <div class='container'>
       <form>
         <div class="form-group">
@@ -40,7 +40,23 @@
           <label>Password :</label>
           <input #pass type="text" class="form-control" >
         </div>
-        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value)">Submit</button>
+        <div class="form-group">
+          <label>Phone Number :</label>
+          <input #num type="number" class="form-control" >
+        </div>
+        <div class="form-group">
+          <select class="selectpicker" #userStatus>
+            <option>admin</option>
+            <option>client</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="selectpicker" #clientStatus>
+            <option>logged_in</option>
+            <option>guest</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value, userStatus.value, clientStatus.value, num.value)">Submit</button>
       </form>
     </div>
     </md-tab>
