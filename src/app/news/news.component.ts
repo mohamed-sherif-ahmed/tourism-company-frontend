@@ -1,63 +1,117 @@
 import { Component, OnInit } from '@angular/core';
-import {News} from './news';
 import {NewsService} from './news.service';
-
-
+import {News} from './news' ;
+import { FileSelectDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
+import {newsjson} from './newsjson' ;
 @Component({
-  selector: 'app-news',
+  selector: 'app-offer',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.less']
+  styleUrls: ['./news.component.less'],
 })
-export class NewsComponent /*implements OnInit*/ {
-  constructor(private newsService: NewsService) { }
-  file: FileList;
- newsArray: News[];
+
+export class NewsComponent implements OnInit {
+  constructor(private offerService: NewsService) { }
+ offersArray: newsjson[];
  neededDate: Date;
   data: {} ;
   error: {};
-  files:any ;
-  selectedNews: News;
-  addedNews:News;
+  filter: boolean= false;
+  filesb: boolean= false;
+  files:any;
+  divVisable:boolean = false;
+  editedOfferId:string;
+  addedOffer:News;
+  viewedOffer:newsjson;
+  expdate:Date;
+  creationDate:Date;
+  called : boolean = false;
+  esponse:any ;
+  visable:boolean = false;
   ngOnInit() {
-    console.log(this.neededDate);
-    this.viewNews(this.neededDate) ;
+    this.viewOffers(this.neededDate) ;
   }
-  viewNews(date: Date ): void {
-    this.newsService.getNews( date ).then((res) => {
-      if (this.newsService.valid) {
-        this.newsArray = res;
-      } else { // nzahrlo this.offerService.err fl UI
+  viewOffers(date: Date ): void {
+    this.offerService.getOffers( date ).then((res) => {
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.offersArray=this.esponse as newsjson[] ;}
+         else { // nzahrlo this.offerService.err fl UI
           }
     });
   }
   sumbitdateclicked(year , month , day){
     this.neededDate = new Date (year , month , day)
     console.log(this.neededDate);
-    this.viewNews(this.neededDate) ;
+    this.viewOffers(this.neededDate) ;
   }
-  viewnew(id: string , long: number): void {
-    this.newsService.getNew( id  ).then((res) => {
-      if (this.newsService.valid) {
-        this.selectedNews = res;
+  viewOffer(id: string ): void {
+    this.visable = true ;
+    this.editedOfferId=id;
+    console.log(this.editedOfferId);
+    this.offerService.getOffer( id  ).then((res) => {
+      this.esponse = JSON.parse(res)['response'] ;
+      if (JSON.parse(res)['valid']) {
+        this.viewedOffer=this.esponse['data'] as newsjson  ;
+
       } else { // nzahrlo this.offerService.err fl UI
       }
     });
   }
-createNews(title , id , body , date){
-  this.addedNews = new News(title , id , body , date);
-  console.log(this.addedNews); 
-    this.newsService.addNews(this.addedNews);
+createOffer(title , titlear ,desc ,descar,exp ,points ,condition, conditionar){
+   this.creationDate = new Date(Date.now());
+  console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
+  this.addedOffer = new News(title,titlear,desc,descar,this.creationDate);
+  console.log(this.addedOffer);
+    console.log("test");
+    this.filesb= true ;
+    this.offerService.addOffer(this.addedOffer);
+}
+
+editOffer(title , desc ,exp , points , type ,condition){
+
+//this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
 
 }
-delete (title:string){
-  this.newsService.delNews(title);
+
+edit(id: string){
+this.divVisable= true;
+this.editedOfferId=id ;
+
+
 }
+createOfferpdf(){
+  console.log(this.addedOffer);
+    console.log(this.offerService.offerbeingCreatedID);
+    this.offerService.addOfferpdf(this.offerService.offerbeingCreatedID, this.files);
+}
+
+
+createOfferimg(){
+  console.log(this.addedOffer);
+    console.log(this.offerService.offerbeingCreatedID);
+    this.offerService.addOfferimg(this.offerService.offerbeingCreatedID, this.files);
+}
+editOfferimg(){
+    console.log(this.editedOfferId);
+    this.offerService.addOfferimg(this.editedOfferId, this.files);
+}
+editOfferpdf(){
+    console.log(this.editedOfferId);
+    this.offerService.addOfferpdf(this.editedOfferId, this.files);
+}
+
+delete(name:string){
+  this.offerService.delOffer(name);
+}
+
+
   pdfHandler(event): void {
     console.log('pdfhandler called');
-    this.files = event.target.files ;
-
+  this.files = event.target.files
   }
   test(): void {
     console.log('sdfdsss');
   }
+
 }

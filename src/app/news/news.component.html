@@ -2,58 +2,78 @@
 <body>
 <md-tab-group>
   <md-tab label="VIEW NEWS">
-    <input placeholder="YEAR"#year><input placeholder="MONTH"#month><input placeholder="DAY"#day> <button class="btn btn--block" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit </button>
+    <input class="in" placeholder="YEAR"#year>
+    <input class="in"placeholder="MONTH"#month>
+    <input class="in" placeholder="DAY"#day>       <p>
+          </p>
+     <button class="btn in" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit the since date </button>
 <ul class="cards">
-  <li class="cards__item" *ngFor="let news of newsArray">
+  <li class="cards__item" *ngFor="let offer of offersArray">
     <div class="card">
-      <div class="card__image"><img src= "https://wwees.buncombeschools.org/common/pages/UserFile.aspx?fileId=2564929" ></div>
+      <div class="card__image"> <img src="{{offer.img_path}}"></div>
       <div class="card__content">
-        <div class="card__title"> {{news.title}} </div>
-        <p class="card__text">{{news.body}} </p>
-        <button class="btn btn--block card__btn" onclick="delete(news.title)" >DELETE</button>
+        <div class="card__title"> {{offer.title[0].value}} </div>
+        <p class="card__text">{{offer.body[0].value}} </p>
+        <button class="btn btn--block card__btn" onclick="delete(offer.id)" >DELETE</button>
+        <button class="btn btn--block card__btn" onclick="edit(offer.id)" >EDIT</button>
       </div>
     </div>
   </li>
 </ul>
   </md-tab>
+
   <md-tab label="ADD NEWS">
+
     <div class='wrap'>
+
       <form>
-        <input  placeholder='TITLE' #titlet="">
-        <input  placeholder='ID' #desct>
-        <textarea   placeholder='BODY' #expt></textarea>
-        <md-input-container>
-            <input  mdInput [mdDatepicker]="picker" #expi>
-            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-        </md-input-container>
-          <md-datepicker #picker></md-datepicker>
+        <input  placeholder='TITLE' #name>
+          <input  placeholder='TITLE IN ARABIC' #titlear>
         <p>
         </p>
-        <button class="btn btn--block card__btn" (click)= "createNews(titlet.value,desct.value,expt.value,expi.value)" >ADD</button>
+        <textarea class="textarea" placeholder='BODY' #descrip></textarea>
+        <textarea class="textarea" placeholder='BODY IN ARABIC' #descar></textarea>
+
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value)" >SUMBIT NEWS DATA</button>
+<div *ngIf="filesb">
+        <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
+        <p>
+        </p>
+          <button class="btn btn--block card__btn" (click)= "createOfferpdf()" >ADD NEWS PDF</button>
+          <input type="file" #file placeholder=' ADD OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
+          <p>
+          </p>
+            <button class="btn btn--block card__btn" (click)= "createOfferimg()" >ADD ADD NEWS IMAGE</button>
+          </div>
+      </form>
+    </div>
+    <div *ngIf="divVisable" class='wrap'>
+
+      <form>
+        <input  placeholder=' NEW TITLE' #title>
+        <p>
+        </p>
+        <textarea class="textarea" placeholder=' NEW BODY' #desc></textarea>
+
+        <p>
+        </p>
+        <button class="btn btn--block card__btn" (click)= "editOffer(title.value,desc.value)" >SUMBIT NEWS DATA</button>
+
+        <input type="file" #file placeholder=' ADD NEW OFFER PDF' (change)="pdfHandler($event)" multiple/>
+        <p>
+        </p>
+          <button class="btn btn--block card__btn" (click)= "editOfferpdf()" >ADD NEW NEWS PDF</button>
+          <input type="file" #file placeholder=' ADD NEW OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
+          <p>
+          </p>
+            <button class="btn btn--block card__btn" (click)= "editOfferimg()" >ADD NEW NEWS IMAGE</button>
       </form>
     </div>
   </md-tab>
-  <md-tab label="SEARCH">
-    <div class="wrap">
-    <input  placeholder='ENTER THE ID OF THE NEWS' #Password>
-      <p>
-      </p>
-      <button class="btn btn--block card__btn">SEARCH</button>
-    </div>
-  </md-tab>
-  <md-tab label="EDIT NEWS">
-    <div class='wrap'>
-      <form>
-        <input  placeholder='TITLE' #title="">
-        <input  placeholder='ID' #desc>
-        <input   placeholder='BODY' #exp>
-        <input   placeholder='DATE ' #points>
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)="test()">EDIT</button>
-      </form>
-    </div>
-  </md-tab>
+
+
 
   </md-tab-group>
 </body>

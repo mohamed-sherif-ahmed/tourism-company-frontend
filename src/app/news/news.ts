@@ -1,17 +1,23 @@
 export class News {
     title : string ;
+    titlear: string;
     id:number;
     body:string;
-    date:string;
+    bodyar:string;
+    date:Date;
+    img_path:string;
+    media_path: string ;
 
 constructor (
               title:         string,
-              id:    number,
+              titlear: string,
               body:    string,
-              date:    string,
+              bodyar: string,
+              date:    Date,
              )  {
                 this.title       = title
-                this.id   = id
+                this.titlear = titlear
                 this.body  = body
-                this.date  = date
+                this.bodyar = bodyar
+              this.date = date
               }}

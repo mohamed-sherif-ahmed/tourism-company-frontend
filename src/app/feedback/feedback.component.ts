@@ -18,7 +18,7 @@ export class FeedbackComponent implements OnInit {
     this.service.getFeedbacks().then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.feedbacks=this.esponse['data'] as Feedback[];
+        this.feedbacks=this.esponse as Feedback[];
 
       }
        else { // nzahrlo this.offerService.err fl UI
