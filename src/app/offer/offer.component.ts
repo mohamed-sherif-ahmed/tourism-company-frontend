@@ -36,7 +36,7 @@ export class OfferComponent implements OnInit {
     this.offerService.getOffers( date ).then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.offersArray=this.esponse['data'] as offerjson[] ;}
+        this.offersArray=this.esponse as offerjson[] ;}
          else { // nzahrlo this.offerService.err fl UI
           }
     });

@@ -153,7 +153,7 @@ is_voucher: false,
 }
     }).subscribe(data => {
       this.offerbeingCreatedID = data['_body']as string;
-      this.offerbeingCreatedID= this.offerbeingCreatedID['response'];
+      this.offerbeingCreatedID= JSON.parse(this.offerbeingCreatedID)['response'];
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
     });
   }
