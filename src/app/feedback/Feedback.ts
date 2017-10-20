@@ -1,7 +1,7 @@
 export class Feedback {
-  title: string;
-  body: string;
-  date: string;
-  pdf: any ;
-  creator_id: string ;
+  about: string;
+  details: string;
+  id: string;
+  date: Date;
+  from_user: string ;
 }
