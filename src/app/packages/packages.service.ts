@@ -143,4 +143,46 @@ export class PackagesService {
     formData.append('id', offerId);
     this.http.post(url, formData, options).subscribe();
   }
+
+  sendFileImgVoucher(offerId: string, files : File[]): void {
+    const url = `/upload_pic/package`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const header = new Headers();
+    // header.append('Accept', 'multipart/form-data');
+    // header.append('Content-Type', 'multipart/form-data');
+    const options = new RequestOptions({
+      headers: header
+    });
+    const formData = new FormData();
+      for ( let file of files) {
+           formData.append('file', file, file.name);
+
+      }
+    formData.append('user_id', user_id);
+    formData.append('offer_id', offerId);
+    formData.append('id', offerId);
+    this.http.post(url, formData, options).subscribe();
+  }
+
+  sendFilePDFVoucher(offerId: string, files : File[]): void {
+    const url = `/upload_pic/package`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const header = new Headers();
+    // header.append('Accept', 'multipart/form-data');
+    // header.append('Content-Type', 'multipart/form-data');
+    const options = new RequestOptions({
+      headers: header
+    });
+    const formData = new FormData();
+      for ( let file of files) {
+           formData.append('file', file, file.name);
+
+      }
+    formData.append('user_id', user_id);
+    formData.append('offer_id', offerId);
+    formData.append('id', offerId);
+    this.http.post(url, formData, options).subscribe();
+  }
 }

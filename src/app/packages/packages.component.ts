@@ -104,13 +104,19 @@ export class PackagesComponent implements OnInit {
   fileHandler(type ,event): void {
     var objId: string;
     this.imgFile = event.target.files;
-    if (type == 1){
+    if (type == 1) {
       objId = this.packageID;
-    }else {
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFile(objId, this.imgFile);
+    } else if (type == 0) {
       objId = this.voucherID;
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFileImgVoucher(objId, this.imgFile);
+    } else {
+      objId = this.voucherID;
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFilePDFVoucher(objId, this.imgFile);
     }
-    console.log(`sending file for ${objId}`);
-    this.packageService.sendFile(objId, this.imgFile);
   }
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
@@ -120,7 +126,7 @@ export class PackagesComponent implements OnInit {
     const startDate = new Date(StartDateStr);
     console.log(packageId);
     const data = {
-      'title': [
+      'name': [
         {
           'lang': 'en',
           'value': title
@@ -130,7 +136,7 @@ export class PackagesComponent implements OnInit {
           'value': titleAr
         }
       ],
-      'desc':[
+      'description':[
         {
           'lang': 'en',
           'value': desc
@@ -142,8 +148,8 @@ export class PackagesComponent implements OnInit {
       ],
       'creation_date': startDate,
       'exp_date': endDate,
-      'type': '',
-      'points': points,
+      'is_voucher': true,
+      'given_points': points,
       'condition':[
         {
           'lang': 'en',
@@ -153,9 +159,12 @@ export class PackagesComponent implements OnInit {
           'lang': 'ar',
           'value': condAr
         }
-      ]
+      ],
+      'condition_type': true
     };
     console.log(data);
-    this.packageService.addVouchers(data, packageId);
+    this.packageService.addVouchers(data, packageId).then(res => {
+      this.showImageUpload = true;
+    });
   }
 }
