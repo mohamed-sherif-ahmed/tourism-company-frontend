@@ -9,7 +9,7 @@ import { RequestService } from './requests.service';
   styleUrls: ['./requests.component.css']
 })
 export class RequestsComponent implements OnInit {
-  requestArr: JSON[];
+  requestArr: any;
   constructor(private requestService: RequestService) { }
 
   ngOnInit() {

@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 export class RequestService {
     constructor (private http: Http) { };
 
-    getAvailableRequests(): Promise<JSON[]> {
-        const url = `/request/`;
+    getAvailableRequests(): Promise<any> {
+        const url = `im4booking/request/`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
@@ -18,7 +18,8 @@ export class RequestService {
             headers: header
           });
         return this.http.get(url, options).toPromise().then(response => {
-            return response['requests'];
+            console.log(response);
+            return JSON.parse(response['_body']);
         });
     }
 

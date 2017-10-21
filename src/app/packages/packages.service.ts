@@ -145,7 +145,7 @@ export class PackagesService {
   }
 
   sendFileImgVoucher(offerId: string, files : File[]): void {
-    const url = `/upload_pic/package`;
+    const url = `/upload_pic/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
@@ -166,7 +166,7 @@ export class PackagesService {
   }
 
   sendFilePDFVoucher(offerId: string, files : File[]): void {
-    const url = `/upload_pic/package`;
+    const url = `/upload_media/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     const header = new Headers();
