@@ -1,5 +1,5 @@
 export class voucher_json {
-    'title': [
+    'name': [
       {
         'lang': 'en',
         'value': string
@@ -9,7 +9,7 @@ export class voucher_json {
         'value': string
       }
     ];
-    'desc':[
+    'description':[
       {
         'lang': 'en',
         'value': string
@@ -21,8 +21,8 @@ export class voucher_json {
     ];
     'creation_date': Date;
     'exp_date': Date;
-    'type': '';
-    'points': number;
+    'is_voucher': boolean;
+    'given_points': number;
     'condition':[
       {
         'lang': 'en',
@@ -32,5 +32,6 @@ export class voucher_json {
         'lang': 'ar',
         'value': string
       }
-    ]
+    ];
+    'condition_type': boolean;
   };

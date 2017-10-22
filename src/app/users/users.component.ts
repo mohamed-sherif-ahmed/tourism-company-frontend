@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UserService } from './user.service';
+import { PackagesService } from './../packages/packages.service';
+import { package_json } from './../packages/package_json';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -8,9 +10,16 @@ import { UserService } from './user.service';
 })
 export class UsersComponent implements OnInit {
   changePassword = false;
-  
-  constructor(private userService: UserService) { }
+  packagesArr: package_json [];
+
+  constructor(private userService: UserService, private packageService: PackagesService) { }
   ngOnInit() {
+    this.packageService.getPackages().then(res => {
+      console.log(res);
+      var body = JSON.parse(res);
+      this.packagesArr = body['response'] as package_json [];
+      console.log(this.packagesArr);
+    });
   }
   showPasswordForm(): void {
     this.changePassword = true;
@@ -21,7 +30,7 @@ export class UsersComponent implements OnInit {
   deleteUser(userId: string): void {
     
   }
-  addNewUser(userName: string, email: string, password: string, userStatus: string, clientStatus: string, phone: string): void {
+  addNewUser(userName: string, email: string, password: string, userStatus: string, clientStatus: string, phone: string, packageId: string): void {
     var data; 
     if (userStatus == "admin") {
       data = {
@@ -29,7 +38,8 @@ export class UsersComponent implements OnInit {
         'email': email,
         'password': password,
         'phone_number': phone,
-        'user_type': userStatus
+        'user_type': userStatus,
+        'packaged_used': packageId
       }
     } else {
       data = {
@@ -38,7 +48,8 @@ export class UsersComponent implements OnInit {
         'password': password,
         'phone_number': phone,
         'client_type': clientStatus,
-        'user_type': userStatus
+        'user_type': userStatus,
+        'packaged_used': packageId
       }
     }
     

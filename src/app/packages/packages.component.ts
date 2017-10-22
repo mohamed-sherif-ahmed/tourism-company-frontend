@@ -34,6 +34,7 @@ export class PackagesComponent implements OnInit {
     });
     this.packageService.getVouchers().then(res => {
       var body = JSON.parse(res);
+      console.log(body);
       this.vouchersArr = body['response'] as voucher_json [];
     });
   }
@@ -164,6 +165,8 @@ export class PackagesComponent implements OnInit {
     };
     console.log(data);
     this.packageService.addVouchers(data, packageId).then(res => {
+      const body = res['response'];
+      this.voucherID = body['_id'];
       this.showImageUpload = true;
     });
   }

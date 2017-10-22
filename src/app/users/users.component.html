@@ -56,7 +56,13 @@
             <option>guest</option>
           </select>
         </div>
-        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value, userStatus.value, clientStatus.value, num.value)">Submit</button>
+        <div class="form-group">
+          <label>Package Name :</label>
+          <select class="selectpicker" #packageId>
+            <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value, userStatus.value, clientStatus.value, num.value, packageId.value)">Submit</button>
       </form>
     </div>
     </md-tab>

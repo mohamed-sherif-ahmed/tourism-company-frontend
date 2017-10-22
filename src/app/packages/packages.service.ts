@@ -119,7 +119,7 @@ export class PackagesService {
       headers: header
     });
     return this.http.get(url, options).toPromise().then(response => {
-      console.log(response);
+      // console.log(response);
       return response['_body'];
     })
   }
