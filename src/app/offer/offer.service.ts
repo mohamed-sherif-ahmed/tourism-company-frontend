@@ -108,8 +108,9 @@ condition: [
   }
 ],
 is_voucher: false,
+price: offer.price,
 
-} as offerjson);
+});
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
@@ -149,6 +150,7 @@ is_voucher: false,
 		}
 	],
 	is_voucher: false,
+  price: offer.price,
 
 }
     }).subscribe(data => {
