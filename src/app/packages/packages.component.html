@@ -163,10 +163,17 @@
             <md-datepicker #testa></md-datepicker>
           </div>
           <div class="form-group">
+            <label for="pwd">Only 1 Use : </label>
+            <select class="selectpicker" #voneuse>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label>Points :</label>
             <input type="number" class="form-control" id="points" #vpoints>
           </div>
-          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value, packageId.value);">Submit</button>
+          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value, packageId.value, voneuse.value);">Submit</button>
           <div *ngIf="showImageUpload">
             <div class="form-group">
               <label>Image :</label>

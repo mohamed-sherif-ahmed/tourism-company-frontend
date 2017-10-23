@@ -122,7 +122,13 @@ export class PackagesComponent implements OnInit {
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
   }
-  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string, packageId: string): void { 
+  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string, packageId: string, oneUse: string): void { 
+    var ob: boolean;
+    if (oneUse == "yes") {
+      ob = true;
+    } else { 
+      ob = false;
+    }
     const endDate = new Date(EnddateStr);
     const startDate = new Date(StartDateStr);
     console.log(packageId);
@@ -161,7 +167,8 @@ export class PackagesComponent implements OnInit {
           'value': condAr
         }
       ],
-      'condition_type': true
+      'condition_type': true,
+      'used_one': ob
     };
     console.log(data);
     this.packageService.addVouchers(data, packageId).then(res => {
