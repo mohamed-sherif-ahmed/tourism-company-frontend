@@ -10,6 +10,7 @@ type: string ;
 conditionar:string;
 titlear:string;
 condition: string;
+price: number;
 constructor (
               name:         string,
               namear:string,
@@ -22,6 +23,7 @@ constructor (
               type:        string,
               condition:       string,
               conditionar : string,
+              price:number
              )  {
                 this.name       = name
                 this.description   = description
@@ -34,6 +36,7 @@ constructor (
                 this.conditionar = conditionar
                 this.titlear= namear
                 this.desar=descriptionar
+                this.price = price
 
               }
 
