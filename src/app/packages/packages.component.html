@@ -58,26 +58,26 @@
     </md-tab>
     <md-tab label="Add New Package">
     <div class='container'>
-      <form>
+      <form (ngSubmit)="newPackageSubmit()" [formGroup]="packageForm">
         <div class="form-group">
           <label>Package Name:</label>
-          <input type="text" class="form-control" #name>
+          <input type="text" class="form-control" formControlName="nameEnglish">
         </div>
         <div class="form-group">
           <label>Package Name in Arabic:</label>
-          <input type="text" class="form-control" #namear>
+          <input type="text" class="form-control" formControlName="nameArabic">
         </div>
         <div class="form-group">
           <label for="pwd">Points:</label>
-          <input type="number" class="form-control" #points>
+          <input type="number" class="form-control" formControlName="points">
         </div>
         <div class="form-group">
           <label>Description :</label>
-          <textarea class="form-control" id="description" #description></textarea>
+          <textarea class="form-control" id="description" formControlName="descriptionEnglish"></textarea>
         </div>
         <div class="form-group">
           <label>Description Arabic:</label>
-          <textarea class="form-control" id="descriptionAr" #descriptionar></textarea>
+          <textarea class="form-control" id="descriptionAr" formControlName="descriptionArabic"></textarea>
         </div>
         <!-- <div class="form-group">
           <div *ngFor="let packVoucher of packVoucherArr">
@@ -85,7 +85,7 @@
             <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
           </div>
         </div> -->
-        <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, namear.value, points.value, description.value, descriptionar.value)">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
         <div *ngIf="showImageUpload">
           <div class="form-group">
             <label>Image</label>
@@ -116,64 +116,59 @@
     <md-tab label="Add New Voucher">
       <h1 class="view-title">Add New Voucher</h1>
       <div class="container">
-        <form>
+        <form (ngSubmit)="newVoucherSubmit()" [formGroup]="voucherForm">
           <div class="form-group">
             <label>Title :</label>
-            <input type="text" class="form-control" id="title" #vtitle>
+            <input type="text" class="form-control" id="title" formControlName="titleEnglish">
           </div>
           <div class="form-group">
             <label>Title Arabic:</label>
-            <input type="text" class="form-control" id="title" #vtitleAr>
+            <input type="text" class="form-control" id="title" formControlName="titleArabic">
           </div>
           <div class="form-group">
             <label for="pwd">Description :</label>
-            <textarea class="form-control" id="description" #vdescription></textarea>
+            <textarea class="form-control" id="description" formControlName="descriptionEnglish"></textarea>
           </div>
           <div class="form-group">
             <label for="pwd">Description Arabic:</label>
-            <textarea class="form-control" id="description" #vdescriptionar></textarea>
+            <textarea class="form-control" id="description" formControlName="descriptionArabic"></textarea>
           </div>
           <div class="form-group">
             <label for="pwd">Condition :</label>
-            <textarea class="form-control" id="condition" #vcondition></textarea>
+            <textarea class="form-control" id="condition" formControlName="conditionEnglish"></textarea>
           </div>
           <div class="form-group">
             <label for="pwd">Condition Arabic:</label>
-            <textarea class="form-control" id="condition" #vconditionar></textarea>
+            <textarea class="form-control" id="condition" formControlName="conditionArabic"></textarea>
           </div>
           <div class="form-group">
-            <select class="selectpicker" #packageId>
+            <select class="selectpicker" formControlName="package">
+              <option value="">Select an Package</option>
+              <option value="1213EEe1">SeRRe</option>
               <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
             </select>
           </div>
           <div class="form-group">
-            <md-input-container>
-              <label>Start Date :</label>
-              <input  mdInput [mdDatepicker]="test" #strt>
-              <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
-            </md-input-container>
-            <md-datepicker #test></md-datepicker>
+            <label>Start Date</label>
+            <date-picker formControlName="startDate"></date-picker>
           </div>
           <div class="form-group">
-            <md-input-container>
-              <label>Expiry Date :</label>
-              <input  mdInput [mdDatepicker]="testa" #exp>
-              <md-datepicker-toggle mdSuffix [for]="testa"></md-datepicker-toggle>
-            </md-input-container>
-            <md-datepicker #testa></md-datepicker>
+            <label>Expiry Date</label>
+              <date-picker formControlName="expiryDate"></date-picker>
           </div>
           <div class="form-group">
             <label for="pwd">Only 1 Use : </label>
-            <select class="selectpicker" #voneuse>
+            <select class="selectpicker" formControlName="oneUse">
+              <option value="">Choose Yes or No</option>
               <option value="yes">Yes</option>
               <option value="no">No</option>
             </select>
           </div>
           <div class="form-group">
             <label>Points :</label>
-            <input type="number" class="form-control" id="points" #vpoints>
+            <input type="number" class="form-control" id="points" formControlName="points">
           </div>
-          <button class="btn btn-primary" (click)="addVoucher(vtitle.value, vdescription.value, vcondition.value, vpoints.value, vdescriptionar.value, vconditionar.value, exp.value, strt.value, vtitleAr.value, packageId.value, voneuse.value);">Submit</button>
+          <button class="btn btn-primary" type="submit">Submit</button>
           <div *ngIf="showImageUpload">
             <div class="form-group">
               <label>Image :</label>

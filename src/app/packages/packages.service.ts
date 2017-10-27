@@ -144,7 +144,7 @@ export class PackagesService {
     this.http.post(url, formData, options).subscribe();
   }
 
-  sendFileImgVoucher(offerId: string, files : File[]): void {
+  sendFileImgVoucher(offerId: string, files : File[]): Promise<any> {
     const url = `/upload_pic/offer`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -162,7 +162,9 @@ export class PackagesService {
     formData.append('user_id', user_id);
     formData.append('offer_id', offerId);
     formData.append('id', offerId);
-    this.http.post(url, formData, options).subscribe();
+    return this.http.post(url, formData, options).toPromise().then(res => {
+      return res;
+    });
   }
 
   sendFilePDFVoucher(offerId: string, files : File[]): void {

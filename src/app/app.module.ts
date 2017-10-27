@@ -8,7 +8,9 @@ import {MdTabsModule} from '@angular/material';
 import {MdInputModule} from '@angular/material';
 import {MdFormFieldModule} from '@angular/material';
 import {MdSelectModule} from '@angular/material';
-
+import { ReactiveFormsModule } from '@angular/forms'; 
+import { DatePickerModule } from 'angular-io-datepicker'
+import { OverlayModule} from 'angular-io-overlay';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
@@ -55,6 +57,8 @@ import { PasswordRedirectComponent } from './password-redirect/password-redirect
     HttpModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     MdCardModule,
     MdButtonModule,
@@ -66,6 +70,8 @@ import { PasswordRedirectComponent } from './password-redirect/password-redirect
     HttpModule,
     MdCheckboxModule,
     MdNativeDateModule,
+    DatePickerModule,
+    OverlayModule,
     RouterModule.forRoot([
       {
         path: 'news',

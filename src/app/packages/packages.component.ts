@@ -4,6 +4,7 @@ import { Package } from './package';
 import { Voucher } from './voucher';
 import { package_json } from './package_json';
 import { voucher_json } from './voucher_json';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; 
 
 @Component({
   selector: 'app-packages',
@@ -24,8 +25,36 @@ export class PackagesComponent implements OnInit {
   showImageUpload = false;
   packageID: string;
   voucherID: string;
+
+  //FORM SECTION 
+  packageForm: FormGroup;  
+  voucherForm: FormGroup;
+  //END FORM SECTION
+
   constructor (private packageService: PackagesService) { }
   ngOnInit() {
+    this.packageForm = new FormGroup({
+      nameEnglish: new FormControl('', Validators.required),
+      nameArabic: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required)
+    });
+
+    this.voucherForm = new FormGroup({
+      titleEnglish: new FormControl('', Validators.required),
+      titleArabic: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl('', Validators.required),
+      conditionArabic: new FormControl('', Validators.required),
+      package: new FormControl('', Validators.required),
+      startDate: new FormControl('', Validators.required),
+      expiryDate: new FormControl('', Validators.required),
+      oneUse: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required)
+    });
+
     this.packageService.getPackages().then(res => {
       console.log(res);
       var body = JSON.parse(res);
@@ -39,6 +68,45 @@ export class PackagesComponent implements OnInit {
     });
   }
 
+  newPackageSubmit(): void {
+    if (this.packageForm.valid) {
+      const data = {
+        'name': [
+          {
+            'lang': 'en',
+            'value': this.packageForm.value.nameEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.packageForm.value.nameArabic
+          }
+        ],
+        'points': this.packageForm.value.points,
+        'description': [
+          {
+            'lang': 'en',
+            'value': this.packageForm.value.descriptionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.packageForm.value.descriptionArabic
+          }
+        ]
+        //'vouchers': []
+      }
+      console.log(data);
+      this.packageService.addPackage(data).then(res => {
+        console.log(res);
+        const response = res['response'];
+        this.packageID = response['_id'];
+        this.showImageUpload = true;
+      });
+      this.packageForm.reset();
+    } else {
+      console.log("RRERERER");
+    }
+  }
+
   editPackage(packageId: string): void {
     this.editEnabled = true;
     this.editedPackage = packageId;
@@ -49,44 +117,11 @@ export class PackagesComponent implements OnInit {
     });
     this.editFormPackage = selectedPackage[0];
   }
-  addNewPackage(name: string, nameAr: string, points: number, desc: string, descAr: string): void {
-    const data = {
-      'name': [
-        {
-          'lang': 'en',
-          'value': name
-        },
-        {
-          'lang': 'ar',
-          'value': nameAr
-        }
-      ],
-      'points': points,
-      'description': [
-        {
-          'lang': 'en',
-          'value': desc
-        },
-        {
-          'lang': 'ar',
-          'value': descAr
-        }
-      ]
-      //'vouchers': []
-    }
-    console.log(data);
-    this.packageService.addPackage(data).then(res => {
-      console.log(res);
-      const response = res['response'];
-      this.packageID = response['_id'];
-      this.showImageUpload = true;
-    });
-  }
+ 
   cancelEdit(): void {
     this.editEnabled = false;
   }
   submitEditPackage(): void {
-
   }
   submitEditVoucher(title: string, desc: string, expdate: string, points: number, condition: string, id: number, package_id: number): void {
     const tempVoucher = new Voucher(title, id, desc, expdate, points, condition, package_id);
@@ -112,7 +147,8 @@ export class PackagesComponent implements OnInit {
     } else if (type == 0) {
       objId = this.voucherID;
       console.log(`sending file for ${objId}`);
-      this.packageService.sendFileImgVoucher(objId, this.imgFile);
+      this.packageService.sendFileImgVoucher(objId, this.imgFile).then(res => {
+      });
     } else {
       objId = this.voucherID;
       console.log(`sending file for ${objId}`);
@@ -122,59 +158,65 @@ export class PackagesComponent implements OnInit {
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
   }
-  addVoucher(title: string, desc: string, cond: string, points: string, descAr: string, condAr: string, EnddateStr: string, StartDateStr: string, titleAr: string, packageId: string, oneUse: string): void { 
-    var ob: boolean;
-    if (oneUse == "yes") {
-      ob = true;
-    } else { 
-      ob = false;
+  newVoucherSubmit(): void {
+    if (this.voucherForm.valid) {
+      var ob: boolean;
+      if (this.voucherForm.value.oneUse == "yes") {
+        ob = true;
+      } else { 
+        ob = false;
+      }
+      console.log(this.voucherForm.value.startDate);
+       const start = new Date(this.voucherForm.value.expiryDate._d);
+       const expiry = new Date(this.voucherForm.value.expiryDate._d);
+      console.log(this.voucherForm.value.package);
+      const data = {
+        'name': [
+          {
+            'lang': 'en',
+            'value': this.voucherForm.value.titleEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.voucherForm.value.titleArabic
+          }
+        ],
+        'description':[
+          {
+            'lang': 'en',
+            'value': this.voucherForm.value.descriptionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.voucherForm.value.descriptionArabic
+          }
+        ],
+        'creation_date': start,
+        'exp_date': expiry,
+        'is_voucher': true,
+        'given_points': this.voucherForm.value.points,
+        'condition':[
+          {
+            'lang': 'en',
+            'value': this.voucherForm.value.conditionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.voucherForm.value.conditionArabic
+          }
+        ],
+        'condition_type': true,
+        'used_one': ob
+      };
+      console.log(data);
+      this.packageService.addVouchers(data, this.voucherForm.value.package).then(res => {
+        const body = res['response'];
+        this.voucherID = body['_id'];
+        this.showImageUpload = true;
+      });
+      this.voucherForm.reset();
+    } else {
+      console.log(this.voucherForm.value);
     }
-    const endDate = new Date(EnddateStr);
-    const startDate = new Date(StartDateStr);
-    console.log(packageId);
-    const data = {
-      'name': [
-        {
-          'lang': 'en',
-          'value': title
-        },
-        {
-          'lang': 'ar',
-          'value': titleAr
-        }
-      ],
-      'description':[
-        {
-          'lang': 'en',
-          'value': desc
-        },
-        {
-          'lang': 'ar',
-          'value': descAr
-        }
-      ],
-      'creation_date': startDate,
-      'exp_date': endDate,
-      'is_voucher': true,
-      'given_points': points,
-      'condition':[
-        {
-          'lang': 'en',
-          'value': cond
-        },
-        {
-          'lang': 'ar',
-          'value': condAr
-        }
-      ],
-      'condition_type': true,
-      'used_one': ob
-    };
-    console.log(data);
-    this.packageService.addVouchers(data, packageId).then(res => {
-      const body = res['response'];
-      this.voucherID = body['_id'];
-      this.showImageUpload = true;
-    });
   }
 }
