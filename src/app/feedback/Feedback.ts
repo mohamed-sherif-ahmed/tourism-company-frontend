@@ -4,4 +4,5 @@ export class Feedback {
   id: string;
   date: Date;
   from_user: string ;
+  _id:string;
 }

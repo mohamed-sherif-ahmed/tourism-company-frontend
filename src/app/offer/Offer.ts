@@ -18,7 +18,6 @@ constructor (
               descriptionar:string ,
               exp_date:    Date,
               creationDate:Date,
-              given_points:    number,
               img_path:    string,
               type:        string,
               condition:       string,
@@ -29,7 +28,6 @@ constructor (
                 this.description   = description
                 this.exp_date  = exp_date
                 this.creationDate=creationDate
-                this.given_points  = given_points
                 this.img_path      = img_path
                 this.type  = type
                 this.condition   = condition

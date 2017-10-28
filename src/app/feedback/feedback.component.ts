@@ -27,6 +27,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   delete(name:string){
+    console.log(name);
     this.service.delFeedbacks(name);
   }
 

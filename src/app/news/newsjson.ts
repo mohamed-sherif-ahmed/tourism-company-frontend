@@ -33,4 +33,5 @@ export class newsjson{
         media_path: {
             type: String
         };
+        _id:string;
 }

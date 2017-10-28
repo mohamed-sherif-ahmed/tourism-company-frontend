@@ -21,7 +21,7 @@ export class offerjson {
 	];
 	exp_date: Date;
 	creation_date: Date ;
-	given_points: number;
+	_id:string;
 	condition_type: boolean;
 	condition: [
 		{
@@ -34,5 +34,7 @@ export class offerjson {
 		}
 	];
 	is_voucher: boolean;
+
+
 
 }

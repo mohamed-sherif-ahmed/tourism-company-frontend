@@ -4,6 +4,7 @@ import {News} from './news' ;
 import { FileSelectDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 import {newsjson} from './newsjson' ;
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-offer',
   templateUrl: './news.component.html',
@@ -15,6 +16,8 @@ export class NewsComponent implements OnInit {
  offersArray: newsjson[];
  neededDate: Date;
   data: {} ;
+  voucherForm: FormGroup;
+  editVoucherForm:FormGroup;
   error: {};
   filter: boolean= false;
   filesb: boolean= false;
@@ -30,6 +33,33 @@ export class NewsComponent implements OnInit {
   visable:boolean = false;
   ngOnInit() {
     this.viewOffers(this.neededDate) ;
+    this.voucherForm = new FormGroup({
+      titleEnglish: new FormControl('', Validators.required),
+      titleArabic: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl('', Validators.required),
+      conditionArabic: new FormControl('', Validators.required),
+      package: new FormControl('', Validators.required),
+      startDate: new FormControl('', Validators.required),
+      expiryDate: new FormControl('', Validators.required),
+      oneUse: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required)
+    });
+    this.editVoucherForm = new FormGroup({
+      titleEnglish: new FormControl('', Validators.required),
+      titleArabic: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl('', Validators.required),
+      conditionArabic: new FormControl('', Validators.required),
+      package: new FormControl('', Validators.required),
+      startDate: new FormControl('', Validators.required),
+      oneUse: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required),
+      newexpiryDate: new FormControl('', Validators.required),
+
+    });
   }
   viewOffers(date: Date ): void {
     this.offerService.getOffers( date ).then((res) => {
@@ -40,8 +70,8 @@ export class NewsComponent implements OnInit {
           }
     });
   }
-  sumbitdateclicked(year , month , day){
-    this.neededDate = new Date (year , month , day)
+  sumbitdateclicked(){
+    this.neededDate = new Date (Date.now());
     console.log(this.neededDate);
     this.viewOffers(this.neededDate) ;
   }
@@ -58,49 +88,36 @@ export class NewsComponent implements OnInit {
       }
     });
   }
-createOffer(title , titlear ,desc ,descar,exp ,points ,condition, conditionar){
+createOffer(){
    this.creationDate = new Date(Date.now());
-  console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
-  this.addedOffer = new News(title,titlear,desc,descar,this.creationDate);
+  this.addedOffer = new News(this.voucherForm.value.titleEnglish,this.voucherForm.value.titleArabic,this.voucherForm.value.descriptionEnglish,this.voucherForm.value.descriptionArabic,this.creationDate);
   console.log(this.addedOffer);
     console.log("test");
     this.filesb= true ;
     this.offerService.addOffer(this.addedOffer);
+    this.voucherForm.reset();
 }
 
-editOffer(title , desc ,exp , points , type ,condition){
-
-//this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
-
-}
 
 edit(id: string){
-this.divVisable= true;
-this.editedOfferId=id ;
+  this.divVisable= true;
+  this.editedOfferId=id;
+  console.log(this.editedOfferId);
+
 
 
 }
-createOfferpdf(){
-  console.log(this.addedOffer);
-    console.log(this.offerService.offerbeingCreatedID);
-    this.offerService.addOfferpdf(this.offerService.offerbeingCreatedID, this.files);
-}
+editsumbit(){
+  this.creationDate = new Date(Date.now());
+ this.addedOffer = new News(this.editVoucherForm.value.titleEnglish,this.editVoucherForm.value.titleArabic,this.editVoucherForm.value.descriptionEnglish,this.editVoucherForm.value.descriptionArabic,this.creationDate);
+ console.log(this.addedOffer);
+ this.offerService.editOffer(this.addedOffer,this.editedOfferId);
+ this.offerService.addOfferimg(this.editedOfferId,this.files);
+
+       this.editVoucherForm.reset();
 
 
-createOfferimg(){
-  console.log(this.addedOffer);
-    console.log(this.offerService.offerbeingCreatedID);
-    this.offerService.addOfferimg(this.offerService.offerbeingCreatedID, this.files);
 }
-editOfferimg(){
-    console.log(this.editedOfferId);
-    this.offerService.addOfferimg(this.editedOfferId, this.files);
-}
-editOfferpdf(){
-    console.log(this.editedOfferId);
-    this.offerService.addOfferpdf(this.editedOfferId, this.files);
-}
-
 delete(name:string){
   this.offerService.delOffer(name);
 }
@@ -108,7 +125,8 @@ delete(name:string){
 
   pdfHandler(event): void {
     console.log('pdfhandler called');
-  this.files = event.target.files
+   this.files = event.target.files
+    this.offerService.files = event.target.files;
   }
   test(): void {
     console.log('sdfdsss');

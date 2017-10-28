@@ -1,100 +1,123 @@
 <app-navigation></app-navigation>
 <body>
-<md-tab-group>
-  <md-tab label="VIEW OFFERS">
-    <input class="in" placeholder="YEAR"#year>
-    <input class="in"placeholder="MONTH"#month>
-    <input class="in" placeholder="DAY"#day>       <p>
-          </p>
-     <button class="btn in" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit the since date </button>
-<ul class="cards">
-  <li class="cards__item" *ngFor="let offer of offersArray">
-    <div class="card">
-      <div class="card__image"> <img src="{{offer.img_path}}"></div>
-      <div class="card__content">
-        <div class="card__title">{{offer.name[1].value}} {{offer.name[0].value}}    </div>
-        <p class="card__text">{{offer.description[0].value}} {{offer.description[1].value}} </p>
-        <p class="card__text">{{offer.media_path}} </p>
-        <button class="btn btn--block card__btn" onclick="delete(offer.name)" >DELETE</button>
-        <button class="btn btn--block card__btn" onclick="edit(offer.id)" >EDIT</button>
+  <md-tab-group>
+    <md-tab label="VIEW OFFERS">
+        <button class="btn btn-primary" (click)="sumbitdateclicked()">REFRESH</button>
+      <div class="cards-tab">
+        <h1 class="view-title">Available Offers</h1>
+        <md-card class="package-card" *ngFor="let offer of offersArray">
+          <md-card-header>
+                <div > <img src="{{offer.img_path}}"></div>
+            <md-card-title>{{offer.description[0].value}}</md-card-title> <md-card-title>{{offer.description[1].value}}</md-card-title>
+                      <md-card-title>{{offer.name[0].value}}</md-card-title>  <md-card-title>{{offer.name[1].value}}</md-card-title>
+          </md-card-header>
+          <md-card-content>
+              <div class="container" *ngIf="divVisable">
+                <form (ngSubmit)="editsumbit()"  [formGroup]="editVoucherForm">
+                  <div class="form-group">
+                    <label>Title :</label>
+                    <input type="text" class="form-control" id="titleng" formControlName="titleEnglish" value="{{offer.name[1].value}}"  >
+                  </div>
+                  <div class="form-group">
+                    <label>Title Arabic:</label>
+                    <input type="text" class="form-control" id="titlearr" formControlName="titleArabic"  value="{{offer.name[0].value}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Description :</label>
+                    <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish" value="{{offer.description[1].value}}" ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Description Arabic:</label>
+                    <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic" value="{{offer.description[0].value}}"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Condition :</label>
+                    <textarea class="form-control" id="conditioneng" formControlName="conditionEnglish" value="{{offer.condition[1].value}}" ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Condition Arabic:</label>
+                    <textarea class="form-control" id="conditionarr" formControlName="conditionArabic" value="{{offer.condition[0].value}}"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Expiry Date</label>
+                      <date-picker formControlName="newexpiryDate" ></date-picker>
+                  </div>
+                  <div class="form-group">
+                    <label>Price :</label>
+                    <input type="number" class="form-control" id="prices"  formControlName="points">
+                  </div>
+                  <div class="form-group">
+                    <label>Image :</label>
+                    <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+                  </div>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+
+                </form>
+              </div>
+
+
+
+
+          </md-card-content>
+          <md-card-actions class="card-actions">
+            <button md-button (click)="edit(offer._id)">EDIT THIS OFFER</button>
+            <button class="delete-button" (click)="delete(offer._id)" md-button>DELETE</button>
+          </md-card-actions>
+
+        </md-card>
+
       </div>
-    </div>
-  </li>
-</ul>
-  </md-tab>
-
-  <md-tab label="ADD OFFERS">
-
-    <div class='wrap'>
-
-      <form>
-        <input  placeholder='TITLE' #name>
-          <input  placeholder='TITLE IN ARABIC' #titlear>
-          <input  placeholder='PRICE' #price>
-        <p>
-        </p>
-        <textarea class="textarea" placeholder='DESCRIPTION' #descrip></textarea>
-        <textarea class="textarea" placeholder='DESCRIPTION IN ARABIC' #descar></textarea>
-         <md-input-container>
-            <input  mdInput [mdDatepicker]="picker" placeholder=" EXP. DATE " #expi>
-            <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-        </md-input-container>
-        <md-datepicker #picker></md-datepicker>
 
 
-        <input   placeholder='GIVEN POINTS ' #pointss>
-        <p>
-        </p>
-        <textarea  placeholder='CONDITIONS' #conditions></textarea>
-            <textarea  placeholder='CONDITIONS IN ARABIC' #conditionar></textarea>
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value,expi.value,pointss.value,conditions.value,conditionar.value,price.value)" >SUMBIT OFFER DATA</button>
-<div *ngIf="filesb">
-        <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
-        <p>
-        </p>
-          <button class="btn btn--block card__btn" (click)= "createOfferpdf()" >ADD OFFER PDF</button>
-          <input type="file" #file placeholder=' ADD OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
-          <p>
-          </p>
-            <button class="btn btn--block card__btn" (click)= "createOfferimg()" >ADD ADD OFFER IMAGE</button>
+    </md-tab>
+
+
+    <md-tab label="ADD NEW OFFER">
+      <h1 class="view-title">Add New Offer</h1>
+      <div class="container">
+        <form  (ngSubmit)="createOffer()" [formGroup]="voucherForm">
+          <div class="form-group">
+            <label>Title :</label>
+            <input type="text" class="form-control" id="titleng" formControlName="titleEnglish">
           </div>
-      </form>
-    </div>
-    <div *ngIf="divVisable" class='wrap'>
+          <div class="form-group">
+            <label>Title Arabic:</label>
+            <input type="text" class="form-control" id="titlearr" formControlName="titleArabic">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Description :</label>
+            <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Description Arabic:</label>
+            <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Condition :</label>
+            <textarea class="form-control" id="conditioneng" formControlName="conditionEnglish"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Condition Arabic:</label>
+            <textarea class="form-control" id="conditionarr" formControlName="conditionArabic"></textarea>
+          </div>
 
-      <form>
-        <input  placeholder=' NEW TITLE' #title>
-        <p>
-        </p>
-        <textarea class="textarea" placeholder=' NEW DESCRIPTION' #desc></textarea>
-      <md-input-container>
-          <input  mdInput [mdDatepicker]="test" #exp>
-          <md-datepicker-toggle mdSuffix [for]="test"></md-datepicker-toggle>
-      </md-input-container>
-      <md-datepicker #test></md-datepicker>
-        <input   placeholder=' NEW GIVEN POINTS ' #points>
-        <p>
-        </p>
-        <textarea  placeholder='NEW CONDITIONS' #condition></textarea>
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)= "editOffer(title.value,desc.value,exp.value,points.value,type.value,condition.value)" >SUMBIT OFFER DATA</button>
+          <div class="form-group">
+            <label>Expiry Date</label>
+              <date-picker formControlName="expiryDate"></date-picker>
+          </div>
+          <div class="form-group">
+            <label>Price :</label>
+            <input type="number" class="form-control" id="prices" formControlName="points">
+          </div>
+          <div class="form-group">
+            <label>Image :</label>
+            <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+          </div>
+          <button class="btn btn-primary" type="submit">Submit</button>
 
-        <input type="file" #file placeholder=' ADD NEW OFFER PDF' (change)="pdfHandler($event)" multiple/>
-        <p>
-        </p>
-          <button class="btn btn--block card__btn" (click)= "editOfferpdf()" >ADD NEW OFFER PDF</button>
-          <input type="file" #file placeholder=' ADD NEW OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
-          <p>
-          </p>
-            <button class="btn btn--block card__btn" (click)= "editOfferimg()" >ADD NEW OFFER IMAGE</button>
-      </form>
-    </div>
-  </md-tab>
-
-
-
+        </form>
+      </div>
+    </md-tab>
   </md-tab-group>
 </body>

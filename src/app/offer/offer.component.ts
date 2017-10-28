@@ -5,6 +5,7 @@ import {Test} from "./Test";
 import { FileSelectDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
 import {FileItem, ParsedResponseHeaders} from "ng2-file-upload";
 import {offerjson} from './offerjson' ;
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({
   selector: 'app-offer',
   templateUrl: './offer.component.html',
@@ -13,6 +14,9 @@ import {offerjson} from './offerjson' ;
 
 export class OfferComponent implements OnInit {
   constructor(private offerService: OfferService) { }
+    voucherForm: FormGroup;
+    editVoucherForm:FormGroup;
+
  offersArray: offerjson[];
  neededDate: Date;
   data: {} ;
@@ -31,6 +35,35 @@ export class OfferComponent implements OnInit {
   visable:boolean = false;
   ngOnInit() {
     this.viewOffers(this.neededDate) ;
+    this.voucherForm = new FormGroup({
+      titleEnglish: new FormControl('', Validators.required),
+      titleArabic: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl('', Validators.required),
+      conditionArabic: new FormControl('', Validators.required),
+      package: new FormControl('', Validators.required),
+      startDate: new FormControl('', Validators.required),
+      expiryDate: new FormControl('', Validators.required),
+      oneUse: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required)
+    });
+    this.editVoucherForm = new FormGroup({
+      titleEnglish: new FormControl('', Validators.required),
+      titleArabic: new FormControl('', Validators.required),
+      descriptionEnglish: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl('', Validators.required),
+      conditionArabic: new FormControl('', Validators.required),
+      package: new FormControl('', Validators.required),
+      startDate: new FormControl('', Validators.required),
+      oneUse: new FormControl('', Validators.required),
+      points: new FormControl('', Validators.required),
+      newexpiryDate: new FormControl('', Validators.required),
+
+    });
+
+
   }
   viewOffers(date: Date ): void {
     this.offerService.getOffers( date ).then((res) => {
@@ -41,9 +74,8 @@ export class OfferComponent implements OnInit {
           }
     });
   }
-  sumbitdateclicked(year , month , day){
-    this.neededDate = new Date (year , month , day)
-    console.log(this.neededDate);
+  sumbitdateclicked(){
+    this.neededDate = new Date (Date.now());
     this.viewOffers(this.neededDate) ;
   }
   viewOffer(id: string ): void {
@@ -59,51 +91,40 @@ export class OfferComponent implements OnInit {
       }
     });
   }
-createOffer(title , titlear ,desc ,descar,exp ,points ,condition, conditionar,price){
-   this.expdate = new Date (exp);
+createOffer(){
    this.creationDate = new Date(Date.now());
-  console.log(title , titlear ,desc ,descar,exp , points ,condition, conditionar);
-  this.addedOffer = new Offer(title,titlear,desc,descar,this.expdate,this.creationDate,points as number,'img to be uploaded ', "offer",condition,conditionar,price as number);
+     this.expdate = new Date(this.voucherForm.value.expiryDate._d);
+  this.addedOffer = new Offer(this.voucherForm.value.titleEnglish,this.voucherForm.value.titleArabic,this.voucherForm.value.descriptionEnglish,this.voucherForm.value.descriptionArabic,this.expdate,this.creationDate,'img to be uploaded ', "offer",this.voucherForm.value.conditionEnglish,this.voucherForm.value.conditionArabic,this.voucherForm.value.points as number);
   console.log(this.addedOffer);
     console.log("test");
     this.filesb= true ;
+
     this.offerService.addOffer(this.addedOffer);
-}
-
-editOffer(title , desc ,exp , points , type ,condition){
-
-//this.offerService.editOffer( new Offer(title,desc,exp,points as number,"offer",condition,'img to be uploaded ') , this.editedOfferId);
+      this.voucherForm.reset();
 
 }
+
+
 
 edit(id: string){
 this.divVisable= true;
-this.editedOfferId=id ;
-
+this.editedOfferId=id;
+console.log(this.editedOfferId);
 
 }
-createOfferpdf(){
+editsumbit(){
+  this.creationDate = new Date(Date.now());
+   this.expdate = new Date(this.editVoucherForm.value.newexpiryDate._d);
+  this.addedOffer = new Offer(this.editVoucherForm.value.titleEnglish,this.editVoucherForm.value.titleArabic,this.editVoucherForm.value.descriptionEnglish,this.editVoucherForm.value.descriptionArabic,this.expdate,this.creationDate,'img to be uploaded ', "offer",this.editVoucherForm.value.conditionEnglish,this.editVoucherForm.value.conditionArabic,this.editVoucherForm.value.points as number);
   console.log(this.addedOffer);
-    console.log(this.offerService.offerbeingCreatedID);
-    this.offerService.addOfferpdf(this.offerService.offerbeingCreatedID, this.files);
-}
+this.offerService.editOffer(this.addedOffer,this.editedOfferId);
+this.offerService.addOfferimg(this.editedOfferId,this.files);
 
-
-createOfferimg(){
-  console.log(this.addedOffer);
-    console.log(this.offerService.offerbeingCreatedID);
-    this.offerService.addOfferimg(this.offerService.offerbeingCreatedID, this.files);
-}
-editOfferimg(){
-    console.log(this.editedOfferId);
-    this.offerService.addOfferimg(this.editedOfferId, this.files);
-}
-editOfferpdf(){
-    console.log(this.editedOfferId);
-    this.offerService.addOfferpdf(this.editedOfferId, this.files);
+      this.editVoucherForm.reset();
 }
 
 delete(name:string){
+  console.log(name);
   this.offerService.delOffer(name);
 }
 
@@ -111,6 +132,7 @@ delete(name:string){
   pdfHandler(event): void {
     console.log('pdfhandler called');
   this.files = event.target.files
+  this.offerService.files = event.target.files;
   }
   test(): void {
     console.log('sdfdsss');
