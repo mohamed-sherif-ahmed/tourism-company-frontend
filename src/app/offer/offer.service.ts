@@ -15,8 +15,10 @@ valid: boolean ;
 export class OfferService {
   valid: Boolean = true ;
   err: string ;
+  files:any ;
   conditions:Boolean = true;
   offerbeingCreatedID:string;
+  finished:Boolean = false;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
   getOffers(sinceDate: Date ): Promise<string> {
     const url = `im4booking/offer`;
@@ -66,7 +68,7 @@ export class OfferService {
   }
 
 
-  addOffer(offer: Offer): void {
+  addOffer(offer: Offer):  void {
     const url = `/im4booking/offer/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -137,7 +139,6 @@ price: offer.price,
 	],
 	exp_date: offer.exp_date,
 	creation_date: offer.creationDate,
-	given_points: offer.given_points,
 	condition_type: this.conditions,
 	condition: [
 		{
@@ -156,11 +157,15 @@ price: offer.price,
     }).subscribe(data => {
     console.log(data);
 
-      this.offerbeingCreatedID= data['response'];
+  this.offerbeingCreatedID= data['response'];
       console.log("the response   ",this.offerbeingCreatedID);
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
       console.log("the id   ",this.offerbeingCreatedID);
+      this.createOfferimg();
+
     });
+
+
   }
   addOfferpdf(offerId: string, files : File[]): void {
     const url = `/upload_media/offer`;
@@ -209,22 +214,101 @@ price: offer.price,
     });
   }
 
-  editOffer(newOffer: Offer , offerId: string): void {
-    const url = `${AppConstants.API_ENDPOINT}/offer/edit`;
+  editOffer(offer: Offer , offerId: string): void {
+    const url = `/im4booking/offer/edit`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
+    console.log(offerId ,{name: [
+  		{
+  			lang: "ar",
+  			value: offer.titlear
+  		},
+  		{
+  			lang: "en",
+  			value: offer.name
+  		}
+  	],
+  	description: [
+  		{
+  			lang: "ar",
+  			value: offer.description
+  		},
+  		{
+  			lang: "en",
+  			value: offer.desar
+  		}
+  	],
+  	exp_date: offer.exp_date,
+  	creation_date: offer.creationDate,
+  	condition_type: this.conditions,
+  	condition: [
+  		{
+  			lang: "ar",
+  			value: offer.conditionar
+  		},
+  		{
+  			lang: "en",
+  			value: offer.condition
+  		}
+  	],
+  	is_voucher: false,
+    price: offer.price,
+
+  } )
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
       'offer_id': offerId,
-      'new_fields': newOffer
+      'new_offer':{
+	name: [
+		{
+			lang: "ar",
+			value: offer.titlear
+		},
+		{
+			lang: "en",
+			value: offer.name
+		}
+	],
+	description: [
+		{
+			lang: "ar",
+			value: offer.description
+		},
+		{
+			lang: "en",
+			value: offer.desar
+		}
+	],
+	exp_date: offer.exp_date,
+	creation_date: offer.creationDate,
+	condition_type: this.conditions,
+	condition: [
+		{
+			lang: "ar",
+			value: offer.conditionar
+		},
+		{
+			lang: "en",
+			value: offer.condition
+		}
+	],
+	is_voucher: false,
+  price: offer.price,
+
+}
     }).subscribe(data => {
       this.valid = data.valid ;
       this.err = data.msg;
     });
   }
+  createOfferimg(){
+
+      console.log(this.offerbeingCreatedID);
+      this.addOfferimg(this.offerbeingCreatedID, this.files);
+  }
   delOffer( offerId: string): void {
-    const url = `${AppConstants.API_ENDPOINT}/offer/delete`;
+    const url = `/im4booking/offer/delete`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     this.httpPoster.post<Response>(url, {

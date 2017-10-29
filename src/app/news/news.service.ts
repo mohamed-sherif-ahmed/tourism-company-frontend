@@ -15,6 +15,7 @@ valid: boolean ;
 export class NewsService {
   valid: Boolean = true ;
   err: string ;
+  files:any;
   conditions:Boolean = true;
   offerbeingCreatedID:string;
   constructor(private http: Http , private httpPoster: HttpClient ) { }
@@ -128,6 +129,7 @@ export class NewsService {
       console.log("the response   ",this.offerbeingCreatedID);
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
       console.log("the id   ",this.offerbeingCreatedID);
+          this.createOfferimg();
     });
   }
   addOfferpdf(offerId: string, files : File[]): void {
@@ -177,28 +179,57 @@ export class NewsService {
     });
   }
 
-  editOffer(newOffer: News , offerId: string): void {
-    const url = `${AppConstants.API_ENDPOINT}/offer/edit`;
+  editOffer(offer: News , offerId: string): void {
+    const url = `im4booking/news/edit`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
-      'offer_id': offerId,
-      'new_fields': newOffer
+      'news_id': offerId,
+      'new_news': {  title: [
+    		{
+    			lang: "ar",
+    			value: offer.titlear
+    		},
+    		{
+    			lang: "en",
+    			value: offer.title
+    		}
+    	],
+    	body: [
+    		{
+    			lang: "ar",
+    			value: offer.bodyar
+    		},
+    		{
+    			lang: "en",
+    			value:offer.body
+    		}
+    	],
+    	creation_date: offer.date ,
+      img_path: "TO BE uploaded",
+      media_path : "TO BE uploaded"
+
+	}
     }).subscribe(data => {
       this.valid = data.valid ;
       this.err = data.msg;
     });
   }
+  createOfferimg(){
+
+      console.log(this.offerbeingCreatedID);
+      this.addOfferimg(this.offerbeingCreatedID, this.files);
+  }
   delOffer( offerId: string): void {
-    const url = `${AppConstants.API_ENDPOINT}/offer/delete`;
+    const url = `im4booking/news/delete`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
     this.httpPoster.post<Response>(url, {
       'user_id': user_id,
       'api_key': api_key,
-      'offer_id': offerId,
+      'news_id': offerId,
     }).subscribe(data => {
       this.valid = data.valid ;
       this.err = data.msg;

@@ -5,8 +5,7 @@
       <div class="card__content">
         <div class="card__title"> {{feedback.about}} </div>
         <p class="card__text">{{feedback.details}} </p>
-        <input *ngIf="false" #d class="card__text" placeholder={{feedback.id}} >
-        <button class="btn btn--block card__btn" onclick="delete(d.value)" >DELETE</button>
+        <button class="btn btn--block card__btn" (click)="delete(feedback._id)" >DELETE</button>
       </div>
     </div>
   </li>

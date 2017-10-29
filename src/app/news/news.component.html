@@ -1,79 +1,89 @@
 <app-navigation></app-navigation>
 <body>
-<md-tab-group>
-  <md-tab label="VIEW NEWS">
-    <input class="in" placeholder="YEAR"#year>
-    <input class="in"placeholder="MONTH"#month>
-    <input class="in" placeholder="DAY"#day>       <p>
-          </p>
-     <button class="btn in" (click)="sumbitdateclicked(year.value,month.value,day.value)">sumbit the since date </button>
-<ul class="cards">
-  <li class="cards__item" *ngFor="let offer of offersArray">
-    <div class="card">
-      <div class="card__image"> <img src="{{offer.img_path}}"></div>
-      <div class="card__content">
-        <div class="card__title"> {{offer.title[0].value}}  {{offer.title[1].value}} </div>
-        <p class="card__text">{{offer.body[0].value}}  {{offer.body[0].value}}</p>
-        <button class="btn btn--block card__btn" onclick="delete(offer.id)" >DELETE</button>
-        <button class="btn btn--block card__btn" onclick="edit(offer.id)" >EDIT</button>
+  <md-tab-group>
+    <md-tab label="VIEW NEWS">
+        <button class="btn btn-primary" (click)="sumbitdateclicked()">REFRESH</button>
+      <div class="cards-tab">
+        <h1 class="view-title">Available News</h1>
+        <md-card class="package-card" *ngFor="let offer of offersArray">
+          <md-card-header>
+                <div > <img src="{{offer.img_path}}"></div>
+            <md-card-title>{{offer.body[0].value}}</md-card-title> <md-card-title>{{offer.body[1].value}}</md-card-title>
+                      <md-card-title>{{offer.title[0].value}}</md-card-title>  <md-card-title>{{offer.title[1].value}}</md-card-title>
+          </md-card-header>
+          <md-card-content>
+              <div class="container" *ngIf="divVisable">
+                <form (ngSubmit)="editsumbit()"  [formGroup]="editVoucherForm">
+                  <div class="form-group">
+                    <label>Title :</label>
+                    <input type="text" class="form-control" id="titleng" formControlName="titleEnglish" value="{{offer.title[1].value}}"  >
+                  </div>
+                  <div class="form-group">
+                    <label>Title Arabic:</label>
+                    <input type="text" class="form-control" id="titlearr" formControlName="titleArabic"  value="{{offer.title[0].value}}">
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Description :</label>
+                    <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish" value="{{offer.body[1].value}}" ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="pwd">Description Arabic:</label>
+                    <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic" value="{{offer.body[0].value}}"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Image :</label>
+                    <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+                  </div>
+                  <button class="btn btn-primary" type="submit">Submit</button>
+
+                </form>
+              </div>
+
+
+
+
+          </md-card-content>
+          <md-card-actions class="card-actions">
+            <button md-button (click)="edit(offer._id)">EDIT THIS NEWS</button>
+            <button class="delete-button" (click)="delete(offer._id)" md-button>DELETE</button>
+          </md-card-actions>
+
+        </md-card>
+
       </div>
-    </div>
-  </li>
-</ul>
-  </md-tab>
 
-  <md-tab label="ADD NEWS">
 
-    <div class='wrap'>
+    </md-tab>
 
-      <form>
-        <input  placeholder='TITLE' #name>
-          <input  placeholder='TITLE IN ARABIC' #titlear>
-        <p>
-        </p>
-        <textarea class="textarea" placeholder='BODY' #descrip></textarea>
-        <textarea class="textarea" placeholder='BODY IN ARABIC' #descar></textarea>
 
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)= "createOffer(name.value,titlear.value,descrip.value,descar.value)" >SUMBIT NEWS DATA</button>
-<div *ngIf="filesb">
-        <input type="file" #file placeholder=' ADD OFFER PDF' (change)="pdfHandler($event)" multiple/>
-        <p>
-        </p>
-          <button class="btn btn--block card__btn" (click)= "createOfferpdf()" >ADD NEWS PDF</button>
-          <input type="file" #file placeholder=' ADD OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
-          <p>
-          </p>
-            <button class="btn btn--block card__btn" (click)= "createOfferimg()" >ADD ADD NEWS IMAGE</button>
+    <md-tab label="ADD NEW NEWS">
+      <h1 class="view-title">Add new News</h1>
+      <div class="container">
+        <form  (ngSubmit)="createOffer()" [formGroup]="voucherForm">
+          <div class="form-group">
+            <label>Title :</label>
+            <input type="text" class="form-control" id="titleng" formControlName="titleEnglish">
           </div>
-      </form>
-    </div>
-    <div *ngIf="divVisable" class='wrap'>
+          <div class="form-group">
+            <label>Title Arabic:</label>
+            <input type="text" class="form-control" id="titlearr" formControlName="titleArabic">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Description :</label>
+            <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pwd">Description Arabic:</label>
+            <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Image :</label>
+            <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+          </div>
+          <button class="btn btn-primary" type="submit">Submit</button>
 
-      <form>
-        <input  placeholder=' NEW TITLE' #title>
-        <p>
-        </p>
-        <textarea class="textarea" placeholder=' NEW BODY' #desc></textarea>
-
-        <p>
-        </p>
-        <button class="btn btn--block card__btn" (click)= "editOffer(title.value,desc.value)" >SUMBIT NEWS DATA</button>
-
-        <input type="file" #file placeholder=' ADD NEW OFFER PDF' (change)="pdfHandler($event)" multiple/>
-        <p>
-        </p>
-          <button class="btn btn--block card__btn" (click)= "editOfferpdf()" >ADD NEW NEWS PDF</button>
-          <input type="file" #file placeholder=' ADD NEW OFFER IMAGE ' (change)="pdfHandler($event)" multiple/>
-          <p>
-          </p>
-            <button class="btn btn--block card__btn" (click)= "editOfferimg()" >ADD NEW NEWS IMAGE</button>
-      </form>
-    </div>
-  </md-tab>
-
-
-
+        </form>
+      </div>
+    </md-tab>
   </md-tab-group>
 </body>
