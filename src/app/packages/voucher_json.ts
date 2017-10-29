@@ -34,4 +34,5 @@ export class voucher_json {
       }
     ];
     'condition_type': boolean;
+    '_id': string;
   };

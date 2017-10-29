@@ -24,7 +24,7 @@ export class RequestService {
     }
 
     changeRequestStatus(requestId: string, newState: string): Promise<JSON> {
-        const url = `/request/${requestId}/`;
+        const url = `im4booking/request/${requestId}/`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
@@ -37,7 +37,7 @@ export class RequestService {
             }
           });
         return this.http.post(url, options).toPromise().then(response => {
-            return response['requests'];
+            return response['body'];
         });
     }
 }

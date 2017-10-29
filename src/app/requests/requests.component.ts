@@ -9,11 +9,15 @@ import { RequestService } from './requests.service';
   styleUrls: ['./requests.component.css']
 })
 export class RequestsComponent implements OnInit {
-  requestArr: any;
+  acceptedArray: any;
+  rejectedArray: any;
+  pendingArray: any;
   constructor(private requestService: RequestService) { }
 
   ngOnInit() {
-    this.requestService.getAvailableRequests().then(res => this.requestArr = res);
+    this.requestService.getAvailableRequests().then(res => {
+      console.log(res);
+    });
   }
 
   deleteRequest(id: string): void {
@@ -22,5 +26,9 @@ export class RequestsComponent implements OnInit {
 
   acceptRequest(id: string): void {
     this.requestService.changeRequestStatus(id, "accept");
+  }
+
+  changeToPending(id: string): void {
+    this.requestService.changeRequestStatus(id, "pending");
   }
 }

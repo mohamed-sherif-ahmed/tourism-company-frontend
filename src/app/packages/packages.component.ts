@@ -26,10 +26,10 @@ export class PackagesComponent implements OnInit {
   packageID: string;
   voucherID: string;
 
-  //FORM SECTION 
   packageForm: FormGroup;  
   voucherForm: FormGroup;
-  //END FORM SECTION
+
+  statusMessage: string;
 
   constructor (private packageService: PackagesService) { }
   ngOnInit() {
@@ -49,8 +49,6 @@ export class PackagesComponent implements OnInit {
       conditionEnglish: new FormControl('', Validators.required),
       conditionArabic: new FormControl('', Validators.required),
       package: new FormControl('', Validators.required),
-      startDate: new FormControl('', Validators.required),
-      expiryDate: new FormControl('', Validators.required),
       oneUse: new FormControl('', Validators.required),
       points: new FormControl('', Validators.required)
     });
@@ -95,15 +93,15 @@ export class PackagesComponent implements OnInit {
         //'vouchers': []
       }
       console.log(data);
-      this.packageService.addPackage(data).then(res => {
+      this.packageService.addPackage(data, this.imgFile).then(res => {
         console.log(res);
         const response = res['response'];
         this.packageID = response['_id'];
-        this.showImageUpload = true;
+        this.statusMessage = "Success";
       });
       this.packageForm.reset();
     } else {
-      console.log("RRERERER");
+      this.statusMessage = "Couldn't connect to the internet";
     }
   }
 
@@ -140,20 +138,20 @@ export class PackagesComponent implements OnInit {
   fileHandler(type ,event): void {
     var objId: string;
     this.imgFile = event.target.files;
-    if (type == 1) {
-      objId = this.packageID;
-      console.log(`sending file for ${objId}`);
-      this.packageService.sendFile(objId, this.imgFile);
-    } else if (type == 0) {
-      objId = this.voucherID;
-      console.log(`sending file for ${objId}`);
-      this.packageService.sendFileImgVoucher(objId, this.imgFile).then(res => {
-      });
-    } else {
-      objId = this.voucherID;
-      console.log(`sending file for ${objId}`);
-      this.packageService.sendFilePDFVoucher(objId, this.imgFile);
-    }
+    // if (type == 1) {
+    //   objId = this.packageID;
+    //   console.log(`sending file for ${objId}`);
+    //   //this.packageService.sendFile(objId, this.imgFile);
+    // } else if (type == 0) {
+    //   objId = this.voucherID;
+    //   console.log(`sending file for ${objId}`);
+    //   this.packageService.sendFileImgVoucher(objId, this.imgFile).then(res => {
+    //   });
+    // } else {
+    //   objId = this.voucherID;
+    //   console.log(`sending file for ${objId}`);
+    //   this.packageService.sendFilePDFVoucher(objId, this.imgFile);
+    // }
   }
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
@@ -166,10 +164,6 @@ export class PackagesComponent implements OnInit {
       } else { 
         ob = false;
       }
-      console.log(this.voucherForm.value.startDate);
-       const start = new Date(this.voucherForm.value.expiryDate._d);
-       const expiry = new Date(this.voucherForm.value.expiryDate._d);
-      console.log(this.voucherForm.value.package);
       const data = {
         'name': [
           {
@@ -191,8 +185,6 @@ export class PackagesComponent implements OnInit {
             'value': this.voucherForm.value.descriptionArabic
           }
         ],
-        'creation_date': start,
-        'exp_date': expiry,
         'is_voucher': true,
         'given_points': this.voucherForm.value.points,
         'condition':[
@@ -209,7 +201,7 @@ export class PackagesComponent implements OnInit {
         'used_one': ob
       };
       console.log(data);
-      this.packageService.addVouchers(data, this.voucherForm.value.package).then(res => {
+      this.packageService.addVouchers(data, this.voucherForm.value.package, this.imgFile).then(res => {
         const body = res['response'];
         this.voucherID = body['_id'];
         this.showImageUpload = true;
@@ -218,5 +210,11 @@ export class PackagesComponent implements OnInit {
     } else {
       console.log(this.voucherForm.value);
     }
+  }
+  deletePackage(id): void {
+    this.packageService.deletePackage(id);
+  }
+  deleteVoucher(id): void {
+    this.packageService.deleteVoucher(id);
   }
 }

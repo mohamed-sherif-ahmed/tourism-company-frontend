@@ -51,7 +51,7 @@
           </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button (click)="editPackage(pack._id)">EDIT</button>
-            <button class="delete-button" md-button>DELETE</button>
+            <button class="delete-button" (click)="deletePackage(pack._id)" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
       </div>
@@ -85,13 +85,11 @@
             <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
           </div>
         </div> -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <div *ngIf="showImageUpload">
-          <div class="form-group">
-            <label>Image</label>
-            <input type="file" class="form-control" (change)="fileHandler(1,$event)">
-          </div>
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" class="form-control" (change)="fileHandler(1,$event)">
         </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
     </md-tab>
@@ -108,7 +106,7 @@
           </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button>EDIT</button>
-            <button class="delete-button" md-button>DELETE</button>
+            <button class="delete-button" (click)="deleteVoucher(voucher._id)" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
       </div>
@@ -149,14 +147,6 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Start Date</label>
-            <date-picker formControlName="startDate"></date-picker>
-          </div>
-          <div class="form-group">
-            <label>Expiry Date</label>
-              <date-picker formControlName="expiryDate"></date-picker>
-          </div>
-          <div class="form-group">
             <label for="pwd">Only 1 Use : </label>
             <select class="selectpicker" formControlName="oneUse">
               <option value="">Choose Yes or No</option>
@@ -168,16 +158,13 @@
             <label>Points :</label>
             <input type="number" class="form-control" id="points" formControlName="points">
           </div>
+          <div class="form-group">
+            <label>Image :</label>
+            <input type="file" class="form-control" id="img" (change)="fileHandler(0, $event)">
+          </div>
           <button class="btn btn-primary" type="submit">Submit</button>
-          <div *ngIf="showImageUpload">
-            <div class="form-group">
-              <label>Image :</label>
-              <input type="file" class="form-control" id="img" (change)="fileHandler(0, $event)">
-            </div>
-            <div class="form-group">
-              <label>pdf :</label>
-              <input type="file" class="form-control" id="pdf" (change)="fileHandler(2, $event)">
-            </div>
+          <div>
+            <h3>{{statusMessage}}</h3>
           </div>
         </form>
       </div>

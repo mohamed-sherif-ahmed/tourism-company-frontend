@@ -12,18 +12,21 @@ import {Voucher} from './voucher';
 export class PackagesService {
   constructor (private http: Http) { }
 
-  addPackage(data): Promise<JSON> {
+  addPackage(data, files: File[]): Promise<JSON> {
     const url = `im4booking/package`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
 
-    const body = {
-      'api_key': api_key,
-      'user_id': user_id,
-      'package': data
-    };
+    let form_data = new FormData();
+    form_data.append('api_key', api_key);
+    form_data.append('user_id', user_id);
+    form_data.append('package', data);
 
-    return this.http.post(url, body).toPromise().then(response => {
+    for (let file of files) {
+      form_data.append('file', file, file.name);
+    }
+
+    return this.http.post(url, form_data).toPromise().then(response => {
       return response.json();
     });
   }
@@ -60,20 +63,23 @@ export class PackagesService {
       return response.json().res as Package;
     });
   }
-  addVouchers(data, packageId): Promise<JSON> {
+  addVouchers(data, packageId, files: File[]): Promise<JSON> {
 
     const url = `im4booking/package/voucher`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
 
-    const body = {
-      'api_key': api_key,
-      'user_id': user_id,
-      'package_id': packageId,
-      'voucher': data
-    }
+    let form_data = new FormData();
+    form_data.append('api_key', api_key);
+    form_data.append('user_id', user_id);
+    form_data.append('voucher', data);
+    form_data.append('package_id', packageId);
 
-    return this.http.post(url, body).toPromise().then(response => {
+    for ( let file of files) {
+        form_data.append('file', file, file.name);
+    }
+    
+    return this.http.post(url, form_data).toPromise().then(response => {
       return response.json();
     });
   }
@@ -186,5 +192,32 @@ export class PackagesService {
     formData.append('offer_id', offerId);
     formData.append('id', offerId);
     this.http.post(url, formData, options).subscribe();
+  }
+  deletePackage(packId): Promise<any> {
+    const url = `im4booking/package/delete`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package_id': packId
+    }
+    return this.http.post(url, body).toPromise().then(res => {
+      return res;
+    });
+  }
+
+  deleteVoucher(packId): Promise<any> {
+    const url = `im4booking/package/voucher/delete`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'voucher_id': packId
+    }
+    return this.http.post(url, body).toPromise().then(res => {
+      return res;
+    });
   }
 }

@@ -27,42 +27,38 @@
   </md-tab>
   <md-tab label="Add New User">
     <div class='container'>
-      <form>
+      <form (ngSubmit)="submitUser()" [formGroup]="userForm">
         <div class="form-group">
           <label>Name :</label>
-          <input #name type="text" class="form-control" >
+          <input formControlName="name" type="text" class="form-control" >
         </div>
         <div class="form-group">
           <label for="pwd">Username (Email) :</label>
-          <input #email type="text" class="form-control" >
+          <input formControlName="userName" type="text" class="form-control" >
         </div>
         <div class="form-group">
           <label>Password :</label>
-          <input #pass type="text" class="form-control" >
+          <input formControlName="password" type="text" class="form-control" >
         </div>
         <div class="form-group">
           <label>Phone Number :</label>
-          <input #num type="number" class="form-control" >
+          <input formControlName="phoneNumber" type="number" class="form-control" >
         </div>
         <div class="form-group">
-          <select class="selectpicker" #userStatus>
-            <option>admin</option>
-            <option>client</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <select class="selectpicker" #clientStatus>
-            <option>logged_in</option>
-            <option>guest</option>
+          <select class="selectpicker" formControlName="adminStatus">
+            <option value="">Choose admin or client</option>
+            <option value="admin">admin</option>
+            <option value="client">client</option>
           </select>
         </div>
         <div class="form-group">
           <label>Package Name :</label>
-          <select class="selectpicker" #packageId>
+          <select class="selectpicker" formControlName="packageId">
+            <option value="">Select Package</option>
             <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
           </select>
         </div>
-        <button class="btn btn-primary" (click)="addNewUser(name.value, email.value, pass.value, userStatus.value, clientStatus.value, num.value, packageId.value)">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
     </md-tab>
