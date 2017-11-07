@@ -12,22 +12,19 @@ import {Voucher} from './voucher';
 export class PackagesService {
   constructor (private http: Http) { }
 
-  addPackage(data, files: File[]): Promise<JSON> {
+  addPackage(data): Promise<JSON> {
     const url = `im4booking/package`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
 
-    let form_data = new FormData();
-    form_data.append('api_key', api_key);
-    form_data.append('user_id', user_id);
-    form_data.append('package', data);
-
-    for (let file of files) {
-      form_data.append('file', file, file.name);
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package': data
     }
 
-    return this.http.post(url, form_data).toPromise().then(response => {
-      return response.json();
+    return this.http.post(url, body).toPromise().then(response => {
+      return response.json();  
     });
   }
 
@@ -47,20 +44,21 @@ export class PackagesService {
       return body;
     });
   }
-  getPackage(id): Promise<Package> {
-    const url = `package/${id}`;
+  getPackage(id): Promise<any> {
+    const url = `im4booking/package/${id}`;
     const api_key = localStorage.getItem('api_key');
-    const header = new Headers();
-    header.append('api_key', api_key);
+    const user_id = localStorage.getItem('user_id');
+    const headers = new Headers();
+
+    headers.append('api_key', api_key);
+    headers.append('user_id', user_id);
+
     const options = new RequestOptions({
-      method: RequestMethod.Get,
-      body: {
-        'api_key': api_key
-      },
-      headers: header
+      headers: headers
     });
-    return this.http.request(url, options).toPromise().then(response => {
-      return response.json().res as Package;
+
+    return this.http.get(url, options).toPromise().then(response => {
+      return response.json();
     });
   }
   addVouchers(data, packageId, files: File[]): Promise<JSON> {
@@ -83,34 +81,49 @@ export class PackagesService {
       return response.json();
     });
   }
-  getVoucher(package_id: number): Promise<Voucher> {
-    const url = `package/voucher/${package_id}`;
-    const header = new Headers();
-    header.append('package_id', package_id.toString());
-    const options = new RequestOptions({
-      method: RequestMethod.Get,
-      body: {
-        'package_id': package_id
-      }
-    });
-    return this.http.request(url, options).toPromise().then(response => {
-      return response.json().res as Voucher;
-    });
-  }
-  editVoucher(data: Voucher): Promise<JSON> {
-    const url = `package/voucher/edit/${data.id}`;
+  getVoucher(package_id: string): Promise<any> {
+    const url = `im4booking/package/voucher/${package_id}`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
-    const header = new Headers();
-    header.append('api_key', api_key);
-    header.append('user_id', user_id);
+    const headers = new Headers();
+
+    headers.append('api_key', api_key);
+    headers.append('user_id', user_id);
+
     const options = new RequestOptions({
-      body: {
-        'voucher': data
-      },
-      headers: header
+      headers: headers
     });
-    return this.http.post(url, options).toPromise().then(response => {
+
+    return this.http.get(url, options).toPromise().then(response => {
+      return response.json();
+    });
+  }
+  editVoucher(data, packge_id): Promise<any> {
+    const url = `im4booking/package/voucher/edit/`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'voucher': data,
+      'package_id': packge_id
+    }
+    return this.http.post(url, body).toPromise().then(response => {
+      return response.json();
+    });
+  }
+  editPackage(data): Promise<any> {
+    const url = `im4booking/package/edit/`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package': data
+    }
+    return this.http.post(url, body).toPromise().then(response => {
       return response.json();
     });
   }

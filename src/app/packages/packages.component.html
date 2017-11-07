@@ -12,45 +12,37 @@
           <md-card-content>
             <!-- <img src="{{pack.imgurl}}" /> -->
             <div class="container" *ngIf="editEnabled">
-              <form>
+              <form (ngSubmit)="editPackageSubmit()" [formGroup]="editPackageForm">
                 <div class="form-group">
                   <label>Package Name:</label>
-                  <input type="text" class="form-control" #name value="{{editFormPackage.name[0].value}}">
+                  <input type="text" class="form-control" formControlName="nameEnglish" value="{{pack.name[0].value}}">
                 </div>
                 <div class="form-group">
                   <label>Package Name in Arabic:</label>
-                  <input type="text" class="form-control" #namear value="{{editFormPackage.name[1].value}}">
+                  <input type="text" class="form-control" formControlName="nameArabic" value="{{pack.name[1].value}}">
                 </div>
                 <div class="form-group">
                   <label for="pwd">Points:</label>
-                  <input type="number" class="form-control" #points value="{{editFormPackage.points}">
+                  <input type="number" class="form-control" formControlName="points" value="{{pack.points}}">
                 </div>
                 <div class="form-group">
                   <label>Description :</label>
-                  <textarea class="form-control" id="description" #description value="{{editFormPackage.description[0].value}}"></textarea>
+                  <textarea class="form-control" id="description" formControlName="descriptionEnglish" value="{{pack.description[0].value}}"></textarea>
                 </div>
                 <div class="form-group">
                   <label>Description Arabic:</label>
-                  <textarea class="form-control" id="descriptionAr" #descriptionar value="{{editFormPackage.description[1].value}}"></textarea>
+                  <textarea class="form-control" id="descriptionAr" formControlName="descriptionArabic" value="{{pack.description[1].value}}"></textarea>
                 </div>
-                <!-- <div class="form-group">
-                  <div *ngFor="let packVoucher of packVoucherArr">
-                    <label>{{packVoucher.title}}</label>
-                    <input type="checkbox" class="form-control" (selected)="addPackVoucher(packVoucher.id)">
-                  </div>
-                </div> -->
-                <button type="submit" class="btn btn-primary" (click)="addNewPackage(name.value, namear.value, points.value, description.value, descriptionar.value)">Submit</button>
-                <!-- <div *ngIf="showImageUpload">
-                  <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" class="form-control" (change)="fileHandler(1,$event)">
-                  </div>
-                </div> -->
+                <div class="form-group">
+                  <label>Image</label>
+                  <input type="file" class="form-control" (change)="editFileHandler(1,$event)">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="editPackage(pack._id)">EDIT</button>
+            <button md-button (click)="editPackage()">EDIT</button>
             <button class="delete-button" (click)="deletePackage(pack._id)" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
@@ -102,10 +94,61 @@
             <md-card-title>{{voucher.name[1].value}}</md-card-title>
           </md-card-header>
           <md-card-content>
-            <!-- <p>{{voucher.condition}}</p> -->
+           <div *ngIf="editEnabled">
+            <form (ngSubmit)="editVoucherSubmit()" [formGroup]="editVoucherForm">
+              <div class="form-group">
+                <label>Title :</label>
+                <input type="text" class="form-control" id="title" formControlName="titleEnglish" value="{{voucher.name[0].value}}">
+              </div>
+              <div class="form-group">
+                <label>Title Arabic:</label>
+                <input type="text" class="form-control" id="title" formControlName="titleArabic" value="{{voucher.name[1].value}}">
+              </div>
+              <div class="form-group">
+                <label for="pwd">Description :</label>
+                <textarea class="form-control" id="description" formControlName="descriptionEnglish" value="{{voucher.description[0].value}}"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="pwd">Description Arabic:</label>
+                <textarea class="form-control" id="description" formControlName="descriptionArabic" value="{{voucher.description[1].value}}"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="pwd">Condition :</label>
+                <textarea class="form-control" id="condition" formControlName="conditionEnglish" value="{{voucher.condition[0].value}}"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="pwd">Condition Arabic:</label>
+                <textarea class="form-control" id="condition" formControlName="conditionArabic" value="{{voucher.condition[1].value}}"></textarea>
+              </div>
+              <div class="form-group">
+                <select class="selectpicker" formControlName="package">
+                  <option value="">Select an Package</option>
+                  <option value="1213EEe1">SeRRe</option>
+                  <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="pwd">Only 1 Use : </label>
+                <select class="selectpicker" formControlName="oneUse">
+                  <option value="">Choose Yes or No</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Points :</label>
+                <input type="number" class="form-control" id="points" formControlName="points" value="{{voucher.points}}">
+              </div>
+              <div class="form-group">
+                <label>Image :</label>
+                <input type="file" class="form-control" id="img" (change)="editFileHandler(0, $event)">
+              </div>
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+           </div>
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button>EDIT</button>
+            <button md-button (click)="editPackage()">EDIT</button>
             <button class="delete-button" (click)="deleteVoucher(voucher._id)" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
@@ -163,10 +206,10 @@
             <input type="file" class="form-control" id="img" (change)="fileHandler(0, $event)">
           </div>
           <button class="btn btn-primary" type="submit">Submit</button>
-          <div>
-            <h3>{{statusMessage}}</h3>
-          </div>
         </form>
+        <div>
+          <h3>{{statusMessage}}</h3>
+        </div>
       </div>
     </md-tab>
   </md-tab-group>

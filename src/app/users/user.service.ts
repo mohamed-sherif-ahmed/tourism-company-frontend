@@ -22,6 +22,22 @@ export class UserService {
         });
     }
 
+    getUser(userID): Promise<any> {
+        const url = `im4booking/user/${userID}`;
+        const api_key = localStorage.getItem('api_key');
+        const user_id = localStorage.getItem('user_id');
+        const header = new Headers();
+        header.append('api_key', api_key);
+        header.append('user_id', user_id);
+        const options = new RequestOptions({
+            headers: header
+          });
+        return this.http.get(url, options).toPromise().then(response => {
+            const body = response['_body'];
+            return JSON.parse(body);
+        });
+    }
+
     addNewUser(data): void {
         const url = `im4booking/user`;
         const api_key = localStorage.getItem('api_key');

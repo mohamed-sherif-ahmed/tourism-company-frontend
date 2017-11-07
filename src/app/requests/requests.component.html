@@ -3,9 +3,9 @@
   <md-tab label="Accepted Requests">
     <div class="cards-tab">
       <h1 class="view-title">Accepted Requests</h1>
-      <md-card class="package-card">
+      <md-card class="package-card" *ngFor="let req of acceptedArray">
         <md-card-header>
-          <md-card-title></md-card-title>
+          <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
         </md-card-header>
       </md-card>
     </div>
@@ -13,13 +13,13 @@
   <md-tab label="Pending Requests">
       <div class="cards-tab">
         <h1 class="view-title">Pending Requests</h1>
-        <md-card class="package-card">
+        <md-card class="package-card" *ngFor="let req of pendingArray">
           <md-card-header>
-            <md-card-title></md-card-title>
+            <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
           </md-card-header>
           <md-card-actions class="card-actions">
-            <button md-button>Accept</button>
-            <button class="delete-button" md-button>Reject</button>
+            <button md-button (click)="acceptRequest(req.id)">Accept</button>
+            <button class="delete-button" md-button (click)="rejectRequest(req.id)">Reject</button>
           </md-card-actions>
         </md-card>
       </div>
@@ -27,13 +27,13 @@
     <md-tab label="Rejected Requests">
         <div class="cards-tab">
           <h1 class="view-title">Rejected Requests</h1>
-          <md-card class="package-card">
+          <md-card class="package-card" *ngFor="let req of rejectedArray">
             <md-card-header>
-              <md-card-title></md-card-title>
+              <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
             </md-card-header>
             <md-card-actions class="card-actions">
-              <button md-button>Change to Pending</button>
-              <button md-button>Accept</button>
+              <button md-button (click)="changeToPending(req.id)">Change to Pending</button>
+              <button md-button (click)="acceptRequest(req.id)">Accept</button>
             </md-card-actions>
           </md-card>
         </div>

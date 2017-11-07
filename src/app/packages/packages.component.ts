@@ -28,6 +28,8 @@ export class PackagesComponent implements OnInit {
 
   packageForm: FormGroup;  
   voucherForm: FormGroup;
+  editPackageForm: FormGroup;
+  editVoucherForm: FormGroup;
 
   statusMessage: string;
 
@@ -53,6 +55,25 @@ export class PackagesComponent implements OnInit {
       points: new FormControl('', Validators.required)
     });
 
+    this.editPackageForm = new FormGroup({
+      nameEnglish: new FormControl(),
+      nameArabic: new FormControl(),
+      points: new FormControl(),
+      descriptionEnglish: new FormControl(),
+      descriptionArabic: new FormControl()
+    });
+
+    this.editVoucherForm = new FormGroup({
+      titleEnglish: new FormControl(),
+      titleArabic: new FormControl(),
+      descriptionEnglish: new FormControl(),
+      descriptionArabic: new FormControl(),
+      conditionEnglish: new FormControl(),
+      conditionArabic: new FormControl(),
+      package: new FormControl(),
+      oneUse: new FormControl(),
+      points: new FormControl()
+    });
     this.packageService.getPackages().then(res => {
       console.log(res);
       var body = JSON.parse(res);
@@ -93,27 +114,71 @@ export class PackagesComponent implements OnInit {
         //'vouchers': []
       }
       console.log(data);
-      this.packageService.addPackage(data, this.imgFile).then(res => {
-        console.log(res);
-        const response = res['response'];
-        this.packageID = response['_id'];
-        this.statusMessage = "Success";
+      this.packageService.addPackage(data).then(res => {
+        const valid = res['valid'];
+        if (valid) {
+          const response = res['response'];
+          this.packageID = response['_id'];
+          this.packageService.sendFile(this.packageID, this.imgFile);
+          this.statusMessage = "Success";
+          this.packageForm.reset();
+        } else {
+
+          this.statusMessage = "Error in Sending Package Data";
+        }
       });
-      this.packageForm.reset();
     } else {
       this.statusMessage = "Couldn't connect to the internet";
     }
   }
 
-  editPackage(packageId: string): void {
-    this.editEnabled = true;
-    this.editedPackage = packageId;
-    const selectedPackage = this.packagesArr.filter( pack => {
-      if (pack._id === this.editedPackage) {
-        return pack;
+  editPackageSubmit(): void {
+    if (this.editPackageForm.valid) {
+      const data = {
+        'name': [
+          {
+            'lang': 'en',
+            'value': this.editPackageForm.value.nameEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.editPackageForm.value.nameArabic
+          }
+        ],
+        'points': this.editPackageForm.value.points,
+        'description': [
+          {
+            'lang': 'en',
+            'value': this.editPackageForm.value.descriptionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.editPackageForm.value.descriptionArabic
+          }
+        ]
+        //'vouchers': []
       }
-    });
-    this.editFormPackage = selectedPackage[0];
+      console.log(data);
+      this.packageService.editPackage(data).then(res => {
+        const valid = res['valid'];
+        if (valid) {
+          const response = res['response'];
+          this.packageID = response['_id'];
+          this.packageService.sendFile(this.packageID, this.imgFile);
+          this.statusMessage = "Success";
+          //this.packageForm.reset();
+        } else {
+
+          this.statusMessage = "Error in Sending Package Data";
+        }
+      });
+    } else {
+      this.statusMessage = "Couldn't connect to the internet";
+    }
+  }
+
+  editPackage(): void {
+    this.editEnabled = true;
   }
  
   cancelEdit(): void {
@@ -121,10 +186,10 @@ export class PackagesComponent implements OnInit {
   }
   submitEditPackage(): void {
   }
-  submitEditVoucher(title: string, desc: string, expdate: string, points: number, condition: string, id: number, package_id: number): void {
-    const tempVoucher = new Voucher(title, id, desc, expdate, points, condition, package_id);
-    this.packageService.editVoucher(tempVoucher);
-  }
+  // submitEditVoucher(title: string, desc: string, expdate: string, points: number, condition: string, id: number, package_id: number): void {
+  //   const tempVoucher = new Voucher(title, id, desc, expdate, points, condition, package_id);
+  //   this.packageService.editVoucher(tempVoucher);
+  // }
   editVoucher(voucherId: number): void {
     this.editEnabled = true;
     // this.editedVoucher = voucherId;
@@ -152,6 +217,24 @@ export class PackagesComponent implements OnInit {
     //   console.log(`sending file for ${objId}`);
     //   this.packageService.sendFilePDFVoucher(objId, this.imgFile);
     // }
+  }
+  editFileHandler(type ,event): void {
+    var objId: string;
+    this.imgFile = event.target.files;
+    if (type == 1) {
+      objId = this.packageID;
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFile(objId, this.imgFile);
+    } else if (type == 0) {
+      objId = this.voucherID;
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFileImgVoucher(objId, this.imgFile).then(res => {
+      });
+    } else {
+      objId = this.voucherID;
+      console.log(`sending file for ${objId}`);
+      this.packageService.sendFilePDFVoucher(objId, this.imgFile);
+    }
   }
   addPackVoucher(id: number): void {
     this.packVoucherArr.push(id.toString());
@@ -202,15 +285,82 @@ export class PackagesComponent implements OnInit {
       };
       console.log(data);
       this.packageService.addVouchers(data, this.voucherForm.value.package, this.imgFile).then(res => {
-        const body = res['response'];
-        this.voucherID = body['_id'];
-        this.showImageUpload = true;
+        const valid = res['valid'];
+        if (valid == true){
+          const body = res['response'];
+          this.voucherID = body['_id'];
+          this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
+          this.voucherForm.reset();
+        } else {
+          
+        }
       });
-      this.voucherForm.reset();
     } else {
       console.log(this.voucherForm.value);
     }
   }
+
+  editVoucherSubmit(): void {
+    if (this.editVoucherForm.valid) {
+      var ob: boolean;
+      if (this.editVoucherForm.value.oneUse == "yes") {
+        ob = true;
+      } else { 
+        ob = false;
+      }
+      const data = {
+        'name': [
+          {
+            'lang': 'en',
+            'value': this.editVoucherForm.value.titleEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.editVoucherForm.value.titleArabic
+          }
+        ],
+        'description':[
+          {
+            'lang': 'en',
+            'value': this.editVoucherForm.value.descriptionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.editVoucherForm.value.descriptionArabic
+          }
+        ],
+        'is_voucher': true,
+        'given_points': this.editVoucherForm.value.points,
+        'condition':[
+          {
+            'lang': 'en',
+            'value': this.editVoucherForm.value.conditionEnglish
+          },
+          {
+            'lang': 'ar',
+            'value': this.editVoucherForm.value.conditionArabic
+          }
+        ],
+        'condition_type': true,
+        'used_one': ob
+      };
+      console.log(data);
+      this.packageService.editVoucher(data, this.editVoucherForm.value.package).then(res => {
+        const valid = res['valid'];
+        if (valid == true){
+          const body = res['response'];
+          this.voucherID = body['_id'];
+          //this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
+          //this.voucherForm.reset();
+        } else {
+          
+        }
+      });
+    } else {
+      console.log(this.voucherForm.value);
+    }
+  }
+
   deletePackage(id): void {
     this.packageService.deletePackage(id);
   }

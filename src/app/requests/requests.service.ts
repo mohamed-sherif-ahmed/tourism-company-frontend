@@ -28,15 +28,13 @@ export class RequestService {
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
-        header.append('api_key', api_key);
-        header.append('user_id', user_id);
-        const options = new RequestOptions({
-            headers: header,
-            body: {
-                'new_state': newState
-            }
-          });
-        return this.http.post(url, options).toPromise().then(response => {
+        
+        let body = {
+            'new_state': newState,
+            'user_id': user_id,
+            'api_key': api_key
+        }
+        return this.http.post(url, body).toPromise().then(response => {
             return response['body'];
         });
     }
