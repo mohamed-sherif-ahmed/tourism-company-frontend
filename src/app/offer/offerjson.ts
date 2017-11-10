@@ -34,7 +34,7 @@ export class offerjson {
 		}
 	];
 	is_voucher: boolean;
-
-
+img_path:string ;
+price:number;
 
 }

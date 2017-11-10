@@ -15,7 +15,9 @@ export class NewsComponent implements OnInit {
   constructor(private offerService: NewsService) { }
  offersArray: newsjson[];
  neededDate: Date;
+ err : string ;
   data: {} ;
+  editingarray:newsjson[];
   voucherForm: FormGroup;
   editVoucherForm:FormGroup;
   error: {};
@@ -65,9 +67,22 @@ export class NewsComponent implements OnInit {
     this.offerService.getOffers( date ).then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.offersArray=this.esponse as newsjson[] ;}
-         else { // nzahrlo this.offerService.err fl UI
+        this.offersArray=this.esponse as newsjson[] ;
+  console.log(this.offersArray);
+
+        this.offersArray =  this.offersArray.map((offer) => {
+          if (offer.img_path == "" || offer.img_path== null || offer.img_path== "TO BE uploaded")
+          {
+            offer.img_path = "/news.png" ;
           }
+
+          return offer ;
+          });
+
+      }
+
+      console.log(this.offersArray);
+
     });
   }
   sumbitdateclicked(){
@@ -95,7 +110,7 @@ createOffer(){
     console.log("test");
     this.filesb= true ;
     this.offerService.addOffer(this.addedOffer);
-    this.voucherForm.reset();
+    this.err = this.offerService.err;
 }
 
 
@@ -103,7 +118,17 @@ edit(id: string){
   this.divVisable= true;
   this.editedOfferId=id;
   console.log(this.editedOfferId);
+  this.editingarray = this.offersArray.filter((offer) => {
+    return offer._id == this.editedOfferId;
+  });
+  this.editVoucherForm.patchValue({
+    nameEnglish: this.editingarray[0].title[1].value,
+    nameArabic: this.editingarray[0].title[0].value,
+    descriptionEnglish: this.editingarray[0].body[0].value,
+    descriptionArabic: this.editingarray[0].body[1].value,
 
+
+  })
 
 
 }
@@ -121,7 +146,10 @@ editsumbit(){
 delete(name:string){
   this.offerService.delOffer(name);
 }
+hide(){
 
+  this.divVisable= false;
+}
 
   pdfHandler(event): void {
     console.log('pdfhandler called');

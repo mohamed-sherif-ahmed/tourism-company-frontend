@@ -12,7 +12,7 @@ body {
   display:-moz-box;
   -moz-box-pack:center;
   -moz-box-align:center;
-background-color: #3E50B4;
+background-color: #ffff;
   /* Safari and Chrome */
   display:-webkit-box;
   -webkit-box-pack:center;
@@ -47,7 +47,7 @@ background-color: #3E50B4;
   display: block; /*1*/
   padding: 12px 18px; /*2*/
   text-decoration: none; /*3*/
-  color: #ffff; /*4*/
+  color: #3a08e7; /*4*/
   border-bottom: 1px solid #eee;
   transition: all ease .5s;
 }

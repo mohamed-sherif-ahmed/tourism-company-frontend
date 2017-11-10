@@ -14,7 +14,7 @@ valid: boolean ;
 @Injectable()
 export class NewsService {
   valid: Boolean = true ;
-  err: string ;
+  err: string  ;
   files:any;
   conditions:Boolean = true;
   offerbeingCreatedID:string;
@@ -130,6 +130,13 @@ export class NewsService {
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
       console.log("the id   ",this.offerbeingCreatedID);
           this.createOfferimg();
+          if (! (this.offerbeingCreatedID ))
+          {
+            this.err = "ERROR";
+          }
+          else{
+            this.err = "Success";
+          }
     });
   }
   addOfferpdf(offerId: string, files : File[]): void {

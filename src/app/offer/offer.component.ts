@@ -21,6 +21,9 @@ export class OfferComponent implements OnInit {
  neededDate: Date;
   data: {} ;
   error: {};
+  editingarray:offerjson[];
+  imgarray:offerjson[];
+  eror:string;
   filter: boolean= false;
   filesb: boolean= false;
   files:any;
@@ -69,10 +72,28 @@ export class OfferComponent implements OnInit {
     this.offerService.getOffers( date ).then((res) => {
       this.esponse = JSON.parse(res)['response'] ;
       if (JSON.parse(res)['valid']) {
-        this.offersArray=this.esponse as offerjson[] ;}
+        this.offersArray=this.esponse as offerjson[] ;
+      this.offersArray =  this.offersArray.map((offer) => {
+        if (offer.img_path == "" || offer.img_path== null || offer.img_path== "TO BE uploaded")
+        {
+          offer.img_path = "/offer.png" ;
+        }
+
+        return offer ;
+        });
+
+
+
+
+      }
          else { // nzahrlo this.offerService.err fl UI
           }
+
+
+
     });
+
+
   }
   sumbitdateclicked(){
     this.neededDate = new Date (Date.now());
@@ -101,6 +122,7 @@ createOffer(){
 
     this.offerService.addOffer(this.addedOffer);
       this.voucherForm.reset();
+this.eror = this.offerService.err
 
 }
 
@@ -109,6 +131,24 @@ createOffer(){
 edit(id: string){
 this.divVisable= true;
 this.editedOfferId=id;
+this.editingarray = this.offersArray.filter((offer) => {
+  return offer._id == this.editedOfferId;
+});
+
+this.editVoucherForm.patchValue({
+  titleArabic: this.editingarray[0].name[1].value,
+  titleEnglish: this.editingarray[0].name[0].value,
+  points: this.editingarray[0].price,
+  descriptionEnglish: this.editingarray[0].description[0].value,
+  descriptionArabic: this.editingarray[0].description[1].value,
+  newexpiryDate: "you have to choose exp date from the calender the old one was : " + this.editingarray[0].exp_date ,
+  conditionEnglish: this.editingarray[0].condition[1].value,
+  conditionArabic:   this.editingarray[0].condition[0].value,
+
+})
+
+console.log(this.editingarray[0].description[1].value);
+this.editVoucherForm.value.descriptionEnglish = this.editingarray[0].description[1].value;
 console.log(this.editedOfferId);
 
 }
@@ -118,9 +158,13 @@ editsumbit(){
   this.addedOffer = new Offer(this.editVoucherForm.value.titleEnglish,this.editVoucherForm.value.titleArabic,this.editVoucherForm.value.descriptionEnglish,this.editVoucherForm.value.descriptionArabic,this.expdate,this.creationDate,'img to be uploaded ', "offer",this.editVoucherForm.value.conditionEnglish,this.editVoucherForm.value.conditionArabic,this.editVoucherForm.value.points as number);
   console.log(this.addedOffer);
 this.offerService.editOffer(this.addedOffer,this.editedOfferId);
+  this.editVoucherForm.reset();
 this.offerService.addOfferimg(this.editedOfferId,this.files);
 
-      this.editVoucherForm.reset();
+}
+hide(){
+
+  this.divVisable= false;
 }
 
 delete(name:string){

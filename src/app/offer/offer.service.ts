@@ -14,7 +14,7 @@ valid: boolean ;
 @Injectable()
 export class OfferService {
   valid: Boolean = true ;
-  err: string ;
+  err: string  ;
   files:any ;
   conditions:Boolean = true;
   offerbeingCreatedID:string;
@@ -161,6 +161,13 @@ price: offer.price,
       console.log("the response   ",this.offerbeingCreatedID);
       this.offerbeingCreatedID=this.offerbeingCreatedID['_id'];
       console.log("the id   ",this.offerbeingCreatedID);
+      if (! (this.offerbeingCreatedID ))
+      {
+        this.err = "ERROR"
+      }
+      else{
+        this.err="Success";
+      }
       this.createOfferimg();
 
     });

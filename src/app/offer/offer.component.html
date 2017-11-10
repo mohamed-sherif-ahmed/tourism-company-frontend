@@ -3,13 +3,15 @@
   <md-tab-group>
     <md-tab label="VIEW OFFERS">
         <button class="btn btn-primary" (click)="sumbitdateclicked()">REFRESH</button>
+        <button class="btn btn-primary" (click)="hide()">HIDE EDIT WINDOWS</button>
       <div class="cards-tab">
         <h1 class="view-title">Available Offers</h1>
         <md-card class="package-card" *ngFor="let offer of offersArray">
           <md-card-header>
-                <div > <img src="{{offer.img_path}}"></div>
-            <md-card-title>{{offer.description[0].value}}</md-card-title> <md-card-title>{{offer.description[1].value}}</md-card-title>
-                      <md-card-title>{{offer.name[0].value}}</md-card-title>  <md-card-title>{{offer.name[1].value}}</md-card-title>
+                <div class="diva"> <img src="{{offer.img_path}}"></div>
+                  <md-card-title class="titlo">Title:  {{offer.name[0].value}}</md-card-title>  <md-card-title class="titlo">{{offer.name[1].value}}</md-card-title>
+            <md-card-title class="titlo"> Description :  {{offer.description[0].value}}</md-card-title> <md-card-title class="titlo">{{offer.description[1].value}}</md-card-title>
+                        <md-card-title class="titlo"> Price : {{offer.price}}</md-card-title>
           </md-card-header>
           <md-card-content>
               <div class="container" *ngIf="divVisable">
@@ -115,8 +117,9 @@
             <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
           </div>
           <button class="btn btn-primary" type="submit">Submit</button>
-
+            <label>{{eror}}</label>
         </form>
+
       </div>
     </md-tab>
   </md-tab-group>

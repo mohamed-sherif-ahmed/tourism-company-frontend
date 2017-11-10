@@ -27,9 +27,7 @@ export class newsjson{
         date: {
             type: Date
         };
-        img_path: {
-            type: String
-        };
+        img_path:string;
         media_path: {
             type: String
         };
