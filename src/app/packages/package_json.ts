@@ -21,4 +21,5 @@ export class package_json {
         'value': string
       }
     ];
+    'img_path': string;
   }

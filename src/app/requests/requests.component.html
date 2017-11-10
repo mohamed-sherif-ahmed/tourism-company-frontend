@@ -4,9 +4,15 @@
     <div class="cards-tab">
       <h1 class="view-title">Accepted Requests</h1>
       <md-card class="package-card" *ngFor="let req of acceptedArray">
-        <md-card-header>
-          <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
-        </md-card-header>
+        <md-card-content>
+          <h3>
+              Request For {{req.request_type}} : {{req.offer}}
+          </h3>
+          <img src="{{req.img}}" alt="img">
+          <h3>
+            From User : {{req.user}}
+          </h3>
+        </md-card-content>
       </md-card>
     </div>
   </md-tab>
@@ -14,9 +20,15 @@
       <div class="cards-tab">
         <h1 class="view-title">Pending Requests</h1>
         <md-card class="package-card" *ngFor="let req of pendingArray">
-          <md-card-header>
-            <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
-          </md-card-header>
+            <md-card-content>
+                <h3>
+                    Request For {{req.request_type}} : {{req.offer}}
+                </h3>
+                <img src="{{req.img}}" alt="img">
+                <h3>
+                  From User : {{req.user}}
+                </h3>
+              </md-card-content>
           <md-card-actions class="card-actions">
             <button md-button (click)="acceptRequest(req.id)">Accept</button>
             <button class="delete-button" md-button (click)="rejectRequest(req.id)">Reject</button>
@@ -28,9 +40,15 @@
         <div class="cards-tab">
           <h1 class="view-title">Rejected Requests</h1>
           <md-card class="package-card" *ngFor="let req of rejectedArray">
-            <md-card-header>
-              <md-card-title>Request For {{req.request_type}} : {{req.offer}} From User : {{req.user}}</md-card-title>
-            </md-card-header>
+              <md-card-content>
+                  <h3>
+                      Request For {{req.request_type}} : {{req.offer}}
+                  </h3>
+                  <img src="{{req.img}}" alt="img">
+                  <h3>
+                    From User : {{req.user}}
+                  </h3>
+                </md-card-content>
             <md-card-actions class="card-actions">
               <button md-button (click)="changeToPending(req.id)">Change to Pending</button>
               <button md-button (click)="acceptRequest(req.id)">Accept</button>

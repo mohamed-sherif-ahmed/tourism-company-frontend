@@ -30,7 +30,7 @@ export class RequestService {
         const header = new Headers();
         
         let body = {
-            'new_state': newState,
+            'new_status': newState,
             'user_id': user_id,
             'api_key': api_key
         }

@@ -6,6 +6,10 @@
         <h1 class="view-title">Available Packages</h1>
         <md-card class="package-card" *ngFor="let pack of packagesArr">
           <md-card-header>
+            <img src="{{pack.img_path}}">
+            <br/>
+            <md-card-title>{{pack.name[0].value}}</md-card-title>
+            <md-card-title>{{pack.name[1].value}}</md-card-title>
             <md-card-title>{{pack.description[0].value}}</md-card-title>
             <md-card-title>{{pack.description[1].value}}</md-card-title>
           </md-card-header>
@@ -42,8 +46,7 @@
             </div>
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="editPackage()">EDIT</button>
-            <button class="delete-button" (click)="deletePackage(pack._id)" md-button>DELETE</button>
+            <button md-button (click)="editPackage(pack._id)">EDIT</button>
           </md-card-actions>
         </md-card>
       </div>
@@ -90,8 +93,12 @@
         <h1 class="view-title">Available Vouchers</h1>
         <md-card class="package-card" *ngFor="let voucher of vouchersArr">
           <md-card-header>
+            <img src="{{voucher.img_path}}">
+            <br/>
             <md-card-title>{{voucher.name[0].value}}</md-card-title>
             <md-card-title>{{voucher.name[1].value}}</md-card-title>
+            <md-card-title>{{voucher.description[0].value}}</md-card-title>
+            <md-card-title>{{voucher.description[1].value}}</md-card-title>
           </md-card-header>
           <md-card-content>
            <div *ngIf="editEnabled">
@@ -148,7 +155,7 @@
            </div>
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="editPackage()">EDIT</button>
+            <button md-button (click)="editVoucher(voucher._id)">EDIT</button>
             <button class="delete-button" (click)="deleteVoucher(voucher._id)" md-button>DELETE</button>
           </md-card-actions>
         </md-card>
@@ -185,7 +192,6 @@
           <div class="form-group">
             <select class="selectpicker" formControlName="package">
               <option value="">Select an Package</option>
-              <option value="1213EEe1">SeRRe</option>
               <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
             </select>
           </div>

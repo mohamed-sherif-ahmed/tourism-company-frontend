@@ -34,11 +34,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.offer.name[1].value,
+              'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.offer.img_path
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -50,11 +51,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.voucher.name[1].value,
+              'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.voucher.img_path
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -66,11 +68,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.package.name[1].value,
+              'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.package.img_path
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -86,11 +89,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.offer.name[1].value,
+              'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.offer.img_path
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -102,11 +106,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.voucher.name[1].value,
+              'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.voucher.img_path
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -118,11 +123,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.package.name[1].value,
+              'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.package.img_path
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -138,11 +144,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.offer.name[1].value,
+              'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.offer.img_path
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -154,11 +161,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.voucher.name[1].value,
+              'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.voucher.img_path
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -170,11 +178,12 @@ export class RequestsComponent implements OnInit {
             console.log("USER ", this.user);
             const newRequest = { 
               'user': this.user.name,
-              'offer': req.package.name[1].value,
+              'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
-              'id': req._id
+              'id': req._id,
+              'img': req.package.img_path
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -185,11 +194,11 @@ export class RequestsComponent implements OnInit {
   }
 
   rejectRequest(id: string): void {
-    this.requestService.changeRequestStatus(id, "reject");
+    this.requestService.changeRequestStatus(id, "rejected");
   }
 
   acceptRequest(id: string): void {
-    this.requestService.changeRequestStatus(id, "accept");
+    this.requestService.changeRequestStatus(id, "accepted");
   }
 
   changeToPending(id: string): void {

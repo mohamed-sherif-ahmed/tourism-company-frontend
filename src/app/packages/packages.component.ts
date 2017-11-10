@@ -17,9 +17,9 @@ export class PackagesComponent implements OnInit {
   vouchersArr: voucher_json [];
   editEnabled = false;
   editedPackage: string;
-  editedVoucher: number;
+  editedVoucher: string;
   editFormPackage: package_json;
-  editFormVoucher: Voucher;
+  editFormVoucher: voucher_json;
   imgFile: any;
   packVoucherArr: string [];
   showImageUpload = false;
@@ -177,8 +177,22 @@ export class PackagesComponent implements OnInit {
     }
   }
 
-  editPackage(): void {
+  editPackage(id: string): void {
     this.editEnabled = true;
+    this.editedVoucher = id;
+    const selectedPackage = this.packagesArr.filter( voucher => {
+      if (voucher._id == this.editedVoucher) {
+        return voucher;
+      }
+    });
+    this.editFormPackage = selectedPackage[0];
+    this.editPackageForm.patchValue({
+      nameEnglish: this.editFormPackage.name[0].value,
+      nameArabic: this.editFormPackage.name[1].value,
+      points: this.editFormPackage.points,
+      descriptionEnglish: this.editFormPackage.description[0].value,
+      descriptionArabic: this.editFormPackage.description[1].value
+    });
   }
  
   cancelEdit(): void {
@@ -190,15 +204,23 @@ export class PackagesComponent implements OnInit {
   //   const tempVoucher = new Voucher(title, id, desc, expdate, points, condition, package_id);
   //   this.packageService.editVoucher(tempVoucher);
   // }
-  editVoucher(voucherId: number): void {
+  editVoucher(voucherId: string): void {
     this.editEnabled = true;
-    // this.editedVoucher = voucherId;
-    // const selectedPackage = this.vouchersArr.filter( voucher => {
-    //   if (voucher.id === this.editedVoucher) {
-    //     return voucher;
-    //   }
-    // });
-    // this.editFormVoucher = selectedPackage[0];
+    this.editedVoucher = voucherId;
+    const selectedPackage = this.vouchersArr.filter( voucher => {
+      if (voucher._id == this.editedVoucher) {
+        return voucher;
+      }
+    });
+    this.editFormVoucher = selectedPackage[0];
+    this.editVoucherForm.patchValue({
+      titleEnglish: "TEST STRING",
+      titleArabic: this.editFormVoucher.name[1].value,
+      descriptionEnglish: this.editFormVoucher.description[0].value,
+      descriptionArabic: this.editFormVoucher.description[1].value,
+      conditionEnglish: this.editFormVoucher.condition[0].value,
+      conditionArabic: this.editFormVoucher.condition[1].value
+    });
   }
   fileHandler(type ,event): void {
     var objId: string;
@@ -281,10 +303,11 @@ export class PackagesComponent implements OnInit {
           }
         ],
         'condition_type': true,
-        'used_one': ob
+        'used_one': ob,
+        'in_package': this.voucherForm.value.package
       };
       console.log(data);
-      this.packageService.addVouchers(data, this.voucherForm.value.package, this.imgFile).then(res => {
+      this.packageService.addVouchers(data, this.voucherForm.value.package).then(res => {
         const valid = res['valid'];
         if (valid == true){
           const body = res['response'];
@@ -301,6 +324,7 @@ export class PackagesComponent implements OnInit {
   }
 
   editVoucherSubmit(): void {
+
     if (this.editVoucherForm.valid) {
       var ob: boolean;
       if (this.editVoucherForm.value.oneUse == "yes") {
@@ -342,7 +366,8 @@ export class PackagesComponent implements OnInit {
           }
         ],
         'condition_type': true,
-        'used_one': ob
+        'used_one': ob,
+        'in_package': this.voucherForm.value.package
       };
       console.log(data);
       this.packageService.editVoucher(data, this.editVoucherForm.value.package).then(res => {

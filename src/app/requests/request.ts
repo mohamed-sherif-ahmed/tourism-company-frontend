@@ -5,6 +5,7 @@ export class OfferRequest {
     request_type: string;
     request_date: string;
     id: string;
+    img: string;
 
     constructor(user, offer, state, type, date) {
         this.user = user;
