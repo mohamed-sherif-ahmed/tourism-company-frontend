@@ -75,7 +75,7 @@ export class NewsComponent implements OnInit {
           {
             offer.img_path = "/news.png" ;
           }
-
+    offer.editingNow = false ;
           return offer ;
           });
 
@@ -122,13 +122,22 @@ edit(id: string){
     return offer._id == this.editedOfferId;
   });
   this.editVoucherForm.patchValue({
-    nameEnglish: this.editingarray[0].title[1].value,
-    nameArabic: this.editingarray[0].title[0].value,
+    titleEnglish: this.editingarray[0].title[1].value,
+    titleArabic: this.editingarray[0].title[0].value,
     descriptionEnglish: this.editingarray[0].body[0].value,
     descriptionArabic: this.editingarray[0].body[1].value,
 
 
-  })
+  });
+  this.offersArray =  this.offersArray.map((offer) => {
+    if (offer._id == id)
+    {
+
+        offer.editingNow = true ;
+    }
+
+    return offer ;
+    });
 
 
 }

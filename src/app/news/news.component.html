@@ -3,7 +3,6 @@
   <md-tab-group>
     <md-tab label="VIEW NEWS">
         <button class="btn btn-primary" (click)="sumbitdateclicked()">REFRESH</button>
-          <button class="btn btn-primary" (click)="hide()">HIDE EDIT WINDOWS</button>
       <div class="cards-tab">
         <h1 class="view-title">Available News</h1>
         <md-card class="package-card" *ngFor="let offer of offersArray">
@@ -14,7 +13,7 @@
 
           </md-card-header>
           <md-card-content>
-              <div class="container" *ngIf="divVisable">
+              <div class="container" *ngIf="offer.editingNow">
                 <form (ngSubmit)="editsumbit()"  [formGroup]="editVoucherForm">
                   <div class="form-group">
                     <label>Title :</label>

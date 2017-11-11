@@ -37,6 +37,7 @@ export class OfferComponent implements OnInit {
   esponse:any ;
   visable:boolean = false;
   ngOnInit() {
+
     this.viewOffers(this.neededDate) ;
     this.voucherForm = new FormGroup({
       titleEnglish: new FormControl('', Validators.required),
@@ -79,6 +80,8 @@ export class OfferComponent implements OnInit {
           offer.img_path = "/offer.png" ;
         }
 
+        offer.editingNow = false ;
+
         return offer ;
         });
 
@@ -92,7 +95,7 @@ export class OfferComponent implements OnInit {
 
 
     });
-
+  this.eror = this.offerService.err
 
   }
   sumbitdateclicked(){
@@ -111,6 +114,9 @@ export class OfferComponent implements OnInit {
       } else { // nzahrlo this.offerService.err fl UI
       }
     });
+
+
+
   }
 createOffer(){
    this.creationDate = new Date(Date.now());
@@ -122,7 +128,7 @@ createOffer(){
 
     this.offerService.addOffer(this.addedOffer);
       this.voucherForm.reset();
-this.eror = this.offerService.err
+
 
 }
 
@@ -135,13 +141,22 @@ this.editingarray = this.offersArray.filter((offer) => {
   return offer._id == this.editedOfferId;
 });
 
+this.offersArray =  this.offersArray.map((offer) => {
+  if (offer._id == id)
+  {
+
+      offer.editingNow = true ;
+  }
+
+  return offer ;
+  });
 this.editVoucherForm.patchValue({
   titleArabic: this.editingarray[0].name[1].value,
   titleEnglish: this.editingarray[0].name[0].value,
   points: this.editingarray[0].price,
   descriptionEnglish: this.editingarray[0].description[0].value,
   descriptionArabic: this.editingarray[0].description[1].value,
-  newexpiryDate: "you have to choose exp date from the calender the old one was : " + this.editingarray[0].exp_date ,
+  newexpiryDate: this.editingarray[0].exp_date ,
   conditionEnglish: this.editingarray[0].condition[1].value,
   conditionArabic:   this.editingarray[0].condition[0].value,
 

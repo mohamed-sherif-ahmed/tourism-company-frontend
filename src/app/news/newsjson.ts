@@ -32,4 +32,5 @@ export class newsjson{
             type: String
         };
         _id:string;
+        editingNow:boolean;
 }
