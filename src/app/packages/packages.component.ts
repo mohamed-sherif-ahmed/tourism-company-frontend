@@ -159,7 +159,7 @@ export class PackagesComponent implements OnInit {
         //'vouchers': []
       }
       console.log(data);
-      this.packageService.editPackage(data).then(res => {
+      this.packageService.editPackage(data, this.editedVoucher).then(res => {
         const valid = res['valid'];
         if (valid) {
           const response = res['response'];
@@ -370,12 +370,12 @@ export class PackagesComponent implements OnInit {
         'in_package': this.voucherForm.value.package
       };
       console.log(data);
-      this.packageService.editVoucher(data, this.editVoucherForm.value.package).then(res => {
+      this.packageService.editVoucher(data, this.editVoucherForm.value.package, this.editedVoucher).then(res => {
         const valid = res['valid'];
         if (valid == true){
           const body = res['response'];
           this.voucherID = body['_id'];
-          //this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
+          this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
           //this.voucherForm.reset();
         } else {
           

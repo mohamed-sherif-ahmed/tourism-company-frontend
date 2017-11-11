@@ -7,6 +7,7 @@ import {RequestMethod, RequestOptions} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import {Voucher} from './voucher';
+import { voucher_json } from './voucher_json';
 
 @Injectable ()
 export class PackagesService {
@@ -95,7 +96,7 @@ export class PackagesService {
       return response.json();
     });
   }
-  editVoucher(data, packge_id): Promise<any> {
+  editVoucher(data, packge_id, voucherId): Promise<any> {
     const url = `im4booking/package/voucher/edit/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -103,14 +104,15 @@ export class PackagesService {
     const body = {
       'api_key': api_key,
       'user_id': user_id,
-      'voucher': data,
-      'package_id': packge_id
+      'new_voucher': data,
+      'package_id': packge_id,
+      'voucher_id': voucherId
     }
     return this.http.post(url, body).toPromise().then(response => {
       return response.json();
     });
   }
-  editPackage(data): Promise<any> {
+  editPackage(data, packageId): Promise<any> {
     const url = `im4booking/package/edit/`;
     const api_key = localStorage.getItem('api_key');
     const user_id = localStorage.getItem('user_id');
@@ -118,7 +120,8 @@ export class PackagesService {
     const body = {
       'api_key': api_key,
       'user_id': user_id,
-      'package': data
+      'new_package': data,
+      'package_id': packageId
     }
     return this.http.post(url, body).toPromise().then(response => {
       return response.json();

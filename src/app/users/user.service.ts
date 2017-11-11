@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 export class UserService {
     constructor (private http: Http) { };
 
-    getAvailableUsers(): Promise<JSON[]> {
-        const url = `/admin/users`;
+    getAvailableUsers(): Promise<JSON> {
+        const url = `im4booking/user/`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
@@ -18,6 +18,23 @@ export class UserService {
             headers: header
           });
         return this.http.get(url, options).toPromise().then(response => {
+            return response['_body'];
+        });
+    }
+
+    editUser(data, id): Promise<JSON[]> {
+        const url = `im4booking/user/edit`;
+        const api_key = localStorage.getItem('api_key');
+        const user_id = localStorage.getItem('user_id');
+
+        const body = {
+            'user_id': user_id,
+            'api_key': api_key,
+            'client_id': id,
+            'new_user': data
+        }
+
+        return this.http.post(url, body).toPromise().then(response => {
             return response['requests'];
         });
     }

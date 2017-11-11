@@ -3,23 +3,50 @@
   <md-tab label="View Users">
     <div class="cards-tab">
       <h1 class="view-title">Available Users</h1>
-      <md-card class="package-card">
+      <md-card class="package-card" *ngFor="let user of usersArr">
         <md-card-header>
-          <md-card-title>USER NAME</md-card-title>
+          <md-card-title>Name : {{user.name}}</md-card-title>
+          <md-card-title>Username : {{user.email}}</md-card-title>
         </md-card-header>
         <md-card-content>
           <div *ngIf="changePassword">
-            <form>
+            <form (ngSubmit)="submitUserEdit()" [formGroup]="userFormEdit">
+              <div class="form-group">
+                <label>Name :</label>
+                <input formControlName="name" type="text" class="form-control" >
+              </div>
+              <div class="form-group">
+                <label for="pwd">Username (Email) :</label>
+                <input formControlName="userName" type="text" class="form-control" >
+              </div>
               <div class="form-group">
                 <label>Password :</label>
-                <input type="text" class="form-control">
+                <input formControlName="password" type="text" class="form-control" >
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="form-group">
+                <label>Phone Number :</label>
+                <input formControlName="phoneNumber" type="number" class="form-control" >
+              </div>
+              <div class="form-group">
+                <select class="selectpicker" formControlName="adminStatus">
+                  <option value="">Choose admin or client</option>
+                  <option value="admin">admin</option>
+                  <option value="client">client</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Package Name :</label>
+                <select class="selectpicker" formControlName="packageId">
+                  <option value="">Select Package</option>
+                  <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" type="submit">Submit</button>
             </form>
           </div>
         </md-card-content>
         <md-card-actions class="card-actions">
-          <button md-button (click)="showPasswordForm()">Change Password</button>
+          <button md-button (click)="showPasswordForm()">Edit</button>
           <button class="delete-button" md-button>Delete</button>
         </md-card-actions>
       </md-card>
