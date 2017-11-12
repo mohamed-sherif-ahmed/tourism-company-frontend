@@ -22,4 +22,5 @@ export class package_json {
       }
     ];
     'img_path': string;
+    'edit_enabled': boolean;
   }

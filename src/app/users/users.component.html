@@ -5,19 +5,29 @@
       <h1 class="view-title">Available Users</h1>
       <md-card class="package-card" *ngFor="let user of usersArr">
         <md-card-header>
-          <md-card-title>Name : {{user.name}}</md-card-title>
-          <md-card-title>Username : {{user.email}}</md-card-title>
         </md-card-header>
         <md-card-content>
-          <div *ngIf="changePassword">
+          <div>
+            <label>Name :</label>
+            <h4>{{user.name}}</h4>
+            <label>Email :</label>
+            <h4>{{user.email}}</h4>
+            <label>Username :</label>
+            <h4>{{user.username}}</h4>
+          </div>
+          <div *ngIf="user.edit_enabled">
             <form (ngSubmit)="submitUserEdit()" [formGroup]="userFormEdit">
               <div class="form-group">
                 <label>Name :</label>
                 <input formControlName="name" type="text" class="form-control" >
               </div>
               <div class="form-group">
-                <label for="pwd">Username (Email) :</label>
+                <label for="pwd">Username:</label>
                 <input formControlName="userName" type="text" class="form-control" >
+              </div>
+              <div class="form-group">
+                <label for="pwd">Email:</label>
+                <input formControlName="email" type="text" class="form-control" >
               </div>
               <div class="form-group">
                 <label>Password :</label>
@@ -38,6 +48,7 @@
                 <label>Package Name :</label>
                 <select class="selectpicker" formControlName="packageId">
                   <option value="">Select Package</option>
+                  <option value="">No Package</option>
                   <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
                 </select>
               </div>
@@ -46,7 +57,7 @@
           </div>
         </md-card-content>
         <md-card-actions class="card-actions">
-          <button md-button (click)="showPasswordForm()">Edit</button>
+          <button md-button (click)="showPasswordForm(user._id)">Edit</button>
           <button class="delete-button" md-button>Delete</button>
         </md-card-actions>
       </md-card>
@@ -60,8 +71,12 @@
           <input formControlName="name" type="text" class="form-control" >
         </div>
         <div class="form-group">
-          <label for="pwd">Username (Email) :</label>
+          <label for="pwd">Username:</label>
           <input formControlName="userName" type="text" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="pwd">Email:</label>
+          <input formControlName="email" type="text" class="form-control" >
         </div>
         <div class="form-group">
           <label>Password :</label>
@@ -82,6 +97,7 @@
           <label>Package Name :</label>
           <select class="selectpicker" formControlName="packageId">
             <option value="">Select Package</option>
+            <option value="">No Package</option>
             <option *ngFor="let package of packagesArr" value="{{package._id}}">{{package.name[0].value}}</option>
           </select>
         </div>

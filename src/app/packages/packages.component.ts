@@ -78,12 +78,26 @@ export class PackagesComponent implements OnInit {
       console.log(res);
       var body = JSON.parse(res);
       this.packagesArr = body['response'] as package_json [];
+      this.packagesArr = this.packagesArr.map(pack => {
+        if (pack.img_path == "" || pack.img_path == null) {
+          pack.img_path = "/pack.jpg";
+        }
+        pack.edit_enabled = false;
+        return pack;
+      });
       console.log(this.packagesArr);
     });
     this.packageService.getVouchers().then(res => {
       var body = JSON.parse(res);
       console.log(body);
       this.vouchersArr = body['response'] as voucher_json [];
+      this.vouchersArr = this.vouchersArr.map(voucher => {
+        if (voucher.img_path == "" || voucher.img_path == null) {
+          voucher.img_path = "/voucher.png";
+        } 
+        voucher.edit_enabled = false;
+        return voucher;
+      });
     });
   }
 
@@ -180,6 +194,12 @@ export class PackagesComponent implements OnInit {
   editPackage(id: string): void {
     this.editEnabled = true;
     this.editedVoucher = id;
+    this.packagesArr = this.packagesArr.map(pack => {
+      if (pack._id == this.editedVoucher){
+        pack.edit_enabled = true;
+      }
+      return pack;
+    });
     const selectedPackage = this.packagesArr.filter( voucher => {
       if (voucher._id == this.editedVoucher) {
         return voucher;
@@ -207,6 +227,12 @@ export class PackagesComponent implements OnInit {
   editVoucher(voucherId: string): void {
     this.editEnabled = true;
     this.editedVoucher = voucherId;
+    this.vouchersArr = this.vouchersArr.map(voucher => {
+      if (this.editedVoucher == voucher._id) {
+        voucher.edit_enabled = true;
+      }
+      return voucher;
+    });
     const selectedPackage = this.vouchersArr.filter( voucher => {
       if (voucher._id == this.editedVoucher) {
         return voucher;
@@ -391,5 +417,32 @@ export class PackagesComponent implements OnInit {
   }
   deleteVoucher(id): void {
     this.packageService.deleteVoucher(id);
+  }
+  refresh(): void {
+    this.packageService.getPackages().then(res => {
+      console.log(res);
+      var body = JSON.parse(res);
+      this.packagesArr = body['response'] as package_json [];
+      this.packagesArr = this.packagesArr.map(pack => {
+        if (pack.img_path == "" || pack.img_path == null) {
+          pack.img_path = "/pack.jpg";
+        }
+        pack.edit_enabled = false;
+        return pack;
+      });
+      console.log(this.packagesArr);
+    });
+    this.packageService.getVouchers().then(res => {
+      var body = JSON.parse(res);
+      console.log(body);
+      this.vouchersArr = body['response'] as voucher_json [];
+      this.vouchersArr = this.vouchersArr.map(voucher => {
+        if (voucher.img_path == "" || voucher.img_path == null) {
+          voucher.img_path = "/voucher.png";
+        } 
+        voucher.edit_enabled = false;
+        return voucher;
+      });
+    });
   }
 }

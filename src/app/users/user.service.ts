@@ -18,7 +18,7 @@ export class UserService {
             headers: header
           });
         return this.http.get(url, options).toPromise().then(response => {
-            return response['_body'];
+            return JSON.parse(response['_body']);
         });
     }
 

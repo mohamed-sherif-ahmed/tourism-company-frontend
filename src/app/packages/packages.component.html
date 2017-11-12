@@ -1,21 +1,24 @@
 <app-navigation></app-navigation>
 <body>
+    <button md-button (click)="refresh()">Refresh</button>
   <md-tab-group>
     <md-tab label="View Packages">
       <div class="cards-tab">
         <h1 class="view-title">Available Packages</h1>
         <md-card class="package-card" *ngFor="let pack of packagesArr">
           <md-card-header>
-            <img src="{{pack.img_path}}">
-            <br/>
-            <md-card-title>{{pack.name[0].value}}</md-card-title>
-            <md-card-title>{{pack.name[1].value}}</md-card-title>
-            <md-card-title>{{pack.description[0].value}}</md-card-title>
-            <md-card-title>{{pack.description[1].value}}</md-card-title>
           </md-card-header>
           <md-card-content>
+            <div>
+                <label>Name:</label>
+                <h4>{{pack.name[0].value}}   <span dir="rtl" lang="ar">{{pack.name[1].value}}</span></h4>
+                <label>Description:</label>
+                <h4>{{pack.description[0].value}}</h4>
+                <h4 dir="rtl" lang="ar">{{pack.description[1].value}}</h4>
+                <div><img src="{{pack.img_path}}"></div>
+            </div>
             <!-- <img src="{{pack.imgurl}}" /> -->
-            <div class="container" *ngIf="editEnabled">
+            <div class="container" *ngIf="pack.edit_enabled">
               <form (ngSubmit)="editPackageSubmit()" [formGroup]="editPackageForm">
                 <div class="form-group">
                   <label>Package Name:</label>
@@ -48,6 +51,8 @@
           <md-card-actions class="card-actions">
             <button md-button (click)="editPackage(pack._id)">EDIT</button>
           </md-card-actions>
+          <br>
+          <br>
         </md-card>
       </div>
     </md-tab>
@@ -93,15 +98,17 @@
         <h1 class="view-title">Available Vouchers</h1>
         <md-card class="package-card" *ngFor="let voucher of vouchersArr">
           <md-card-header>
-            <img src="{{voucher.img_path}}">
-            <br/>
-            <md-card-title>{{voucher.name[0].value}}</md-card-title>
-            <md-card-title>{{voucher.name[1].value}}</md-card-title>
-            <md-card-title>{{voucher.description[0].value}}</md-card-title>
-            <md-card-title>{{voucher.description[1].value}}</md-card-title>
           </md-card-header>
           <md-card-content>
-           <div *ngIf="editEnabled">
+              <div>
+                  <label>Name:</label>
+                  <h4>{{voucher.name[0].value}}   <span h4 dir="rtl" lang="ar">{{voucher.name[1].value}}</span></h4>
+                  <label>Description:</label>
+                  <h4>{{voucher.description[0].value}}</h4>
+                  <h4 dir="rtl" lang="ar">{{voucher.description[1].value}}</h4>
+                  <div><img src="{{voucher.img_path}}"></div>
+              </div>
+           <div *ngIf="voucher.edit_enabled">
             <form (ngSubmit)="editVoucherSubmit()" [formGroup]="editVoucherForm">
               <div class="form-group">
                 <label>Title :</label>
@@ -158,6 +165,8 @@
             <button md-button (click)="editVoucher(voucher._id)">EDIT</button>
             <button class="delete-button" (click)="deleteVoucher(voucher._id)" md-button>DELETE</button>
           </md-card-actions>
+          <br>
+          <br>
         </md-card>
       </div>
     </md-tab>
