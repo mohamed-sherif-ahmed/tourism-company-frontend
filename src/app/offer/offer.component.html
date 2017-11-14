@@ -7,12 +7,20 @@
         <h1 class="view-title">Available Offers</h1>
         <md-card class="package-card" *ngFor="let offer of offersArray">
           <md-card-header>
-                <div class="diva"> <img src="{{offer.img_path}}"></div>
-                  <md-card-title class="titlo">Title:  {{offer.name[0].value}}</md-card-title>  <md-card-title class="titlo">{{offer.name[1].value}}</md-card-title>
-            <md-card-title class="titlo"> Description :  {{offer.description[0].value}}</md-card-title> <md-card-title class="titlo">{{offer.description[1].value}}</md-card-title>
-                        <md-card-title class="titlo"> Price : {{offer.price}}</md-card-title>
           </md-card-header>
           <md-card-content>
+            <div>
+                <div><img src="{{offer.img_path}}"></div>
+                <label class="label-view">Name:</label>
+                <h4 class="data-view">{{offer.name[1].value}} </h4>
+                <h4 class="data-view" dir="rtl" lang="ar">{{offer.name[0].value}}</h4>
+                <label class="label-view">Description:</label>
+                <h4 class="data-view">{{offer.description[0].value}}</h4>
+                <h4 class="data-view" dir="rtl" lang="ar">{{offer.description[1].value}}</h4>
+                <h4 class="data-view">{{offer.price}}</h4>
+            </div>
+
+
               <div class="container" *ngIf="offer.editingNow">
                 <form (ngSubmit)="editsumbit()"  [formGroup]="editVoucherForm">
                   <div class="form-group">
@@ -25,11 +33,11 @@
                   </div>
                   <div class="form-group">
                     <label for="pwd">Description :</label>
-                    <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish" value="{{offer.description[1].value}}" ></textarea>
+                    <textarea class="form-control" id="descriptioneng" formControlName="descriptionEnglish" value="{{offer.description[0].value}}" ></textarea>
                   </div>
                   <div class="form-group">
                     <label for="pwd">Description Arabic:</label>
-                    <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic" value="{{offer.description[0].value}}"></textarea>
+                    <textarea class="form-control" id="descriptionarr" formControlName="descriptionArabic" value="{{offer.description[1].value}}"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="pwd">Condition :</label>
@@ -50,7 +58,7 @@
                   </div>
                   <div class="form-group">
                     <label>Image :</label>
-                    <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+                    <input type="file" class="form-control" id="img" (change)="pdfHandler($event)" >
                   </div>
                   <button class="btn btn-primary" type="submit">Submit</button>
 
@@ -62,7 +70,7 @@
 
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="edit(offer._id)">EDIT THIS OFFER</button>
+            <button class="edit-button"md-button (click)="edit(offer._id)">EDIT  </button>
             <button class="delete-button" (click)="delete(offer._id)" md-button>DELETE</button>
           </md-card-actions>
 
@@ -113,7 +121,7 @@
           </div>
           <div class="form-group">
             <label>Image :</label>
-            <input type="file" class="form-control" id="img" (change)="pdfHandler($event)">
+            <input type="file" class="form-control" id="img" (change)="pdfHandler($event)" formControlName="img">
           </div>
           <button class="btn btn-primary" type="submit">Submit</button>
             <label>{{eror}}</label>
