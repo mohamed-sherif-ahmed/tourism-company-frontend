@@ -39,6 +39,22 @@ export class UserService {
         });
     }
 
+    deleteUser(id): Promise<JSON[]> {
+        const url = `im4booking/user/delete`;
+        const api_key = localStorage.getItem('api_key');
+        const user_id = localStorage.getItem('user_id');
+
+        const body = {
+            'user_id': user_id,
+            'api_key': api_key,
+            'client_id': id,
+        }
+
+        return this.http.post(url, body).toPromise().then(response => {
+            return response['requests'];
+        });
+    }
+
     getUser(userID): Promise<any> {
         const url = `im4booking/user/${userID}`;
         const api_key = localStorage.getItem('api_key');

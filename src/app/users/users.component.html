@@ -57,8 +57,8 @@
           </div>
         </md-card-content>
         <md-card-actions class="card-actions">
-          <button md-button (click)="showPasswordForm(user._id)">Edit</button>
-          <button class="delete-button" md-button>Delete</button>
+          <button md-button (click)="showPasswordForm(user._id)" class="edit-button">Edit</button>
+          <button class="delete-button" (click)="deleteUser(user._id)" md-button>Delete</button>
         </md-card-actions>
       </md-card>
     </div>

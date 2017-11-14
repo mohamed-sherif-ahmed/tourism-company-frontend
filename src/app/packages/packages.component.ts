@@ -31,7 +31,9 @@ export class PackagesComponent implements OnInit {
   editPackageForm: FormGroup;
   editVoucherForm: FormGroup;
 
-  statusMessage: string;
+  statusMessage = "";
+
+  selectedTab = 0;
 
   constructor (private packageService: PackagesService) { }
   ngOnInit() {
@@ -130,15 +132,16 @@ export class PackagesComponent implements OnInit {
       console.log(data);
       this.packageService.addPackage(data).then(res => {
         const valid = res['valid'];
+        console.log("AFTER PAC" + valid);
         if (valid) {
           const response = res['response'];
           this.packageID = response['_id'];
           this.packageService.sendFile(this.packageID, this.imgFile);
           this.statusMessage = "Success";
           this.packageForm.reset();
+          this.refresh();
         } else {
-
-          this.statusMessage = "Error in Sending Package Data";
+          this.statusMessage = `${res['msg']}`;
         }
       });
     } else {
@@ -181,9 +184,9 @@ export class PackagesComponent implements OnInit {
           this.packageService.sendFile(this.packageID, this.imgFile);
           this.statusMessage = "Success";
           //this.packageForm.reset();
+          this.refresh();
         } else {
-
-          this.statusMessage = "Error in Sending Package Data";
+          this.statusMessage = `${res['msg']}`;
         }
       });
     } else {
@@ -239,13 +242,17 @@ export class PackagesComponent implements OnInit {
       }
     });
     this.editFormVoucher = selectedPackage[0];
+    console.log("CONDITION" + this.editFormVoucher.condition[0].value);
     this.editVoucherForm.patchValue({
       titleEnglish: "TEST STRING",
       titleArabic: this.editFormVoucher.name[1].value,
       descriptionEnglish: this.editFormVoucher.description[0].value,
       descriptionArabic: this.editFormVoucher.description[1].value,
       conditionEnglish: this.editFormVoucher.condition[0].value,
-      conditionArabic: this.editFormVoucher.condition[1].value
+      conditionArabic: this.editFormVoucher.condition[1].value,
+      package: this.editFormVoucher.in_package,
+      oneUse: this.editFormVoucher.used_one,
+      points: this.editFormVoucher.given_points
     });
   }
   fileHandler(type ,event): void {
@@ -290,7 +297,7 @@ export class PackagesComponent implements OnInit {
   newVoucherSubmit(): void {
     if (this.voucherForm.valid) {
       var ob: boolean;
-      if (this.voucherForm.value.oneUse == "yes") {
+      if (this.voucherForm.value.oneUse == "true") {
         ob = true;
       } else { 
         ob = false;
@@ -339,9 +346,11 @@ export class PackagesComponent implements OnInit {
           const body = res['response'];
           this.voucherID = body['_id'];
           this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
+          this.statusMessage = "Voucher Added";
           this.voucherForm.reset();
+          this.refresh();
         } else {
-          
+          this.statusMessage = `${res['msg']}`;
         }
       });
     } else {
@@ -353,7 +362,7 @@ export class PackagesComponent implements OnInit {
 
     if (this.editVoucherForm.valid) {
       var ob: boolean;
-      if (this.editVoucherForm.value.oneUse == "yes") {
+      if (this.editVoucherForm.value.oneUse == "true") {
         ob = true;
       } else { 
         ob = false;
@@ -403,6 +412,7 @@ export class PackagesComponent implements OnInit {
           this.voucherID = body['_id'];
           this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
           //this.voucherForm.reset();
+          this.refresh();
         } else {
           
         }
@@ -413,10 +423,16 @@ export class PackagesComponent implements OnInit {
   }
 
   deletePackage(id): void {
-    this.packageService.deletePackage(id);
+    this.packageService.deletePackage(id).then(res => {
+      console.log("DELETE RES" + res);
+      this.refresh();
+    });
   }
   deleteVoucher(id): void {
-    this.packageService.deleteVoucher(id);
+    this.packageService.deleteVoucher(id).then(res => {
+      console.log("DELETE RES" + res);
+      this.refresh();
+    });
   }
   refresh(): void {
     this.packageService.getPackages().then(res => {

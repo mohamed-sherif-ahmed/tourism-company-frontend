@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
 
   }
   deleteUser(userId: string): void {
-    
+    this.userService.deleteUser(userId);
   }
   submitUser(): void {
     var data;

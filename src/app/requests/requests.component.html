@@ -30,7 +30,7 @@
                 </h3>
               </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="acceptRequest(req.id)">Accept</button>
+            <button class="edit-button" md-button (click)="acceptRequest(req.id)">Accept</button>
             <button class="delete-button" md-button (click)="rejectRequest(req.id)">Reject</button>
           </md-card-actions>
         </md-card>
@@ -50,8 +50,8 @@
                   </h3>
                 </md-card-content>
             <md-card-actions class="card-actions">
-              <button md-button (click)="changeToPending(req.id)">Change to Pending</button>
-              <button md-button (click)="acceptRequest(req.id)">Accept</button>
+              <button class="edit-button" md-button (click)="changeToPending(req.id)">Change to Pending</button>
+              <button class="edit-button" md-button (click)="acceptRequest(req.id)">Accept</button>
             </md-card-actions>
           </md-card>
         </div>
