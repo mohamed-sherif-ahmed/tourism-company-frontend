@@ -37,6 +37,6 @@ export class voucher_json {
     '_id': string;
     'img_path': string;
     'edit_enabled': boolean; 
-    'in_package': boolean;
+    'in_package': string;
     'used_one': boolean;
   };

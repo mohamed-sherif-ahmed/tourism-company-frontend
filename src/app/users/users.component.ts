@@ -82,7 +82,9 @@ export class UsersComponent implements OnInit {
       userName: this.user.username,
       password: this.user.password,
       email: this.user.email,
-      phoneNumber: this.user.phone_number
+      phoneNumber: this.user.phone_number,
+      adminStatus: this.user.user_type,
+      packageId: this.user.package_id
     });
   }
   editPassword(userId: string): void {
@@ -131,7 +133,7 @@ export class UsersComponent implements OnInit {
   submitUserEdit(): void {
     var data;
     console.log(this.userForm.value.packageId);
-    if (this.userForm.value.adminStatus == "admin") {
+    if (this.userFormEdit.value.adminStatus == "admin") {
       data = {
         'name': this.userFormEdit.value.name,
         'email': this.userFormEdit.value.userName,
@@ -139,7 +141,7 @@ export class UsersComponent implements OnInit {
         'phone_number': this.userFormEdit.value.phoneNumber,
         'user_type': this.userFormEdit.value.adminStatus
       }
-    } else if (this.userForm.value.adminStatus == "client" && (this.userForm.value.packageId == "" || this.userForm.value.packageId == null)) {
+    } else if (this.userFormEdit.value.adminStatus == "client" && (this.userFormEdit.value.packageId == "" || this.userFormEdit.value.packageId == null )) {
       data = {
         'name': this.userFormEdit.value.name,
         'username': this.userFormEdit.value.userName,
@@ -149,7 +151,7 @@ export class UsersComponent implements OnInit {
         'user_type': this.userFormEdit.value.adminStatus,
         'client_type': 'guest'
       }
-    } else if (this.userForm.value.adminStatus == "client" && (this.userForm.value.packageId != "" || this.userForm.value.packageId != null)) {
+    } else if (this.userFormEdit.value.adminStatus == "client" && (this.userFormEdit.value.packageId != "" || this.userFormEdit.value.packageId != null)) {
       data = {
         'name': this.userFormEdit.value.name,
         'email': this.userFormEdit.value.userName,
@@ -160,7 +162,7 @@ export class UsersComponent implements OnInit {
         'package_id': this.userFormEdit.value.packageId
       }
     }
-    console.log(data);
+    console.log("DATA EDIT USER" + data);
     this.userService.editUser(data, this.editUser).then(res => {
       this.router.navigateByUrl("offer");
     });

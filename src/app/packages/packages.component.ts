@@ -31,7 +31,7 @@ export class PackagesComponent implements OnInit {
   editPackageForm: FormGroup;
   editVoucherForm: FormGroup;
 
-  statusMessage = "";
+  statusMessage = " ";
 
   selectedTab = 0;
 
@@ -244,7 +244,7 @@ export class PackagesComponent implements OnInit {
     this.editFormVoucher = selectedPackage[0];
     console.log("CONDITION" + this.editFormVoucher.condition[0].value);
     this.editVoucherForm.patchValue({
-      titleEnglish: "TEST STRING",
+      titleEnglish: this.editFormVoucher.name[0].value,
       titleArabic: this.editFormVoucher.name[1].value,
       descriptionEnglish: this.editFormVoucher.description[0].value,
       descriptionArabic: this.editFormVoucher.description[1].value,
@@ -402,7 +402,7 @@ export class PackagesComponent implements OnInit {
         ],
         'condition_type': true,
         'used_one': ob,
-        'in_package': this.voucherForm.value.package
+        'in_package': this.editVoucherForm.value.package
       };
       console.log(data);
       this.packageService.editVoucher(data, this.editVoucherForm.value.package, this.editedVoucher).then(res => {
