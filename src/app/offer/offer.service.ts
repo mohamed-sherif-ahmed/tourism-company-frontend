@@ -168,6 +168,7 @@ price: offer.price,
       else{
         this.err="Success";
       }
+
       this.createOfferimg();
 
     });

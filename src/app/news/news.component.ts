@@ -111,6 +111,7 @@ createOffer(){
     this.filesb= true ;
     this.offerService.addOffer(this.addedOffer);
     this.err = this.offerService.err;
+    this.voucherForm.reset();
 }
 
 
@@ -146,9 +147,17 @@ editsumbit(){
  this.addedOffer = new News(this.editVoucherForm.value.titleEnglish,this.editVoucherForm.value.titleArabic,this.editVoucherForm.value.descriptionEnglish,this.editVoucherForm.value.descriptionArabic,this.creationDate);
  console.log(this.addedOffer);
  this.offerService.editOffer(this.addedOffer,this.editedOfferId);
+    this.editVoucherForm.reset();
+    setTimeout(5000);
+        this.sumbitdateclicked();
+        setTimeout(10000);
+            this.sumbitdateclicked();
+            setTimeout(10000);
+                this.sumbitdateclicked();
+                setTimeout(10000);
+                    this.sumbitdateclicked();
  this.offerService.addOfferimg(this.editedOfferId,this.files);
 
-       this.editVoucherForm.reset();
 
 
 }

@@ -36,6 +36,7 @@ export class OfferComponent implements OnInit {
   called : boolean = false;
   esponse:any ;
   visable:boolean = false;
+
   ngOnInit() {
 
     this.viewOffers(this.neededDate) ;
@@ -44,13 +45,14 @@ export class OfferComponent implements OnInit {
       titleArabic: new FormControl('', Validators.required),
       descriptionEnglish: new FormControl('', Validators.required),
       descriptionArabic: new FormControl('', Validators.required),
-      conditionEnglish: new FormControl('', Validators.required),
-      conditionArabic: new FormControl('', Validators.required),
+      conditionEnglish: new FormControl(''),
+      conditionArabic: new FormControl(''),
       package: new FormControl('', Validators.required),
       startDate: new FormControl('', Validators.required),
       expiryDate: new FormControl('', Validators.required),
       oneUse: new FormControl('', Validators.required),
-      points: new FormControl('', Validators.required)
+      points: new FormControl('', Validators.required),
+      img: new FormControl('')
     });
     this.editVoucherForm = new FormGroup({
       titleEnglish: new FormControl('', Validators.required),
@@ -121,7 +123,7 @@ export class OfferComponent implements OnInit {
 createOffer(){
    this.creationDate = new Date(Date.now());
      this.expdate = new Date(this.voucherForm.value.expiryDate._d);
-  this.addedOffer = new Offer(this.voucherForm.value.titleEnglish,this.voucherForm.value.titleArabic,this.voucherForm.value.descriptionEnglish,this.voucherForm.value.descriptionArabic,this.expdate,this.creationDate,'img to be uploaded ', "offer",this.voucherForm.value.conditionEnglish,this.voucherForm.value.conditionArabic,this.voucherForm.value.points as number);
+  this.addedOffer = new Offer(this.voucherForm.value.titleEnglish,this.voucherForm.value.titleArabic,this.voucherForm.value.descriptionEnglish,this.voucherForm.value.descriptionArabic,this.expdate,this.creationDate,'img to be ', "offer",this.voucherForm.value.conditionEnglish,this.voucherForm.value.conditionArabic,this.voucherForm.value.points as number);
   console.log(this.addedOffer);
     console.log("test");
     this.filesb= true ;
@@ -151,8 +153,8 @@ this.offersArray =  this.offersArray.map((offer) => {
   return offer ;
   });
 this.editVoucherForm.patchValue({
-  titleArabic: this.editingarray[0].name[1].value,
-  titleEnglish: this.editingarray[0].name[0].value,
+  titleArabic: this.editingarray[0].name[0].value,
+  titleEnglish: this.editingarray[0].name[1].value,
   points: this.editingarray[0].price,
   descriptionEnglish: this.editingarray[0].description[0].value,
   descriptionArabic: this.editingarray[0].description[1].value,
@@ -174,9 +176,20 @@ editsumbit(){
   console.log(this.addedOffer);
 this.offerService.editOffer(this.addedOffer,this.editedOfferId);
   this.editVoucherForm.reset();
+setTimeout(5000);
+    this.sumbitdateclicked();
+    setTimeout(5000);
+        this.sumbitdateclicked();
+        setTimeout(10000);
+            this.sumbitdateclicked();
+            setTimeout(10000);
+                this.sumbitdateclicked();
+
 this.offerService.addOfferimg(this.editedOfferId,this.files);
 
+
 }
+
 hide(){
 
   this.divVisable= false;

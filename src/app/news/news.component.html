@@ -7,12 +7,19 @@
         <h1 class="view-title">Available News</h1>
         <md-card class="package-card" *ngFor="let offer of offersArray">
           <md-card-header>
-                <div class="diva"> <img src="{{offer.img_path}}"></div>
-                <md-card-title class="titlo">Title : {{offer.title[0].value}}</md-card-title>  <md-card-title class="titlo">{{offer.title[1].value}}</md-card-title>
-            <md-card-title class="titlo"> Body : {{offer.body[0].value}}</md-card-title> <md-card-title class="titlo">{{offer.body[1].value}}</md-card-title>
-
           </md-card-header>
           <md-card-content>
+
+            <div>
+                <div><img src="{{offer.img_path}}"></div>
+                <label class="label-view">title:</label>
+                <h4 class="data-view">{{offer.title[1].value}} </h4>
+                <h4 class="data-view" dir="rtl" lang="ar">{{offer.title[0].value}}</h4>
+                <label class="label-view">Description:</label>
+                <h4 class="data-view">{{offer.body[1].value}}</h4>
+                <h4 class="data-view" dir="rtl" lang="ar">{{offer.body[0].value}}</h4>
+            </div>
+
               <div class="container" *ngIf="offer.editingNow">
                 <form (ngSubmit)="editsumbit()"  [formGroup]="editVoucherForm">
                   <div class="form-group">
@@ -45,7 +52,7 @@
 
           </md-card-content>
           <md-card-actions class="card-actions">
-            <button md-button (click)="edit(offer._id)">EDIT THIS NEWS</button>
+            <button class="edit-button" md-button (click)="edit(offer._id)">EDIT </button>
             <button class="delete-button" (click)="delete(offer._id)" md-button>DELETE</button>
           </md-card-actions>
 
