@@ -113,7 +113,7 @@ is_voucher: false,
 price: offer.price,
 
 });
-    this.httpPoster.post<Response>(url, {
+    this.httpPoster.post<JSON>(url, {
       'user_id': user_id,
       'api_key': api_key,
       'offer': {
@@ -305,8 +305,11 @@ price: offer.price,
 
 }
     }).subscribe(data => {
-      this.valid = data.valid ;
-      this.err = data.msg;
+      console.log(data );
+      console.log(    data['msg']);
+        console.log(data.msg);
+  this.err = data['msg'];
+
     });
   }
   createOfferimg(){
@@ -323,8 +326,11 @@ price: offer.price,
       'api_key': api_key,
       'offer_id': offerId,
     }).subscribe(data => {
-      this.valid = data.valid ;
-      this.err = data.msg;
+    console.log(data );
+    console.log(data['msg']);
+      console.log(data.msg);
+    this.err = data['msg'];
+
     });
   }
 }

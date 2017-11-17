@@ -148,14 +148,19 @@ editsumbit(){
  console.log(this.addedOffer);
  this.offerService.editOffer(this.addedOffer,this.editedOfferId);
     this.editVoucherForm.reset();
-    setTimeout(5000);
+    setTimeout(()=>{    //<<<---    using ()=> syntax
         this.sumbitdateclicked();
-        setTimeout(10000);
+     },2000);setTimeout(()=>{    //<<<---    using ()=> syntax
+         this.sumbitdateclicked();
+      },2000);setTimeout(()=>{    //<<<---    using ()=> syntax
+          this.sumbitdateclicked();
+       },2000);setTimeout(()=>{    //<<<---    using ()=> syntax
+           this.sumbitdateclicked();
+        },2000);setTimeout(()=>{    //<<<---    using ()=> syntax
             this.sumbitdateclicked();
-            setTimeout(10000);
-                this.sumbitdateclicked();
-                setTimeout(10000);
-                    this.sumbitdateclicked();
+         },2000);setTimeout(()=>{    //<<<---    using ()=> syntax
+             this.sumbitdateclicked();
+          },2000);
  this.offerService.addOfferimg(this.editedOfferId,this.files);
 
 

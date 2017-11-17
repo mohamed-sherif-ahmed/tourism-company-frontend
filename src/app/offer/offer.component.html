@@ -5,18 +5,22 @@
         <button class="btn btn-primary" (click)="sumbitdateclicked()">REFRESH</button>
       <div class="cards-tab">
         <h1 class="view-title">Available Offers</h1>
+          <label>{{eror}}</label>
         <md-card class="package-card" *ngFor="let offer of offersArray">
           <md-card-header>
           </md-card-header>
           <md-card-content>
             <div>
                 <div><img src="{{offer.img_path}}"></div>
-                <label class="label-view">Name:</label>
+                <label class="label-view">Name</label>
                 <h4 class="data-view">{{offer.name[1].value}} </h4>
                 <h4 class="data-view" dir="rtl" lang="ar">{{offer.name[0].value}}</h4>
-                <label class="label-view">Description:</label>
+                <label class="label-view">Description</label>
                 <h4 class="data-view">{{offer.description[0].value}}</h4>
                 <h4 class="data-view" dir="rtl" lang="ar">{{offer.description[1].value}}</h4>
+                <label class="label-view">conditions</label>
+                <h4 class="data-view">{{offer.condition[0].value}}</h4>
+                <h4 class="data-view" dir="rtl" lang="ar">{{offer.condition[1].value}}</h4>
                 <h4 class="data-view">{{offer.price}}</h4>
             </div>
 
@@ -72,6 +76,8 @@
           <md-card-actions class="card-actions">
             <button class="edit-button"md-button (click)="edit(offer._id)">EDIT  </button>
             <button class="delete-button" (click)="delete(offer._id)" md-button>DELETE</button>
+
+            <label>{{eror}}</label>
           </md-card-actions>
 
         </md-card>
@@ -124,7 +130,7 @@
             <input type="file" class="form-control" id="img" (change)="pdfHandler($event)" formControlName="img">
           </div>
           <button class="btn btn-primary" type="submit">Submit</button>
-            <label>{{eror}}</label>
+
         </form>
 
       </div>
