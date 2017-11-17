@@ -9,5 +9,6 @@ export class user_json {
     'client_type': any;
     'package_id': any;
     'edit_enabled': boolean;
+    'user_status': string;
 }
 

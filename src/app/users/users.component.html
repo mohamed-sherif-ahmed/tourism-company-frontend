@@ -8,12 +8,14 @@
         </md-card-header>
         <md-card-content>
           <div>
-            <label class="label-view">Name :</label>
+            <label class="label-view">Name</label>
             <h4 class="data-view">{{user.name}}</h4>
-            <label class="label-view">Email :</label>
+            <label class="label-view">Email</label>
             <h4 class="data-view">{{user.email}}</h4>
-            <label class="label-view">Username :</label>
+            <label class="label-view">Username</label>
             <h4 class="data-view">{{user.username}}</h4>
+            <label class="label-view">User Type</label>
+            <h4 class="data-view">{{user.user_status}}</h4>
           </div>
           <div *ngIf="user.edit_enabled">
             <form (ngSubmit)="submitUserEdit()" [formGroup]="userFormEdit">

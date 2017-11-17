@@ -214,8 +214,7 @@ price: offer.price,
            formData.append('file', file, file.name);
       }
     formData.append('user_id', user_id);
-    formData.append('offer_id', offerId);
-    formData.append('id',this.offerbeingCreatedID);
+    formData.append('id', offerId);
     this.http.post(url, formData, options).subscribe(data => {
       this.valid = data['valid'] ;
       this.err = data['msg'];

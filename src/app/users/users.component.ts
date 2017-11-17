@@ -54,6 +54,19 @@ export class UsersComponent implements OnInit {
       this.usersArr = res['response'] as user_json [];
       this.usersArr = this.usersArr.map(user => {
         user.edit_enabled = false;
+        if (user.user_type == "admin") {
+          user.user_status = "Admin";
+        }else if (user.user_type == "client" && user.client_type == "guest"){
+          user.user_status = "Guest";
+        }else {
+          var pack = this.packagesArr.filter(pac => {
+            if (user.package_id == pac._id){
+              return pac;
+            }
+          });
+          
+          user.user_status = pack[0].name[0].value;
+        }
         return user;
       });
     });

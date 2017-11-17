@@ -178,13 +178,16 @@ export class PackagesComponent implements OnInit {
       console.log(data);
       this.packageService.editPackage(data, this.editedVoucher).then(res => {
         const valid = res['valid'];
+        console.log("PACK VALID " + valid);
         if (valid) {
           const response = res['response'];
           this.packageID = response['_id'];
-          this.packageService.sendFile(this.packageID, this.imgFile);
           this.statusMessage = "Success";
-          //this.packageForm.reset();
           this.refresh();
+          if (this.imgFile.length != null || typeof this.imgFile.length != undefined) {
+            this.packageService.sendFile(this.packageID, this.imgFile);
+          }
+          //this.packageForm.reset();
         } else {
           this.statusMessage = `${res['msg']}`;
         }
@@ -406,13 +409,16 @@ export class PackagesComponent implements OnInit {
       };
       console.log(data);
       this.packageService.editVoucher(data, this.editVoucherForm.value.package, this.editedVoucher).then(res => {
+        console.log("EDIT RES" + res);
         const valid = res['valid'];
         if (valid == true){
           const body = res['response'];
           this.voucherID = body['_id'];
-          this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
-          //this.voucherForm.reset();
           this.refresh();
+          if (this.imgFile != null || typeof this.imgFile != undefined){
+            this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
+          }
+          //this.voucherForm.reset();
         } else {
           
         }
@@ -435,6 +441,8 @@ export class PackagesComponent implements OnInit {
     });
   }
   refresh(): void {
+    this.packagesArr = null;
+    this.vouchersArr = null;
     this.packageService.getPackages().then(res => {
       console.log(res);
       var body = JSON.parse(res);
