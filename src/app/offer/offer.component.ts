@@ -38,13 +38,14 @@ export class OfferComponent implements OnInit {
   visable:boolean = false;
 
   ngOnInit() {
+    this.eror = this.offerService.err;
 
     this.viewOffers(this.neededDate) ;
     this.voucherForm = new FormGroup({
       titleEnglish: new FormControl('', Validators.required),
-      titleArabic: new FormControl('', Validators.required),
+      titleArabic: new FormControl(''),
       descriptionEnglish: new FormControl('', Validators.required),
-      descriptionArabic: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl(''),
       conditionEnglish: new FormControl(''),
       conditionArabic: new FormControl(''),
       package: new FormControl('', Validators.required),
@@ -97,7 +98,7 @@ export class OfferComponent implements OnInit {
 
 
     });
-  this.eror = this.offerService.err
+
 
   }
   sumbitdateclicked(){
@@ -176,14 +177,17 @@ editsumbit(){
   console.log(this.addedOffer);
 this.offerService.editOffer(this.addedOffer,this.editedOfferId);
   this.editVoucherForm.reset();
-setTimeout(5000);
-    this.sumbitdateclicked();
-    setTimeout(5000);
+  setTimeout(()=>{    //<<<---    using ()=> syntax
+      this.sumbitdateclicked();
+   },2000);
+   setTimeout(()=>{    //<<<---    using ()=> syntax
+       this.sumbitdateclicked();
+    },2000);
+    setTimeout(()=>{    //<<<---    using ()=> syntax
         this.sumbitdateclicked();
-        setTimeout(10000);
-            this.sumbitdateclicked();
-            setTimeout(10000);
-                this.sumbitdateclicked();
+     },2000);
+    this.sumbitdateclicked();
+
 
 this.offerService.addOfferimg(this.editedOfferId,this.files);
 
