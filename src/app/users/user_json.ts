@@ -7,8 +7,9 @@ export class user_json {
     'phone_number': string;
     'user_type': string;
     'client_type': any;
-    'package_id': any;
+    'packaged_used': string;
     'edit_enabled': boolean;
     'user_status': string;
+    'package_exp_date': string;
 }
 

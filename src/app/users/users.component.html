@@ -16,6 +16,12 @@
             <h4 class="data-view">{{user.username}}</h4>
             <label class="label-view">User Type</label>
             <h4 class="data-view">{{user.user_status}}</h4>
+            <label class="label-view">Phone Number</label>
+            <h4 class="data-view">{{user.phone_number}}</h4>
+            <div *ngIf="user.user_type=='client'&&user.client_type!='guest'">
+              <label class="label-view">Package Expiration Date</label>
+              <h4 class="data-view">{{user.package_exp_date}}</h4>
+            </div>
           </div>
           <div *ngIf="user.edit_enabled">
             <form (ngSubmit)="submitUserEdit()" [formGroup]="userFormEdit">

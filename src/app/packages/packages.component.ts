@@ -4,6 +4,8 @@ import { Package } from './package';
 import { Voucher } from './voucher';
 import { package_json } from './package_json';
 import { voucher_json } from './voucher_json';
+import { packageElement } from './packageElement';
+import { voucher_list_json } from './voucher_list_json';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; 
 
 @Component({
@@ -14,7 +16,9 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 
 export class PackagesComponent implements OnInit {
   packagesArr: package_json [];
-  vouchersArr: voucher_json [];
+  vouchersArr: voucher_json[];
+  voucherList: voucher_list_json;
+  vvList: packageElement[];
   editEnabled = false;
   editedPackage: string;
   editedVoucher: string;
@@ -39,19 +43,19 @@ export class PackagesComponent implements OnInit {
   ngOnInit() {
     this.packageForm = new FormGroup({
       nameEnglish: new FormControl('', Validators.required),
-      nameArabic: new FormControl('', Validators.required),
+      nameArabic: new FormControl(),
       points: new FormControl('', Validators.required),
       descriptionEnglish: new FormControl('', Validators.required),
-      descriptionArabic: new FormControl('', Validators.required)
+      descriptionArabic: new FormControl()
     });
 
     this.voucherForm = new FormGroup({
       titleEnglish: new FormControl('', Validators.required),
-      titleArabic: new FormControl('', Validators.required),
+      titleArabic: new FormControl(),
       descriptionEnglish: new FormControl('', Validators.required),
-      descriptionArabic: new FormControl('', Validators.required),
-      conditionEnglish: new FormControl('', Validators.required),
-      conditionArabic: new FormControl('', Validators.required),
+      descriptionArabic: new FormControl(),
+      conditionEnglish: new FormControl(),
+      conditionArabic: new FormControl(),
       package: new FormControl('', Validators.required),
       oneUse: new FormControl('', Validators.required),
       points: new FormControl('', Validators.required)
@@ -79,12 +83,15 @@ export class PackagesComponent implements OnInit {
     this.packageService.getPackages().then(res => {
       console.log(res);
       var body = JSON.parse(res);
+
       this.packagesArr = body['response'] as package_json [];
       this.packagesArr = this.packagesArr.map(pack => {
         if (pack.img_path == "" || pack.img_path == null) {
           pack.img_path = "/pack.jpg";
         }
         pack.edit_enabled = false;
+        pack.status = pack.activate ? "Deactivate":"Activate";
+        console.log("STATUS PAC", pack);
         return pack;
       });
       console.log(this.packagesArr);
@@ -92,13 +99,24 @@ export class PackagesComponent implements OnInit {
     this.packageService.getVouchers().then(res => {
       var body = JSON.parse(res);
       console.log(body);
-      this.vouchersArr = body['response'] as voucher_json [];
-      this.vouchersArr = this.vouchersArr.map(voucher => {
-        if (voucher.img_path == "" || voucher.img_path == null) {
-          voucher.img_path = "/voucher.png";
+      var list = body['response'];
+      this.voucherList = list as voucher_list_json;
+      this.vvList = this.voucherList['list'];
+      console.log("EBN EL GAZMA", this.voucherList);
+      console.log("EBN EL GAZMA 2", this.vvList);
+      this.vouchersArr = Array();
+      this.vvList.forEach(e => {
+        let ee = e.vouchers as voucher_json[];
+        let vv_enhanced = ee.map(voucher => {
+        if (voucher['img_path'] == "" || voucher['img_path'] == null) {
+          voucher['img_path'] = "/voucher.png";
         } 
-        voucher.edit_enabled = false;
+        voucher['edit_enabled'] = false;
         return voucher;
+      });
+        vv_enhanced.forEach(vvv => {
+          this.vouchersArr.push(vvv);
+        });
       });
     });
   }
@@ -234,21 +252,21 @@ export class PackagesComponent implements OnInit {
     this.editEnabled = true;
     this.editedVoucher = voucherId;
     this.vouchersArr = this.vouchersArr.map(voucher => {
-      if (this.editedVoucher == voucher._id) {
-        voucher.edit_enabled = true;
+      if (this.editedVoucher == voucher['_id']) {
+        voucher['edit_enabled'] = true;
       }
       return voucher;
     });
     const selectedPackage = this.vouchersArr.filter( voucher => {
-      if (voucher._id == this.editedVoucher) {
+      if (voucher['_id'] == this.editedVoucher) {
         return voucher;
       }
     });
     this.editFormVoucher = selectedPackage[0];
-    console.log("CONDITION" + this.editFormVoucher.condition[0].value);
+    // console.log("CONDITION" + this.editFormVoucher.condition[0].value);
     this.editVoucherForm.patchValue({
-      titleEnglish: this.editFormVoucher.name[0].value,
-      titleArabic: this.editFormVoucher.name[1].value,
+      titleEnglish: this.editFormVoucher['name'][0]['value'],
+      titleArabic: this.editFormVoucher['name'][1]['value'],
       descriptionEnglish: this.editFormVoucher.description[0].value,
       descriptionArabic: this.editFormVoucher.description[1].value,
       conditionEnglish: this.editFormVoucher.condition[0].value,
@@ -362,7 +380,6 @@ export class PackagesComponent implements OnInit {
   }
 
   editVoucherSubmit(): void {
-
     if (this.editVoucherForm.valid) {
       var ob: boolean;
       if (this.editVoucherForm.value.oneUse == "true") {
@@ -415,9 +432,7 @@ export class PackagesComponent implements OnInit {
           const body = res['response'];
           this.voucherID = body['_id'];
           this.refresh();
-          if (this.imgFile != null || typeof this.imgFile != undefined){
-            this.packageService.sendFileImgVoucher(this.voucherID, this.imgFile);
-          }
+          this.packageService.sendFileImgVoucher(this.editedVoucher, this.imgFile);
           //this.voucherForm.reset();
         } else {
           
@@ -441,32 +456,60 @@ export class PackagesComponent implements OnInit {
     });
   }
   refresh(): void {
-    this.packagesArr = null;
-    this.vouchersArr = null;
-    this.packageService.getPackages().then(res => {
-      console.log(res);
-      var body = JSON.parse(res);
-      this.packagesArr = body['response'] as package_json [];
-      this.packagesArr = this.packagesArr.map(pack => {
-        if (pack.img_path == "" || pack.img_path == null) {
-          pack.img_path = "/pack.jpg";
-        }
-        pack.edit_enabled = false;
-        return pack;
+   this.packageService.getPackages().then(res => {
+        console.log(res);
+        var body = JSON.parse(res);
+
+        this.packagesArr = body['response'] as package_json [];
+        this.packagesArr = this.packagesArr.map(pack => {
+          if (pack.img_path == "" || pack.img_path == null) {
+            pack.img_path = "/pack.jpg";
+          }
+          pack.edit_enabled = false;
+          pack.status = pack.activate ? "Deactivate":"Activate";
+          console.log("STATUS PAC", pack);
+          return pack;
+        });
+        console.log(this.packagesArr);
       });
-      console.log(this.packagesArr);
-    });
-    this.packageService.getVouchers().then(res => {
-      var body = JSON.parse(res);
-      console.log(body);
-      this.vouchersArr = body['response'] as voucher_json [];
-      this.vouchersArr = this.vouchersArr.map(voucher => {
-        if (voucher.img_path == "" || voucher.img_path == null) {
-          voucher.img_path = "/voucher.png";
-        } 
-        voucher.edit_enabled = false;
-        return voucher;
+      this.packageService.getVouchers().then(res => {
+        var body = JSON.parse(res);
+        console.log(body);
+        var list = body['response'];
+        this.voucherList = list as voucher_list_json;
+        this.vvList = this.voucherList['list'];
+        console.log("EBN EL GAZMA", this.voucherList);
+        console.log("EBN EL GAZMA 2", this.vvList);
+        this.vouchersArr = Array();
+        this.vvList.forEach(e => {
+          let ee = e.vouchers as voucher_json[];
+          let vv_enhanced = ee.map(voucher => {
+          if (voucher['img_path'] == "" || voucher['img_path'] == null) {
+            voucher['img_path'] = "/voucher.png";
+          } 
+          voucher['edit_enabled'] = false;
+          return voucher;
+        });
+          vv_enhanced.forEach(vvv => {
+            this.vouchersArr.push(vvv);
+          });
+        });
       });
-    });
+  }
+
+  deactivatePackage(id: string){
+    this.packageService.deactivatePackage(id);
+  }
+  activatePackage(id: string){
+    this.packageService.activatePackage(id);
+  }
+
+  packageStatusChanger(status: boolean, id: string){
+    if (status){
+      this.deactivatePackage(id);
+    } else {
+      this.activatePackage(id);
+    }
+    this.refresh();
   }
 }

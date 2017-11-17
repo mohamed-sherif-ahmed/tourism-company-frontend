@@ -233,4 +233,31 @@ export class PackagesService {
       return res;
     });
   }
+
+  deactivatePackage(packId): Promise<any> {
+    const url = `im4booking/package/deactivate`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package_id': packId
+    }
+    return this.http.post(url, body).toPromise().then(res => {
+      return res;
+    });
+  }
+    activatePackage(packId): Promise<any> {
+    const url = `im4booking/package/activate`;
+    const api_key = localStorage.getItem('api_key');
+    const user_id = localStorage.getItem('user_id');
+    const body = {
+      'api_key': api_key,
+      'user_id': user_id,
+      'package_id': packId
+    }
+    return this.http.post(url, body).toPromise().then(res => {
+      return res;
+    });
+  }
 }

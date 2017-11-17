@@ -17,6 +17,11 @@
                 <label class="label-view">Description:</label>
                 <h4 class="data-view">{{pack.description[0].value}}</h4>
                 <h4 class="data-view" dir="rtl" lang="ar">{{pack.description[1].value}}</h4>
+                <div>
+                  <label class="label-view">Description:</label>
+                  <h4 class="data-view">{{pack.description[0].value}}</h4>
+                  <h4 class="data-view" dir="rtl" lang="ar">{{pack.description[1].value}}</h4>
+                </div>
             </div>
             <!-- <img src="{{pack.imgurl}}" /> -->
             <div class="container" *ngIf="pack.edit_enabled">
@@ -51,6 +56,7 @@
           </md-card-content>
           <md-card-actions class="card-actions">
             <button class="edit-button" md-button (click)="editPackage(pack._id)">EDIT</button>
+            <button class="edit-button" md-button (click)="packageStatusChanger(pack.activate, pack._id)">{{pack.status}}</button>
           </md-card-actions>
           <br>
           <br>
@@ -99,7 +105,10 @@
       <div class="cards-tab">
         <button class="refresh-button" md-button (click)="refresh()">Refresh</button>
         <h1 class="view-title">Available Vouchers</h1>
-        <md-card class="package-card" *ngFor="let voucher of vouchersArr">
+        <div *ngFor="let list of vvList">
+          <h2>{{list.name}}</h2>
+          <br>
+          <md-card class="package-card" *ngFor="let voucher of list.vouchers">
           <md-card-header>
           </md-card-header>
           <md-card-content>
@@ -172,6 +181,9 @@
           <br>
           <br>
         </md-card>
+        <br>
+        <br>
+        </div>
       </div>
     </md-tab>
     <md-tab label="Add New Voucher">

@@ -47,27 +47,39 @@ export class UsersComponent implements OnInit {
       var body = JSON.parse(res);
       this.packagesArr = body['response'] as package_json [];
       console.log(this.packagesArr);
-    });
-
-    this.userService.getAvailableUsers().then(res => {
-      console.log("NASDNASD" + res);
-      this.usersArr = res['response'] as user_json [];
-      this.usersArr = this.usersArr.map(user => {
-        user.edit_enabled = false;
-        if (user.user_type == "admin") {
-          user.user_status = "Admin";
-        }else if (user.user_type == "client" && user.client_type == "guest"){
-          user.user_status = "Guest";
-        }else {
-          var pack = this.packagesArr.filter(pac => {
-            if (user.package_id == pac._id){
-              return pac;
+      this.userService.getAvailableUsers().then(res => {
+        console.log("NASDNASD" + res);
+        console.log("");
+        console.log("RES", res['response']);
+        console.log("");
+        this.usersArr = res['response'] as user_json [];
+        this.usersArr = this.usersArr.map(user => {
+          user.edit_enabled = false;
+          if (user.user_type == "admin") {
+            user.user_status = "Admin";
+          }else if (user.user_type == "client" && user.client_type == "guest"){
+            user.user_status = "Guest";
+          }else {
+            console.log("PACKAGEARR", this.packagesArr);
+            var pack = this.packagesArr.filter(pac => {
+              console.log("PAC IN LOOP", pac);
+              console.log("ID", user.packaged_used);
+              if (user.packaged_used == pac._id){
+                return pac;
+              }
+            });
+            console.log("PAC SELECTED", pack);
+            if (pack.length == 0){
+              console.log("IN NO PACKAGE", pack);
+              user.user_status = "Package Deleted";
+            } else {
+              console.log("IN PACKAGE", pack);
+              user.user_status = pack[0].name[0].value; 
             }
-          });
-          
-          user.user_status = pack[0].name[0].value;
-        }
-        return user;
+
+          }
+          return user;
+        });
       });
     });
   }
@@ -97,7 +109,7 @@ export class UsersComponent implements OnInit {
       email: this.user.email,
       phoneNumber: this.user.phone_number,
       adminStatus: this.user.user_type,
-      packageId: this.user.package_id
+      packageId: this.user.packaged_used
     });
   }
   editPassword(userId: string): void {
@@ -137,7 +149,7 @@ export class UsersComponent implements OnInit {
         'phone_number': this.userForm.value.phoneNumber,
         'user_type': this.userForm.value.adminStatus,
         'client_type': 'logged_in',
-        'package_id': this.userForm.value.packageId
+        'packaged_used': this.userForm.value.packageId
       }
     }
     console.log(data);
@@ -172,7 +184,7 @@ export class UsersComponent implements OnInit {
         'phone_number': this.userFormEdit.value.phoneNumber,
         'user_type': this.userFormEdit.value.adminStatus,
         'client_type': 'logged_in',
-        'package_id': this.userFormEdit.value.packageId
+        'packaged_used': this.userFormEdit.value.packageId
       }
     }
     console.log("DATA EDIT USER" + data);
