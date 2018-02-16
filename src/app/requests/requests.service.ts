@@ -28,11 +28,27 @@ export class RequestService {
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
         const header = new Headers();
-        
+
         let body = {
             'new_status': newState,
             'user_id': user_id,
             'api_key': api_key
+        }
+        return this.http.post(url, body).toPromise().then(response => {
+            return response['body'];
+        });
+    }
+    acceptRequest(requestId: string, newState: string, price): Promise<JSON> {
+        const url = `im4booking/request/${requestId}/`;
+        const api_key = localStorage.getItem('api_key');
+        const user_id = localStorage.getItem('user_id');
+        const header = new Headers();
+
+        let body = {
+            'new_status': newState,
+            'user_id': user_id,
+            'api_key': api_key,
+            'new_price': price
         }
         return this.http.post(url, body).toPromise().then(response => {
             return response['body'];

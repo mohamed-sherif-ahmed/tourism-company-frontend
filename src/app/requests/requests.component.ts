@@ -32,14 +32,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.offer.img_path
+              'img': req.offer.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -49,14 +51,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.voucher.img_path
+              'img': req.voucher.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -66,14 +70,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.package.img_path
+              'img': req.package.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.acceptedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -87,14 +93,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.offer.img_path
+              'img': req.offer.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -104,14 +112,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.voucher.img_path
+              'img': req.voucher.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -121,14 +131,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.package.img_path
+              'img': req.package.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.pendingArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -142,14 +154,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.offer.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.offer.img_path
+              'img': req.offer.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -159,14 +173,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.voucher.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.voucher.img_path
+              'img': req.voucher.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -176,14 +192,16 @@ export class RequestsComponent implements OnInit {
             console.log("Comp " , res);
             this.user = res['response'];
             console.log("USER ", this.user);
-            const newRequest = { 
+            const newRequest = {
               'user': this.user.name,
               'offer': req.package.name[0].value,
               'state': req.state,
               'request_type': req.request_type,
               'request_date': req.request_date,
               'id': req._id,
-              'img': req.package.img_path
+              'img': req.package.img_path,
+              'payment_status': req.payment_status,
+              'price': req.price
             }
             this.rejectedArray.push(newRequest);
             console.log("ARR", this.pendingArray);
@@ -197,8 +215,14 @@ export class RequestsComponent implements OnInit {
     this.requestService.changeRequestStatus(id, "rejected");
   }
 
-  acceptRequest(id: string): void {
-    this.requestService.changeRequestStatus(id, "accepted");
+  acceptRequest(id: string, price): void {
+    console.log(typeof price);
+    const priceFinal = parseInt(price, 10);
+    if (!Number.isNaN(priceFinal)) {
+      if (priceFinal > 0){
+        this.requestService.acceptRequest(id, "accepted", priceFinal);
+      }
+    }
   }
 
   changeToPending(id: string): void {

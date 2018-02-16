@@ -12,6 +12,12 @@
           <h3>
             From User : {{req.user}}
           </h3>
+          <h3>
+            Price : {{req.price}}
+          </h3>
+          <h3>
+            Payment Status : {{req.payment_status}}
+          </h3>
         </md-card-content>
       </md-card>
     </div>
@@ -30,8 +36,9 @@
                 </h3>
               </md-card-content>
           <md-card-actions class="card-actions">
-            <button class="edit-button" md-button (click)="acceptRequest(req.id)">Accept</button>
-            <button class="delete-button" md-button (click)="rejectRequest(req.id)">Reject</button>
+              <input type="number" #price/>
+              <button class="edit-button" md-button (click)="acceptRequest(req.id, price.value)">Accept</button>
+              <button class="delete-button" md-button (click)="rejectRequest(req.id)">Reject</button>
           </md-card-actions>
         </md-card>
       </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from './user.service';
-import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; 
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PackagesService } from './../packages/packages.service';
 import { package_json } from './../packages/package_json';
 import { user_json } from './user_json';
@@ -74,7 +74,7 @@ export class UsersComponent implements OnInit {
               user.user_status = "Package Deleted";
             } else {
               console.log("IN PACKAGE", pack);
-              user.user_status = pack[0].name[0].value; 
+              user.user_status = pack[0].name[0].value;
             }
 
           }
@@ -153,7 +153,12 @@ export class UsersComponent implements OnInit {
       }
     }
     console.log(data);
-    this.userService.addNewUser(data);
+    this.userService.addNewUser(data).then(status => {
+      const body = JSON.parse(status['_body']);
+      if (body.valid == true){
+        this.userForm.reset();
+      }
+    });
   }
   submitUserEdit(): void {
     var data;

@@ -71,18 +71,20 @@ export class UserService {
         });
     }
 
-    addNewUser(data): void {
+    addNewUser(data): Promise<any> {
         const url = `im4booking/user`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
-        this.http.post(url, {
+        return this.http.post(url, {
             'api_key': api_key,
             'user_id': user_id,
             'new_user': data
-        }).subscribe();
+        }).toPromise().then(response => {
+          return response;
+        });
     }
 
-    changeUserPassword(userId: string, newPassword: string): Promise<JSON> {
+    changeUserPassword(userId: string, newPassword: string): Promise<any> {
         const url = `/request/${userId}/`;
         const api_key = localStorage.getItem('api_key');
         const user_id = localStorage.getItem('user_id');
@@ -96,7 +98,8 @@ export class UserService {
             }
           });
         return this.http.post(url, options).toPromise().then(response => {
-            return response['requests'];
+            //console.log(response);
+            return response;
         });
     }
 }
